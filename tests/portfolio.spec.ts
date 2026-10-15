@@ -1,5 +1,24 @@
 import { test, expect } from "../playwright-fixture";
 
+test("ordinary visits prioritise AI while explicit all and marketing links persist", async ({ page }) => {
+  await page.goto("/#cases");
+  const portfolio = page.locator("#portfolio");
+  await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(portfolio.getByRole("article")).toHaveCount(3);
+  await expect(portfolio.getByRole("article").first()).toContainText("HH Career Engine");
+  await expect(portfolio.getByRole("link")).toHaveCount(0);
+  await page.getByRole("button", { name: "Все направления", exact: true }).click();
+  await expect(page).toHaveURL(/direction=all#cases$/);
+  await page.reload();
+  await expect(portfolio.getByRole("article")).toHaveCount(6);
+  await expect(portfolio.getByRole("article").first()).toContainText("HH Career Engine");
+  await page.goto("/?direction=marketing#cases");
+  await expect(portfolio.getByRole("article")).toHaveCount(3);
+  await expect(portfolio.getByRole("article").first()).toContainText("PropTech кейс");
+  await page.goto("/?direction=unknown#cases");
+  await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
+});
+
 test("direct direction links, tag filters, reload and browser history", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
   const portfolio = page.locator("#portfolio");
@@ -27,8 +46,8 @@ test("new AI cases distinguish workflow checks from an unverified prototype", as
   await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
   await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
   await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
-  await expect(dialog.getByText("Прототип по описанию автора. Реализация и текущая работоспособность не верифицированы.", { exact: true })).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "Описание прототипа", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
+  await expect(dialog.getByText(/исходники и текущая работоспособность не верифицированы/)).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Карточка описания (JSON)", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
   for (const path of ["/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
     const response = await page.request.get(path);
     expect(response.ok()).toBeTruthy();
@@ -44,8 +63,8 @@ test("case opens by keyboard, renders full evidence, traps and restores focus", 
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("heading", { name: "Бизнес-применение", exact: true })).toBeVisible();
-  await expect(dialog.getByText(/350 автоматических тестов/)).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "Артефакт проверки", exact: true })).toHaveAttribute("href", "/projects/hh-career-engine-verification.json");
+  await expect(dialog.getByText(/350 пройденных автоматических тестов/)).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Техническая сводка проверки (JSON)", exact: true })).toHaveAttribute("href", "/projects/hh-career-engine-verification.json");
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press("Tab");
     expect(await dialog.evaluate(el => el.contains(document.activeElement))).toBeTruthy();

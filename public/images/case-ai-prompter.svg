@@ -13,6 +13,6 @@
     </g>
     <g font-size="28" text-anchor="middle"><text x="176" y="372">Контекст</text><text x="480" y="372">Анализ</text><text x="783" y="372">Варианты ответа</text></g>
     <g stroke="#d99a00" stroke-width="3" fill="none"><path d="M307 360h40m-12-10 12 10-12 10"/><path d="M610 360h40m-12-10 12 10-12 10"/></g>
-    <text x="64" y="502" font-size="22" fill="#64748b">Описание автора · реализация не верифицирована</text>
+    <text x="64" y="502" font-size="22" fill="#64748b">Работа с контекстом и запросами к LLM</text>
   </g>
 </svg>

@@ -28,9 +28,9 @@ import { cn } from "@/lib/utils";
 const CaseMarkdown = lazy(() => import("./CaseMarkdown"));
 
 const directions = [
-  { value: "all", label: "Все направления" },
   { value: "ai", label: "AI / Automation" },
   { value: "marketing", label: "Marketing / CRM" },
+  { value: "all", label: "Все направления" },
 ] as const;
 
 const notionProseClass =
@@ -177,8 +177,8 @@ const CasesSection = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const requestedDirection = new URLSearchParams(location.search).get("direction");
-  const direction = requestedDirection === "ai" || requestedDirection === "marketing"
-    ? requestedDirection : "all";
+  const direction = requestedDirection === "all" || requestedDirection === "marketing"
+    ? requestedDirection : "ai";
   const [active, setActive] = useState<PortfolioCase | null>(null);
   const [filterTag, setFilterTag] = useState<string | null>(null);
   const caseTriggerRef = useRef<HTMLElement | null>(null);
@@ -190,7 +190,8 @@ const CasesSection = () => {
   }, [direction]);
 
   const directionCases = useMemo(
-    () => cases.filter((c) => direction === "all" || c.category === direction),
+    () => cases.filter((c) => direction === "all" || c.category === direction)
+      .sort((a, b) => Number(b.category === "ai") - Number(a.category === "ai")),
     [direction]
   );
 
@@ -207,7 +208,7 @@ const CasesSection = () => {
 
   const selectDirection = (value: typeof directions[number]["value"]) => {
     const params = new URLSearchParams(location.search);
-    if (value === "all") params.delete("direction");
+    if (value === "ai") params.delete("direction");
     else params.set("direction", value);
     navigate({ search: params.toString(), hash: "#cases" });
   };
@@ -223,7 +224,7 @@ const CasesSection = () => {
         <div className="mb-14">
           <SectionHeading
             title="Кейсы"
-            subtitle="AI-инструменты и автоматизации в pet-проектах, маркетинговые и CRM-задачи. В каждом кейсе — задача, реализация и подтверждённый результат."
+            subtitle="Прикладные AI-проекты на базе опыта в B2B-маркетинге и CRM. В каждом кейсе — задача, решение, мой вклад и доступные материалы."
           />
         </div>
 
@@ -386,7 +387,7 @@ const CasesSection = () => {
                       Прочитать
                     </Button>
 
-                    {c.link ? (
+                    {c.link && c.category !== "ai" ? (
                       <Button
                         type="button"
                         variant="ghost"
@@ -519,7 +520,7 @@ const CasesSection = () => {
                       </Suspense>
                     </div>
 
-                    {active.link && (
+                    {active.link && active.category !== "ai" && (
                       <div className="mt-12 flex justify-center border-t border-slate-100 pt-10">
                         <Button
                           variant="ghost"
