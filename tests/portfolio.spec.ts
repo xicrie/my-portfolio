@@ -3,10 +3,10 @@ import { test, expect } from "../playwright-fixture";
 test("direct direction links, tag filters, reload and browser history", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
   const portfolio = page.locator("#portfolio");
-  await expect(portfolio.getByRole("article")).toHaveCount(1);
+  await expect(portfolio.getByRole("article")).toHaveCount(3);
   await expect(portfolio.getByRole("heading", { name: "HH Career Engine" })).toBeVisible();
   await page.reload();
-  await expect(portfolio.getByRole("article")).toHaveCount(1);
+  await expect(portfolio.getByRole("article")).toHaveCount(3);
   await page.getByRole("button", { name: "Marketing / CRM", exact: true }).click();
   await expect(portfolio.getByRole("article")).toHaveCount(3);
   await page.getByRole("group", { name: "Темы проектов" }).getByRole("button", { name: "Статьи", exact: true }).click();
@@ -14,9 +14,26 @@ test("direct direction links, tag filters, reload and browser history", async ({
   await expect(portfolio.getByRole("heading", { name: "Статья про PropTech для IT компании" })).toBeVisible();
   await page.goBack();
   await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await expect(portfolio.getByRole("article")).toHaveCount(1);
+  await expect(portfolio.getByRole("article")).toHaveCount(3);
   await page.getByRole("button", { name: "Все направления", exact: true }).click();
-  await expect(portfolio.getByRole("article")).toHaveCount(4);
+  await expect(portfolio.getByRole("article")).toHaveCount(6);
+});
+
+test("new AI cases distinguish workflow checks from an unverified prototype", async ({ page }) => {
+  await page.goto("/?direction=ai#cases");
+  await page.getByRole("button", { name: "Прочитать кейс: Telegram → AI → YouGile", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByText(/32 локальные проверки/)).toBeVisible();
+  await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
+  await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
+  await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
+  await expect(dialog.getByText("Прототип по описанию автора. Реализация и текущая работоспособность не верифицированы.", { exact: true })).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Описание прототипа", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
+  for (const path of ["/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
+    const response = await page.request.get(path);
+    expect(response.ok()).toBeTruthy();
+    expect(response.headers()["content-type"]).toContain("application/json");
+  }
 });
 
 test("case opens by keyboard, renders full evidence, traps and restores focus", async ({ page }) => {

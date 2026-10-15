@@ -2,6 +2,8 @@ import fullContentProptech from "../../notion-data/PropTech кейс для IT �
 import fullContentArticle from "../../notion-data/Статья про PropTech для IT компании 3045c3762c4181e7874af5ec3ec68a3c.md?raw";
 import fullContentEmailCombined from "../../notion-data/email-marketing-kts.md?raw";
 import fullContentHH from "./projects/hh-career-engine.md?raw";
+import fullContentYouGile from "./projects/telegram-ai-yougile.md?raw";
+import fullContentPrompter from "./projects/ai-prompter.md?raw";
 
 export type PortfolioCase = {
   id: string;
@@ -75,5 +77,33 @@ export const cases: PortfolioCase[] = [
     status: "Pet-проект · offline-проверка",
     link: "/projects/hh-career-engine-verification.json",
     linkLabel: "Артефакт проверки",
+  },
+  {
+    id: "telegram-ai-yougile",
+    category: "ai",
+    title: "Telegram → AI → YouGile",
+    description:
+      "Workflow на n8n для переноса поручений из переписки в задачи. Подтверждены экспорт из 35 узлов, JSON Schema и ветки ошибок; production-запуск не подтверждён.",
+    fullContent: fullContentYouGile,
+    company: "Личная автоматизация",
+    tags: ["AI", "n8n", "API"],
+    image: "/images/case-telegram-yougile.svg",
+    status: "Workflow-прототип · проверен offline",
+    link: "/projects/yougile-workflow-verification.json",
+    linkLabel: "Артефакт проверки",
+  },
+  {
+    id: "ai-prompter",
+    category: "ai",
+    title: "AI-суфлёр",
+    description:
+      "Прототип помощника для онлайн-разговоров: анализ контекста и варианты ответа. Представлен по описанию автора; исходники и текущая работоспособность не проверены.",
+    fullContent: fullContentPrompter,
+    company: "Личный прототип",
+    tags: ["AI", "Прототип"],
+    image: "/images/case-ai-prompter.svg",
+    status: "Прототип · реализация не верифицирована",
+    link: "/projects/ai-prompter-brief.json",
+    linkLabel: "Описание прототипа",
   },
 ];
