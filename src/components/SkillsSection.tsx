@@ -37,16 +37,16 @@ const pipelineStages = [
     title: "AI-Прототипы &\nУскорение",
     icon: Cpu,
     tone: "warm" as Tone,
-    tools: ["Cursor", "Cloud Code", "ChatGPT", "Midjourney"],
-    impact: "Использую ИИ как личную команду. Собираю рабочие прототипы, логику и визуал с нуля, ускоряя time-to-market новых гипотез в разы.",
+    tools: ["Python", "LLM API", "Claude Code", "Cursor"],
+    impact: "Создаю AI-инструменты в pet-проектах: связываю API, проверяю ответы LLM и тестирую логику. Качество подтверждаю проверками, а не обещанием ускорения.",
   },
   {
     id: 4,
-    title: "Автоматизация\nIT-процессов",
+    title: "Автоматизация\nбизнес-процессов",
     icon: Workflow,
     tone: "cool" as Tone,
     tools: ["n8n", "1C-Битрикс", "CRM-связки", "Tilda"],
-    impact: "Связываю разрозненные инструменты в единый пайплайн. Лиды передаются автоматически, без ручной работы и человеческого фактора.",
+    impact: "Развиваю автоматизации на n8n и опираюсь на опыт с CRM-процессами. Проектирую передачу данных между сервисами и проверку ошибок.",
   },
   {
     id: 5,
@@ -132,6 +132,22 @@ export default function AI_RoadmapSection() {
               <div
                 key={stage.id}
                 className="relative z-30 flex flex-row md:flex-col items-start md:items-center w-full md:w-auto group cursor-pointer mb-14 md:mb-0"
+                role="button"
+                tabIndex={0}
+                aria-label={stage.title.replace("\n", " ")}
+                aria-expanded={isHovered}
+                aria-controls={isHovered ? `skill-${stage.id}` : undefined}
+                onFocus={() => setHoveredStage(stage.id)}
+                onBlur={() => setHoveredStage(null)}
+                onClick={() => setHoveredStage(stage.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setHoveredStage(stage.id);
+                  } else if (event.key === "Escape") {
+                    setHoveredStage(null);
+                  }
+                }}
                 onMouseEnter={() => setHoveredStage(stage.id)}
                 onMouseLeave={() => setHoveredStage(null)}
               >
@@ -169,12 +185,16 @@ export default function AI_RoadmapSection() {
                 <AnimatePresence>
                   {isHovered && (
                     <motion.div
+                      id={`skill-${stage.id}`}
+                      style={{ x: "var(--skill-offset, 0%)" }}
                       initial={{ opacity: 0, y: isTop ? 15 : -15, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: isTop ? 10 : -10, scale: 0.95 }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className={cn(
-                        "absolute left-16 md:left-1/2 md:-translate-x-1/2 w-[calc(100vw-6rem)] md:w-[360px] rounded-[1.5rem] p-7 text-left z-50",
+                        "absolute left-16 md:left-1/2 md:[--skill-offset:-50%] w-[calc(100vw-7rem)] md:w-[360px] rounded-[1.5rem] p-7 text-left z-50",
+                        index === 0 && "md:left-0 md:[--skill-offset:0%]",
+                        index === pipelineStages.length - 1 && "md:left-auto md:right-0 md:[--skill-offset:0%]",
                         "bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_16px_40px_rgba(31,38,135,0.06)]",
                         isTop ? "md:top-24" : "md:bottom-24"
                       )}

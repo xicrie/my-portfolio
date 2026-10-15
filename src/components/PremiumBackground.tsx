@@ -47,7 +47,7 @@ const PremiumBackground = () => {
     const assemblyAnchor = { x: -9999, y: -9999 }; 
     
     let isMouseMoving = false;
-    let moveTimeout: NodeJS.Timeout;
+    let moveTimeout: ReturnType<typeof setTimeout>;
     let activeShapeIndex = 0;
 
     // ЧИСТАЯ, ДОРОГАЯ ПАЛИТРА (Без лишнего шума, только теплый спектр)

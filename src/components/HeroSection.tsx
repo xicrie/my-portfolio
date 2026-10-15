@@ -28,7 +28,6 @@ const HeroSection = () => {
 
   return (
     <section
-      id="hero"
       className="relative isolate overflow-hidden pt-24 md:pt-32"
     >
       {/* ВОТ ЗДЕСЬ Я УДАЛИЛ ТОТ САМЫЙ ГРАДИЕНТ, КОТОРЫЙ ДЕЛАЛ ШОВ */}
@@ -60,18 +59,18 @@ const HeroSection = () => {
               </h1>
 
               <p className="mt-7 text-[1.18rem] font-semibold leading-relaxed text-foreground md:text-[1.34rem]">
-                B2B-маркетолог и AI-автоматизатор
+                AI-автоматизация и B2B-маркетинг
               </p>
 
               <p className="mt-7 max-w-[710px] text-[1.04rem] leading-[1.78] text-muted-foreground md:text-[1.12rem]">
-                Помогаю сложным IT и B2B-продуктам звучать понятно: собираю
-                сайты, лендинги, SEO-контент, email-воронки и AI-процессы,
-                которые приводят лиды и поддерживают продажи.
+                Создаю прикладные AI-инструменты и автоматизации в pet-проектах.
+                Опираюсь на опыт в B2B-маркетинге, CRM и digital, чтобы
+                переводить бизнес-задачи в работающие решения.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <a
-                  href="#portfolio"
+                  href="#cases"
                   className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-[1.2rem] bg-accent px-6 py-4 text-base font-medium text-accent-foreground shadow-[0_18px_44px_rgba(236,183,11,0.28)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_68px_rgba(236,183,11,0.36)]"
                 >
                   <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.0)_42%,rgba(255,255,255,0.12)_100%)] opacity-75" />
@@ -105,6 +104,7 @@ const HeroSection = () => {
             <div
               className="group relative"
               onMouseEnter={rotateQuote}
+              onFocus={rotateQuote}
               tabIndex={0}
               aria-label="Интерактивная карточка с цитатой"
             >
@@ -120,15 +120,17 @@ const HeroSection = () => {
 
                 <div className="relative overflow-hidden rounded-[2rem]">
                   <img
-                    src="/images/alena-hero.png"
-                    alt="Алена Степанова"
+                    src="/images/alena-hero.webp"
+                    alt="Алёна Степанова"
+                    fetchPriority="high"
+                    decoding="async"
                     className="h-[520px] w-full object-cover sm:h-[620px]"
                     draggable={false}
                   />
 
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(180deg,transparent_0%,rgba(30,20,10,0.45)_100%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
-                  <div className="absolute bottom-6 left-5 right-5 z-20 translate-y-4 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 sm:left-6 sm:right-6">
+                  <div className="absolute bottom-6 left-5 right-5 z-20 translate-y-4 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100 sm:left-6 sm:right-6">
                     <div className="relative rounded-[1.25rem] bg-[#fbf9f6] p-5 shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
                       <svg
                         className="absolute -top-[14px] right-12 h-[15px] w-[20px] text-[#fbf9f6] drop-shadow-[0_-4px_4px_rgba(0,0,0,0.04)]"
