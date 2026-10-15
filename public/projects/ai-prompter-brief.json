@@ -1,0 +1,11 @@
+{
+  "project": "AI-суфлёр",
+  "checked_on": "2026-10-16",
+  "status": "Prototype described by its author; implementation not verified",
+  "purpose": "Analyse online conversation context and suggest relevant response options",
+  "author_contribution": ["User scenarios", "Context and LLM prompts", "Review of suggested responses"],
+  "evidence_level": "Author-provided description; not a code audit or working demo",
+  "not_verified": ["Source code", "Context capture method", "Interface", "Model and technical stack", "Current functionality", "Latency and quality", "Production use"],
+  "demo_available": false,
+  "cover": "Concept diagram, not an application screenshot"
+}

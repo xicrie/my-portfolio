@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import SectionHeading from "./SectionHeading";
 import {
   ExternalLink,
@@ -25,6 +24,14 @@ import {
 } from "@/components/ui/dialog";
 import { cases, type PortfolioCase } from "@/data/cases";
 import { cn } from "@/lib/utils";
+
+const CaseMarkdown = lazy(() => import("./CaseMarkdown"));
+
+const directions = [
+  { value: "all", label: "Все направления" },
+  { value: "ai", label: "AI / Automation" },
+  { value: "marketing", label: "Marketing / CRM" },
+] as const;
 
 const notionProseClass =
   "prose prose-slate max-w-none " +
@@ -167,19 +174,43 @@ const hasUsableDescription = (item: PortfolioCase) => {
 };
 
 const CasesSection = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const requestedDirection = new URLSearchParams(location.search).get("direction");
+  const direction = requestedDirection === "ai" || requestedDirection === "marketing"
+    ? requestedDirection : "all";
   const [active, setActive] = useState<PortfolioCase | null>(null);
   const [filterTag, setFilterTag] = useState<string | null>(null);
+  const caseTriggerRef = useRef<HTMLElement | null>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setFilterTag(null);
+    setActive(null);
+  }, [direction]);
+
+  const directionCases = useMemo(
+    () => cases.filter((c) => direction === "all" || c.category === direction),
+    [direction]
+  );
 
   const allTags = useMemo(() => {
     const set = new Set<string>();
-    cases.forEach((c) => c.tags.forEach((t) => set.add(t.trim())));
+    directionCases.forEach((c) => c.tags.forEach((t) => set.add(t.trim())));
     return sortTagsForFilters(Array.from(set));
-  }, []);
+  }, [directionCases]);
 
   const filteredCases = useMemo(() => {
-    if (filterTag == null) return cases;
-    return cases.filter((c) => c.tags.includes(filterTag));
-  }, [filterTag]);
+    if (filterTag == null) return directionCases;
+    return directionCases.filter((c) => c.tags.includes(filterTag));
+  }, [filterTag, directionCases]);
+
+  const selectDirection = (value: typeof directions[number]["value"]) => {
+    const params = new URLSearchParams(location.search);
+    if (value === "all") params.delete("direction");
+    else params.set("direction", value);
+    navigate({ search: params.toString(), hash: "#cases" });
+  };
 
   const applyFilter = (tag: string) => {
     setFilterTag(tag);
@@ -192,14 +223,34 @@ const CasesSection = () => {
         <div className="mb-14">
           <SectionHeading
             title="Кейсы"
-            subtitle="От упаковки смыслов до сайтов, которые приносят конверсию. Разбираем проекты по косточкам: какая была задача и что получилось на выходе."
+            subtitle="AI-инструменты и автоматизации в pet-проектах, маркетинговые и CRM-задачи. В каждом кейсе — задача, реализация и подтверждённый результат."
           />
         </div>
 
-        <div className="mb-12 flex flex-wrap items-center gap-2.5">
+        <div className="mb-6 flex flex-wrap items-center gap-2.5" role="group" aria-label="Направление проектов">
+          {directions.map((item) => (
+            <button
+              key={item.value}
+              type="button"
+              aria-pressed={direction === item.value}
+              onClick={() => selectDirection(item.value)}
+              className={cn(
+                "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
+                direction === item.value
+                  ? "border-amber-300/70 bg-[linear-gradient(180deg,rgba(255,224,138,0.96),rgba(255,202,74,0.9))] text-slate-900 shadow-[0_14px_28px_rgba(251,191,36,0.18)]"
+                  : "border-white/80 bg-white/72 text-slate-500 shadow-[0_8px_20px_rgba(15,23,42,0.04)] hover:border-slate-200 hover:bg-white hover:text-slate-700"
+              )}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        <div ref={filtersRef} className="mb-12 flex flex-wrap items-center gap-2.5" role="group" aria-label="Темы проектов">
           <button
             type="button"
             onClick={() => setFilterTag(null)}
+            aria-pressed={filterTag === null}
             className={cn(
               "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300",
               "outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
@@ -221,6 +272,7 @@ const CasesSection = () => {
                 key={tag}
                 type="button"
                 onClick={() => setFilterTag(tag)}
+                aria-pressed={filterTag === tag}
                 className={cn(
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300",
                   "outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
@@ -246,7 +298,10 @@ const CasesSection = () => {
             return (
               <article
                 key={c.id}
-                onClick={() => setActive(c)}
+                onClick={(event) => {
+                  caseTriggerRef.current = event.currentTarget.querySelector("[data-case-trigger]");
+                  setActive(c);
+                }}
                 className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,255,255,0.72))] p-3 shadow-[0_18px_42px_rgba(15,23,42,0.07)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_70px_rgba(15,23,42,0.14)]"
               >
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
@@ -258,6 +313,8 @@ const CasesSection = () => {
                   <img
                     src={c.image}
                     alt={c.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.045]"
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,28,0.02),rgba(12,18,28,0.12))]" />
@@ -303,6 +360,10 @@ const CasesSection = () => {
                     {c.title}
                   </h3>
 
+                  {c.category === "ai" && (
+                    <p className="mb-3 text-sm font-medium text-amber-700">{c.status}</p>
+                  )}
+
                   {c.description && (
                     <p className="mb-6 line-clamp-3 text-pretty text-[0.98rem] leading-relaxed text-slate-600">
                       {c.description}
@@ -313,8 +374,11 @@ const CasesSection = () => {
                     <Button
                       type="button"
                       variant="ghost"
+                      data-case-trigger
+                      aria-label={`Прочитать кейс: ${c.title}`}
                       onClick={(e) => {
                         e.stopPropagation();
+                        caseTriggerRef.current = e.currentTarget;
                         setActive(c);
                       }}
                       className="h-11 rounded-2xl border border-slate-200 bg-white/74 px-4 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-white hover:text-slate-950"
@@ -335,7 +399,7 @@ const CasesSection = () => {
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          Читать на сайте
+                          {c.linkLabel ?? "Читать на сайте"}
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>
@@ -351,11 +415,19 @@ const CasesSection = () => {
       </div>
 
       <Dialog open={!!active} onOpenChange={(open) => !open && setActive(null)}>
-        <DialogContent className="z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.96)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] backdrop-blur-2xl [&>button]:hidden sm:rounded-[34px]">
+        <DialogContent
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            const trigger = caseTriggerRef.current;
+            if (trigger?.isConnected) trigger.focus();
+            else filtersRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus();
+          }}
+          className="z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.96)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] backdrop-blur-2xl [&>button:not([data-case-close])]:hidden sm:rounded-[34px]">
           {active && (
             <>
               {/* Крестик зафиксирован в углу самой модалки */}
               <button
+                data-case-close
                 type="button"
                 onClick={() => setActive(null)}
                 className="absolute right-5 top-5 z-[50] inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/70 backdrop-blur border border-slate-200/60 text-slate-700 shadow-sm transition hover:scale-105 hover:bg-white hover:text-slate-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
@@ -442,9 +514,9 @@ const CasesSection = () => {
                     )}
 
                     <div className={notionProseClass}>
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {active.fullContent}
-                      </ReactMarkdown>
+                      <Suspense fallback={<p role="status">Загружаю кейс…</p>}>
+                        <CaseMarkdown content={active.fullContent} />
+                      </Suspense>
                     </div>
 
                     {active.link && (

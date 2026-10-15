@@ -32,7 +32,7 @@ export default function Footer() {
               </span>
             </div>
                         <p className="text-slate-500 text-[0.95rem] leading-relaxed max-w-[320px]">
-              B2B маркетинг для IT, SaaS и сложных продуктов. От смыслов — до лидов.
+              AI-инструменты и автоматизации в pet-проектах. B2B-маркетинг и CRM — профессиональная база.
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default function Footer() {
           <div className="md:col-span-3 flex flex-col gap-4">
             <span className="text-[0.7rem] uppercase tracking-[0.2em] text-slate-400 font-bold mb-2">Навигация</span>
             <a href="#experience" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Опыт работы</a>
-            <a href="#portfolio" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Портфолио</a>
+            <a href="#cases" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Портфолио</a>
             <a href="#skills" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Стек и AI</a>
             <a href="#results" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Результаты</a>
           </div>
@@ -74,7 +74,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
             <span className="text-[0.8rem] font-medium text-slate-400 text-center md:text-left">
-              © {new Date().getFullYear()} Алёна Степанова · B2B Content & Digital Marketing
+              © {new Date().getFullYear()} Алёна Степанова · AI-автоматизация и B2B-маркетинг
             </span>
             <div className="hidden md:block w-1 h-1 rounded-full bg-slate-200" />
             <span className="flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-400">

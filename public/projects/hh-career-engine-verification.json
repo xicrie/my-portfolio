@@ -1,0 +1,12 @@
+{
+  "project": "HH Career Engine",
+  "checked_on": "2026-10-16",
+  "source_revision": "b78e56db31e60613d4b63b49aef5e6df7946dd14",
+  "scope": "Source review and offline regression tests; no live HH or paid LLM calls",
+  "command": "python -m pytest -q",
+  "python": "3.12.14",
+  "tests": { "passed": 350, "skipped": 1 },
+  "network_in_tests": "HTTP and socket connections blocked by autouse fixture",
+  "reviewed_components": ["career/pipeline.py", "career/engine.py", "career/store.py", "career/ai.py", "career/letters.py", "career/search.py", "career/report.py", "tests/conftest.py"],
+  "limitations": ["No validated hiring outcome or measured time saving", "No current live-model quality evaluation", "Private source code is not published in this artifact"]
+}

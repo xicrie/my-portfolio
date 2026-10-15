@@ -1,0 +1,172 @@
+{
+  "project": "Telegram → AI → YouGile",
+  "checked_on": "2026-10-16",
+  "source_sha256": "3b0dea35126abc34a7c0cfaca03b5b14ded798516145f70f734e27430c6fc710",
+  "evidence": "Author-provided redacted workflow and setup guide",
+  "workflow": {
+    "nodes": 35,
+    "active": false
+  },
+  "offline_checks": {
+    "passed": 32,
+    "scope": "Isolated Code-node execution with synthetic data and mocked node outputs; not an n8n integration run",
+    "checks": [
+      {
+        "name": "export contains 35 nodes and is inactive",
+        "passed": true
+      },
+      {
+        "name": "all connection targets exist",
+        "passed": true
+      },
+      {
+        "name": "export contains no credential or webhookId bindings",
+        "passed": true
+      },
+      {
+        "name": "valid reply command is accepted",
+        "passed": true
+      },
+      {
+        "name": "unauthorised chat is ignored",
+        "passed": true
+      },
+      {
+        "name": "unauthorised user is ignored",
+        "passed": true
+      },
+      {
+        "name": "taskforce is not accepted as task",
+        "passed": true
+      },
+      {
+        "name": "missing reply produces usage path",
+        "passed": true
+      },
+      {
+        "name": "caption is accepted as source text",
+        "passed": true
+      },
+      {
+        "name": "forum topic service reply is rejected",
+        "passed": true
+      },
+      {
+        "name": "command note is extracted",
+        "passed": true
+      },
+      {
+        "name": "message identity produces stable hash",
+        "passed": true
+      },
+      {
+        "name": "empty access settings disable access restrictions",
+        "passed": true
+      },
+      {
+        "name": "board lookup prepares column lookup",
+        "passed": true
+      },
+      {
+        "name": "column lookup prepares duplicate lookup with current state",
+        "passed": true
+      },
+      {
+        "name": "existing source marker detects a duplicate",
+        "passed": true
+      },
+      {
+        "name": "YouGile 401 does not retry",
+        "passed": true
+      },
+      {
+        "name": "YouGile 429 follows bounded backoff",
+        "passed": true
+      },
+      {
+        "name": "LLM request includes strict JSON schema",
+        "passed": true
+      },
+      {
+        "name": "all task schema fields are required",
+        "passed": true
+      },
+      {
+        "name": "well-formed task is accepted",
+        "passed": true
+      },
+      {
+        "name": "invalid JSON cannot create a task",
+        "passed": true
+      },
+      {
+        "name": "unsupported direction is rejected",
+        "passed": true
+      },
+      {
+        "name": "LLM refusal cannot create a task",
+        "passed": true
+      },
+      {
+        "name": "AI 401 does not retry",
+        "passed": true
+      },
+      {
+        "name": "creation request includes idempotency key",
+        "passed": true
+      },
+      {
+        "name": "assignee and deadline are not assigned to native fields",
+        "passed": true
+      },
+      {
+        "name": "successful response must include task ID",
+        "passed": true
+      },
+      {
+        "name": "missing task ID is not claimed as success",
+        "passed": true
+      },
+      {
+        "name": "creation 503 schedules a retry",
+        "passed": true
+      },
+      {
+        "name": "creation 403 does not retry",
+        "passed": true
+      },
+      {
+        "name": "first-run replay reproduces lost loop state",
+        "passed": true
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "loop-state-first-run",
+      "level": "P1 before live activation",
+      "description": "Loop handlers read .first() without runIndex. Replaying the first prepared state for the next response loses the lookup phase. n8n run-state behavior requires validation before activation."
+    },
+    {
+      "id": "access-defaults",
+      "level": "setup prerequisite",
+      "description": "Empty access settings accept any chat/user. Production access must be explicitly configured."
+    },
+    {
+      "id": "native-fields",
+      "level": "limitation",
+      "description": "Assignee, deadline and priority are included in the description; native YouGile fields are not assigned."
+    }
+  ],
+  "live_apis_called": false,
+  "workflow_imported_or_activated": false,
+  "limitations": [
+    "No live Telegram, LLM or YouGile integration run",
+    "No production or time-saving claim",
+    "Original setup guide contains residual private infrastructure names and is not republished"
+  ],
+  "references": [
+    "https://docs.n8n.io/code/builtin/output-other-nodes/",
+    "https://yougile.com/api-json"
+  ]
+}

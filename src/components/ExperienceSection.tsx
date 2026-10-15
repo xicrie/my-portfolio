@@ -262,6 +262,9 @@ const ExperienceSection = () => {
 
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        const atStart = scroller.scrollLeft <= 1;
+        const atEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 1;
+        if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) return;
         e.preventDefault();
         scroller.scrollBy({
           left: e.deltaY * 0.92,
@@ -375,6 +378,9 @@ const ExperienceSection = () => {
           <div className="overflow-visible" style={edgeMaskStyle}>
             <div
               ref={scrollerRef}
+              role="region"
+              aria-label="Карьера и компании — прокручиваемые карточки"
+              tabIndex={0}
               className="exp-no-scrollbar flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-visible px-[5vw] pt-[30px] pb-[68px] scroll-smooth md:px-[120px]"
             >
               {jobs.map((job, index) => {

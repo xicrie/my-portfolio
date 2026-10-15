@@ -12,7 +12,7 @@ import {
 
 export default function PremiumContactSection() {
   return (
-    <section className="relative w-full overflow-hidden py-20 md:py-32 font-sans text-slate-900 z-10" id="resume">
+    <section className="relative w-full overflow-hidden py-20 md:py-32 font-sans text-slate-900 z-10">
 
       <div className="container relative z-20 mx-auto px-6 max-w-[1150px]">
         
@@ -28,8 +28,8 @@ export default function PremiumContactSection() {
             Поговорим <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-400">о задаче</span>
           </h2>
           <p className="mt-5 text-[1.1rem] leading-relaxed text-slate-600 max-w-2xl">
-            Если вам нужен маркетинг который работает на результат — напишите. Отвечу быстро,
-            разберёмся в задаче и предложу конкретный план.
+            Обсудим задачи в AI-автоматизации, CRM или B2B-маркетинге.
+            Расскажу о своём опыте и покажу pet-проекты.
           </p>
         </div>
 
@@ -56,8 +56,8 @@ export default function PremiumContactSection() {
                 
                 <div className="relative w-32 h-32 rounded-3xl border-[3px] border-white shadow-lg overflow-hidden bg-slate-100 z-10">
                   <img 
-                    src="/images/alena-hero.png" 
-                    alt="Алёна Степанова" 
+                    src="/images/alena-hero.webp"
+                    alt="Алёна Степанова" loading="lazy" decoding="async"
                     className="w-full h-full object-cover"
                   />
                   {/* Легкий глянцевый блик поверх фото */}
@@ -78,7 +78,7 @@ export default function PremiumContactSection() {
                 {/* Плашка профессии */}
                 <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-100/80 text-[0.8rem] font-bold text-amber-700">
                   <Sparkles className="w-3.5 h-3.5" />
-                  B2B Контент-маркетолог
+                  AI-автоматизация · B2B
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function PremiumContactSection() {
                   <h3 className="text-2xl font-bold text-slate-900">Telegram</h3>
                 </div>
                 <p className="text-[0.95rem] font-medium text-slate-600 leading-relaxed">
-                  Предпочитаю общаться через Telegram. Объясню задачу — предложу подход и стоимость.
+                  Предпочитаю общаться через Telegram. Расскажите о задаче или вакансии — обсудим детали.
                 </p>
               </div>
 
@@ -155,7 +155,7 @@ export default function PremiumContactSection() {
                 </div>
                 <div className="flex flex-col">
                   <h4 className="text-[1.1rem] font-bold text-slate-900 mb-0.5">Официальное резюме</h4>
-                  <span className="text-[0.85rem] font-medium text-slate-500">Headhunter · Полный стек</span>
+                  <span className="text-[0.85rem] font-medium text-slate-500">HeadHunter · Опыт и навыки</span>
                 </div>
               </div>
 
