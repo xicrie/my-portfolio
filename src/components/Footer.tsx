@@ -54,7 +54,7 @@ export default function Footer() {
                   <Cpu className="w-3.5 h-3.5 text-violet-500" />
                   AI Stack
                 </div>
-                <span className="text-[0.7rem] font-bold text-emerald-500 uppercase tracking-tighter flex items-center gap-1.5">
+                <span className="text-[0.7rem] font-bold text-emerald-700 uppercase tracking-tighter flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Active
                 </span>

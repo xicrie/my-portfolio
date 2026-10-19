@@ -29,11 +29,13 @@ for (const width of [320, 390, 1440]) {
         await expect(dialog.locator("pre").first()).toBeVisible();
         if (title === "Telegram → AI → YouGile") {
           await nav.getByRole("button", { name: "Все 35 узлов", exact: true }).click();
-          const diagram = dialog.locator('img[src="/images/engineering/yougile-workflow.svg"]');
+          const diagram = dialog.locator('img[src="/images/engineering/yougile-workflow.svg"]').first();
           await diagram.scrollIntoViewIfNeeded();
           await expect(diagram).toBeVisible();
           await diagram.evaluate(async n => { await (n as HTMLImageElement).decode(); });
-          await expect(diagram.locator("..")).toHaveAttribute("target", "_blank");
+          await diagram.locator("..").click();
+          await expect(diagram.locator("..")).toHaveAttribute("aria-expanded", "true");
+          await expect(dialog.getByRole("group", { name: "Увеличенная схема" })).toBeVisible();
         }
       }
       for (const button of await nav.getByRole("button").all()) {

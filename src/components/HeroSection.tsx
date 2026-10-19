@@ -120,7 +120,11 @@ const HeroSection = () => {
 
                 <div className="relative overflow-hidden rounded-[2rem]">
                   <img
-                    src="/images/alena-hero.webp"
+                    src="/images/alena-hero-960.webp"
+                    srcSet="/images/alena-hero-640.webp 640w, /images/alena-hero-960.webp 960w, /images/alena-hero-1024.webp 1024w"
+                    sizes="(min-width: 1280px) 580px, (min-width: 1024px) 45vw, (min-width: 640px) 560px, 90vw"
+                    width={1024}
+                    height={1536}
                     alt="Алёна Степанова"
                     fetchPriority="high"
                     decoding="async"

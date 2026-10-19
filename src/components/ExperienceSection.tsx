@@ -507,11 +507,14 @@ const ExperienceSection = () => {
               type="button"
               onClick={() => snapTo(index)}
               aria-label={`Перейти к карточке ${index + 1}`}
-              className={[
-                "h-2.5 rounded-full transition-all duration-300",
+              aria-current={index === activeIndex ? "step" : undefined}
+              className="flex h-7 min-w-7 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700"
+            >
+              <span aria-hidden="true" className={[
+                "block h-2.5 rounded-full transition-all duration-300",
                 index === activeIndex ? `w-8 ${dotColor}` : "w-2.5 bg-black/12",
-              ].join(" ")}
-            />
+              ].join(" ")} />
+            </button>
           )
         })}
       </div>

@@ -1,0 +1,24 @@
+/* Shared case system: color changes are scoped to the portfolio and its reader. */
+.portfolio-cases, .case-reader { --case-ink: #885800; --case-wash: #fff8e6; --case-edge: #e8d7a9; }
+.portfolio-cases[data-direction="marketing"], .portfolio-cases article[data-direction="marketing"], .case-reader[data-direction="marketing"] { --case-ink: #6740a0; --case-wash: #f5f0fd; --case-edge: #dbcef0; }
+.portfolio-cases [aria-label="Направление проектов"] button[data-direction="marketing"] { border-color: #dbcef0; color: #6740a0; }
+.portfolio-cases [aria-label="Направление проектов"] button[data-direction="marketing"][aria-pressed="true"] { background: #ece2fa; box-shadow: 0 8px 24px #7e57b51a; }
+.portfolio-cases [aria-label="Направление проектов"] button[data-direction="ai"] { border-color: #e8d7a9; color: #6e5000; }
+.portfolio-cases[data-direction="marketing"] [aria-label="Темы проектов"] button[aria-pressed="true"] { background: #ece2fa; color: #573382; border-color: #cfbce8; box-shadow: 0 8px 24px #7e57b51a; }
+.portfolio-cases article[data-direction="marketing"] { background: linear-gradient(180deg,#fff,#faf7fd); }
+.portfolio-cases article[data-direction] button:not([data-case-trigger]) { border-color: var(--case-edge); background: var(--case-wash); color: var(--case-ink); }
+.portfolio-cases article[data-direction] [data-case-trigger], .case-reader .case-return { border-color: var(--case-edge); color: var(--case-ink); background: var(--case-wash); }
+.portfolio-cases article[data-direction="marketing"] .text-amber-500, .portfolio-cases article[data-direction="marketing"] .text-amber-700 { color: #6740a0; }
+.case-reader[data-direction="marketing"] .prose a { color: #6740a0; }
+.case-reader[data-direction="marketing"] .text-amber-500 { color: #6740a0; }
+.case-reader[data-direction="marketing"] .prose blockquote { border-color: #b89bd7; background: #f5f0fd; }
+.case-reader .artifact-preview pre { white-space: pre; font-size: 12px; }
+@media (max-width: 640px) { .portfolio-cases article { backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-cases *, .case-reader * { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+.portfolio-cases[data-direction="marketing"] [aria-label="Темы проектов"] button { color: #6740a0; border-color: #dbcef0; background: #faf7fd; }
+.portfolio-cases[data-direction="marketing"] [aria-label="Темы проектов"] button[aria-pressed="true"] { background: #e9dcf7; }
+.portfolio-cases article[data-direction="marketing"] .case-hover > div:first-child { background: linear-gradient(180deg,#a47ed322,#ffffff08); }
+.portfolio-cases article[data-direction="marketing"] .case-hover > div:last-child { box-shadow: inset 0 0 60px #a47ed31f; }
+.portfolio-cases article[data-direction="marketing"]:hover h3 { color: #6740a0; }

@@ -4,13 +4,13 @@ test("ordinary visits prioritise AI while explicit all and marketing links persi
   await page.goto("/#cases");
   const portfolio = page.locator("#portfolio");
   await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await expect(portfolio.getByRole("article")).toHaveCount(3);
+  await expect(portfolio.getByRole("article")).toHaveCount(6);
   await expect(portfolio.getByRole("article").first()).toContainText("HH Career Engine");
   await expect(portfolio.getByRole("link")).toHaveCount(0);
   await page.getByRole("button", { name: "Все направления", exact: true }).click();
   await expect(page).toHaveURL(/direction=all#cases$/);
   await page.reload();
-  await expect(portfolio.getByRole("article")).toHaveCount(6);
+  await expect(portfolio.getByRole("article")).toHaveCount(9);
   await expect(portfolio.getByRole("article").first()).toContainText("HH Career Engine");
   await page.goto("/?direction=marketing#cases");
   await expect(portfolio.getByRole("article")).toHaveCount(3);
@@ -22,20 +22,22 @@ test("ordinary visits prioritise AI while explicit all and marketing links persi
 test("direct direction links, tag filters, reload and browser history", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
   const portfolio = page.locator("#portfolio");
-  await expect(portfolio.getByRole("article")).toHaveCount(3);
+  await expect(portfolio.getByRole("article")).toHaveCount(6);
   await expect(portfolio.getByRole("heading", { name: "HH Career Engine" })).toBeVisible();
   await page.reload();
-  await expect(portfolio.getByRole("article")).toHaveCount(3);
+  await expect(portfolio.getByRole("article")).toHaveCount(6);
   await page.getByRole("button", { name: "Marketing / CRM", exact: true }).click();
   await expect(portfolio.getByRole("article")).toHaveCount(3);
   await page.getByRole("group", { name: "Темы проектов" }).getByRole("button", { name: "Статьи", exact: true }).click();
   await expect(portfolio.getByRole("article")).toHaveCount(1);
   await expect(portfolio.getByRole("heading", { name: "Статья про PropTech для IT компании" })).toBeVisible();
   await page.goBack();
-  await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(portfolio.getByRole("article")).toHaveCount(3);
-  await page.getByRole("button", { name: "Все направления", exact: true }).click();
+  await page.goBack();
+  await expect(page.getByRole("button", { name: "AI / Automation", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(portfolio.getByRole("article")).toHaveCount(6);
+  await page.getByRole("button", { name: "Все направления", exact: true }).click();
+  await expect(portfolio.getByRole("article")).toHaveCount(9);
 });
 
 test("new AI cases distinguish workflow checks from an unverified prototype", async ({ page }) => {
@@ -47,8 +49,8 @@ test("new AI cases distinguish workflow checks from an unverified prototype", as
   await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
   await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
   await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
-  await expect(dialog.getByText(/Исходники находятся на другом компьютере/)).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "Историческая карточка описания (JSON)", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
+  await expect(dialog.getByText(/11 изолированных проверок чистых функций/)).toBeVisible();
+  await expect(dialog.locator('[data-artifact="/projects/ai-prompter-brief.json"]')).toBeVisible();
   for (const path of ["/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
     const response = await page.request.get(path);
     expect(response.ok()).toBeTruthy();
@@ -65,7 +67,7 @@ test("case opens by keyboard, renders full evidence, traps and restores focus", 
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("heading", { name: "Бизнес-применение", exact: true })).toBeVisible();
   await expect(dialog.getByText(/350 passed, 1 skipped/)).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "техническая сводка аудита", exact: true })).toHaveAttribute("href", "/projects/hh-career-engine-verification.json");
+  await expect(dialog.locator('[data-artifact="/projects/hh-career-engine-verification.json"]')).toBeVisible();
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press("Tab");
     expect(await dialog.evaluate(el => el.contains(document.activeElement))).toBeTruthy();

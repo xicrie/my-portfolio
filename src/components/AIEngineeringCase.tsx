@@ -28,7 +28,7 @@ export default function AIEngineeringCase({ id, content }: { id: string; content
           <div><dt className="font-semibold">Моя роль</dt><dd className="mt-1 text-muted-foreground">{project.role}</dd></div>
           <div><dt className="font-semibold">Текущий статус</dt><dd className="mt-1 text-muted-foreground">{project.status}</dd></div>
         </dl>
-        <ul aria-label="Подтверждённый стек" className="mt-5 flex flex-wrap gap-2">
+        <ul aria-label={project.stackLabel ?? "Подтверждённый стек"} className="mt-5 flex flex-wrap gap-2">
           {project.stack.map((technology) => <li key={technology} className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium">{technology}</li>)}
         </ul>
       </div>

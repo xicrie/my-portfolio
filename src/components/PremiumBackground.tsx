@@ -38,6 +38,12 @@ const PremiumBackground = () => {
     ];
 
     let animationId = 0;
+    let width = 0;
+    let height = 0;
+    let inView = true;
+    let lastPaint = 0;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
     let particles: Particle[] = [];
     let shapeClouds: { x: number; y: number }[][] = [];
     let time = 0;
@@ -120,6 +126,8 @@ const PremiumBackground = () => {
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       canvas.width = rect.width * dpr;
@@ -173,9 +181,15 @@ const PremiumBackground = () => {
       }
     };
 
-    const animate = () => {
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
+    const animate = (timestamp = 0) => {
+      if (!inView || document.hidden) { animationId = 0; return; }
+      if (timestamp && timestamp - lastPaint < (coarsePointer.matches ? 32 : 16)) {
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+      lastPaint = timestamp;
+      const w = width;
+      const h = height;
       time += 0.003; // Чуть замедлили глобальное время для большей "премиальности"
 
       ctx.clearRect(0, 0, w, h);
@@ -359,10 +373,16 @@ const PremiumBackground = () => {
         }
       });
 
-      animationId = requestAnimationFrame(animate);
+      animationId = reducedMotion.matches ? 0 : requestAnimationFrame(animate);
+    };
+
+    const resume = () => {
+      cancelAnimationFrame(animationId);
+      if (inView && !document.hidden) animationId = requestAnimationFrame(animate);
     };
 
     const onMouseMove = (e: MouseEvent) => {
+      if (!inView || reducedMotion.matches) return;
       const rect = canvas.getBoundingClientRect();
       currentMouse.x = e.clientX - rect.left;
       currentMouse.y = e.clientY - rect.top;
@@ -375,8 +395,12 @@ const PremiumBackground = () => {
       assemblyAnchor.y = -9999;
     };
 
-    const resizeObserver = new ResizeObserver(() => resize());
+    const resizeObserver = new ResizeObserver(() => { resize(); resume(); });
     resizeObserver.observe(container);
+    const intersectionObserver = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; resume(); });
+    intersectionObserver.observe(container);
+    document.addEventListener("visibilitychange", resume);
+    reducedMotion.addEventListener("change", resume);
 
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
@@ -386,6 +410,9 @@ const PremiumBackground = () => {
 
     return () => {
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", resume);
+      reducedMotion.removeEventListener("change", resume);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
       clearTimeout(moveTimeout);

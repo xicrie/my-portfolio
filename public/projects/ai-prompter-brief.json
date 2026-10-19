@@ -1,11 +1,58 @@
 {
+  "source_revision": "78f5d60",
+  "scope": "AST-extracted pure functions with synthetic data; main import, GUI, audio, PDF files and network not executed",
+  "passed": 11,
+  "checks": [
+    {
+      "name": "empty document",
+      "passed": true
+    },
+    {
+      "name": "overlapping chunks",
+      "passed": true
+    },
+    {
+      "name": "exact duplicate",
+      "passed": true
+    },
+    {
+      "name": "normalization",
+      "passed": true
+    },
+    {
+      "name": "empty noise",
+      "passed": true
+    },
+    {
+      "name": "question heuristic",
+      "passed": true
+    },
+    {
+      "name": "plain statement",
+      "passed": true
+    },
+    {
+      "name": "latest speaker selected",
+      "passed": true
+    },
+    {
+      "name": "lexical context selection",
+      "passed": true
+    },
+    {
+      "name": "lexical fallback when no overlap",
+      "passed": true
+    },
+    {
+      "name": "cross-channel duplicate filtered",
+      "passed": true
+    }
+  ],
+  "native_runtime_tested": false,
   "project": "AI-суфлёр",
-  "checked_on": "2026-10-16",
-  "status": "Prototype described by its author; implementation not verified",
-  "purpose": "Analyse online conversation context and suggest relevant response options",
-  "author_contribution": ["User scenarios", "Context and LLM prompts", "Review of suggested responses"],
-  "evidence_level": "Author-provided description; not a code audit or working demo",
-  "not_verified": ["Source code", "Context capture method", "Interface", "Model and technical stack", "Current functionality", "Latency and quality", "Production use"],
-  "demo_available": false,
-  "cover": "Concept diagram, not an application screenshot"
+  "checked_on": "2026-10-19",
+  "upstream": "SevaSk/ecoute",
+  "upstream_license": "MIT",
+  "state": "source_reviewed_not_windows_runtime",
+  "private_repository_link_published": false
 }

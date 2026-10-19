@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SectionHeading from "./SectionHeading";
 import {
@@ -24,9 +24,9 @@ import {
 } from "@/components/ui/dialog";
 import { cases, type PortfolioCase } from "@/data/cases";
 import { cn } from "@/lib/utils";
+import "./cases.css";
 
-const CaseMarkdown = lazy(() => import("./CaseMarkdown"));
-const AIEngineeringCase = lazy(() => import("./AIEngineeringCase"));
+const CaseContent = lazy(() => import("./CaseContent"));
 
 const directions = [
   { value: "ai", label: "AI / Automation" },
@@ -180,15 +180,29 @@ const CasesSection = () => {
   const requestedDirection = new URLSearchParams(location.search).get("direction");
   const direction = requestedDirection === "all" || requestedDirection === "marketing"
     ? requestedDirection : "ai";
-  const [active, setActive] = useState<PortfolioCase | null>(null);
-  const [filterTag, setFilterTag] = useState<string | null>(null);
+  const params = new URLSearchParams(location.search);
+  const active = cases.find((item) => item.id === params.get("case")) ?? null;
+  const filterTag = params.get("tag");
   const caseTriggerRef = useRef<HTMLElement | null>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
+  const listScrollRef = useRef<number | null>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
-    setFilterTag(null);
-    setActive(null);
-  }, [direction]);
+    if (active) {
+      if (!wasOpen.current) {
+        const listTop = document.getElementById("portfolio")?.getBoundingClientRect().top;
+        listScrollRef.current = location.state?.listScrollY ?? (listTop === undefined ? window.scrollY : window.scrollY + listTop);
+        caseTriggerRef.current ??= document.querySelector<HTMLButtonElement>(`[data-case-trigger="${active.id}"]`);
+      }
+      wasOpen.current = true;
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
+      const top = listScrollRef.current;
+      const frame = requestAnimationFrame(() => window.scrollTo({ top: top ?? 0, behavior: "instant" }));
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [active, location.state]);
 
   const directionCases = useMemo(
     () => cases.filter((c) => direction === "all" || c.category === direction)
@@ -209,18 +223,41 @@ const CasesSection = () => {
 
   const selectDirection = (value: typeof directions[number]["value"]) => {
     const params = new URLSearchParams(location.search);
+    params.delete("case");
+    params.delete("tag");
     if (value === "ai") params.delete("direction");
     else params.set("direction", value);
     navigate({ search: params.toString(), hash: "#cases" });
   };
 
-  const applyFilter = (tag: string) => {
-    setFilterTag(tag);
-    setActive(null);
+  const applyFilter = (tag: string | null) => {
+    const params = new URLSearchParams(location.search);
+    params.delete("case");
+    if (tag) params.set("tag", tag);
+    else params.delete("tag");
+    navigate({ search: params.toString(), hash: "#cases" }, { replace: !!active });
+  };
+
+  const openCase = (item: PortfolioCase) => {
+    const params = new URLSearchParams(location.search);
+    params.set("case", item.id);
+    listScrollRef.current = window.scrollY;
+    navigate({ search: params.toString(), hash: "#cases" }, {
+      state: { portfolioCase: true, listScrollY: window.scrollY },
+    });
+  };
+
+  const closeCase = () => {
+    if (location.state?.portfolioCase) navigate(-1);
+    else {
+      const params = new URLSearchParams(location.search);
+      params.delete("case");
+      navigate({ search: params.toString(), hash: "#cases" }, { replace: true });
+    }
   };
 
   return (
-    <section className="relative py-24 md:py-32" id="portfolio">
+    <section className="portfolio-cases relative py-24 md:py-32" id="portfolio" data-direction={direction}>
       <div className="container relative z-10 mx-auto max-w-[1280px] px-6">
         <div className="mb-14">
           <SectionHeading
@@ -235,6 +272,7 @@ const CasesSection = () => {
               key={item.value}
               type="button"
               aria-pressed={direction === item.value}
+              data-direction={item.value}
               onClick={() => selectDirection(item.value)}
               className={cn(
                 "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
@@ -251,7 +289,7 @@ const CasesSection = () => {
         <div ref={filtersRef} className="mb-12 flex flex-wrap items-center gap-2.5" role="group" aria-label="Темы проектов">
           <button
             type="button"
-            onClick={() => setFilterTag(null)}
+            onClick={() => applyFilter(null)}
             aria-pressed={filterTag === null}
             className={cn(
               "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300",
@@ -273,7 +311,7 @@ const CasesSection = () => {
               <button
                 key={tag}
                 type="button"
-                onClick={() => setFilterTag(tag)}
+                onClick={() => applyFilter(tag)}
                 aria-pressed={filterTag === tag}
                 className={cn(
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300",
@@ -302,11 +340,12 @@ const CasesSection = () => {
                 key={c.id}
                 onClick={(event) => {
                   caseTriggerRef.current = event.currentTarget.querySelector("[data-case-trigger]");
-                  setActive(c);
+                  openCase(c);
                 }}
+                data-direction={c.category}
                 className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,255,255,0.72))] p-3 shadow-[0_18px_42px_rgba(15,23,42,0.07)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_70px_rgba(15,23,42,0.14)]"
               >
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <div className="case-hover pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   <div className="absolute inset-[1px] rounded-[29px] bg-[linear-gradient(180deg,rgba(255,230,160,0.15),rgba(255,255,255,0.03))]" />
                   <div className="absolute inset-[1px] rounded-[29px] shadow-[inset_0_0_60px_rgba(255,221,120,0.12)]" />
                 </div>
@@ -334,7 +373,7 @@ const CasesSection = () => {
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setFilterTag(tag);
+                            applyFilter(tag);
                           }}
                           className={cn(
                             "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]",
@@ -376,12 +415,12 @@ const CasesSection = () => {
                     <Button
                       type="button"
                       variant="ghost"
-                      data-case-trigger
+                      data-case-trigger={c.id}
                       aria-label={`Прочитать кейс: ${c.title}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         caseTriggerRef.current = e.currentTarget;
-                        setActive(c);
+                        openCase(c);
                       }}
                       className="h-11 rounded-2xl border border-slate-200 bg-white/74 px-4 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-white hover:text-slate-950"
                     >
@@ -401,7 +440,7 @@ const CasesSection = () => {
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          {c.linkLabel ?? "Читать на сайте"}
+                          <span className="flex flex-col text-left leading-tight"><span>{c.linkLabel ?? "Читать на сайте"}</span><span className="mt-1 text-[10px]">новая вкладка</span></span>
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>
@@ -416,27 +455,34 @@ const CasesSection = () => {
         </div>
       </div>
 
-      <Dialog open={!!active} onOpenChange={(open) => !open && setActive(null)}>
+      <Dialog open={!!active} onOpenChange={(open) => !open && closeCase()}>
         <DialogContent
+          data-direction={active?.category}
           onCloseAutoFocus={(event) => {
             event.preventDefault();
             const trigger = caseTriggerRef.current;
             if (trigger?.isConnected) trigger.focus();
-            else filtersRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus();
+            else {
+              const fallback = document.querySelector<HTMLButtonElement>(`[data-case-trigger="${active?.id}"]`);
+              if (fallback) fallback.focus({ preventScroll: true });
+              else filtersRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus({ preventScroll: true });
+            }
           }}
-          className="z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.96)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] backdrop-blur-2xl [&>button:not([data-case-close])]:hidden sm:rounded-[34px]">
+          className="case-reader z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.98)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] [&>button:not([data-case-close])]:hidden sm:rounded-[34px]">
           {active && (
             <>
-              {/* Крестик зафиксирован в углу самой модалки */}
+              <div className="flex shrink-0 items-center justify-between border-b border-slate-200/70 bg-white px-4 py-2 sm:px-6" role="group" aria-label="Управление чтением">
+                <button type="button" onClick={closeCase} className="case-return rounded-xl px-3 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">← К списку кейсов</button>
               <button
                 data-case-close
                 type="button"
-                onClick={() => setActive(null)}
-                className="absolute right-5 top-5 z-[50] inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/70 backdrop-blur border border-slate-200/60 text-slate-700 shadow-sm transition hover:scale-105 hover:bg-white hover:text-slate-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                onClick={closeCase}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 text-slate-700 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-700"
                 aria-label="Закрыть"
               >
                 <X className="h-5 w-5" />
               </button>
+              </div>
 
               <DialogTitle className="sr-only">{active.title}</DialogTitle>
               <DialogDescription className="sr-only">
@@ -489,7 +535,7 @@ const CasesSection = () => {
                     {active.category === "marketing" && (hasUsableDescription(active) || active.companyDescription) && (
                       <div className="mb-10 grid gap-4 md:grid-cols-[1.18fr_0.82fr]">
                         {hasUsableDescription(active) && (
-                          <div className="rounded-[28px] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,252,244,0.94),rgba(255,255,255,0.98))] p-6 shadow-[0_12px_34px_rgba(15,23,42,0.05)]">
+                          <div className="rounded-[28px] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(247,242,253,0.94),rgba(255,255,255,0.98))] p-6 shadow-[0_12px_34px_rgba(15,23,42,0.05)]">
                             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-amber-500">
                               О проекте
                             </div>
@@ -517,7 +563,7 @@ const CasesSection = () => {
 
                     <div className={active.category === "ai" ? undefined : notionProseClass}>
                       <Suspense fallback={<p role="status">Загружаю кейс…</p>}>
-                        {active.category === "ai" ? <AIEngineeringCase id={active.id} content={active.fullContent} /> : <CaseMarkdown content={active.fullContent} />}
+                        <CaseContent item={active} />
                       </Suspense>
                     </div>
 
@@ -535,7 +581,7 @@ const CasesSection = () => {
                             rel="noopener noreferrer"
                           >
                             <ExternalLink className="mr-2 h-5 w-5" />
-                            {active.linkLabel ?? "Читать на сайте"}
+                            {active.linkLabel ?? "Читать на сайте"} · новая вкладка
                           </a>
                         </Button>
                       </div>
