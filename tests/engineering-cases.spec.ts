@@ -1,52 +1,23 @@
 import { test, expect } from "../playwright-fixture";
 
 for (const width of [320, 390, 1440]) {
-  test(`engineering reading, navigation and diagrams at ${width}px`, async ({ page }) => {
+  test(`product stories and optional engineering evidence at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
-    const errors: string[] = [];
-    page.on("pageerror", e => errors.push(e.message));
+    const errors: string[] = [];page.on("pageerror", e => errors.push(e.message));
     await page.goto("/?direction=ai#cases");
-    for (const title of ["HH Career Engine", "Telegram → AI → YouGile", "AI-суфлёр"]) {
-      const trigger = page.getByRole("button", { name: `Прочитать кейс: ${title}`, exact: true });
-      await trigger.click();
-      const dialog = page.getByRole("dialog");
-      await expect(dialog.getByText("Обзор за 30 секунд", { exact: true })).toBeVisible();
-      await expect(dialog.getByRole("list", { name: "Подтверждённый стек" })).toBeVisible();
-      const nav = dialog.getByRole("navigation", { name: "Содержание AI-кейса" });
-      if (title !== "AI-суфлёр") {
-        const details = dialog.locator("details").filter({ has: page.locator("summary", { hasText: "Инженерный разбор" }) });
-        await expect(details).not.toHaveAttribute("open", "");
-        await nav.getByRole("button", { name: "Инженерный разбор", exact: true }).click();
-        await expect(details).toHaveAttribute("open", "");
-        expect(await details.evaluate(el => el.parentElement === document.activeElement)).toBeTruthy();
-        const summary = details.locator("summary");
-        await summary.focus();
-        await page.keyboard.press("Enter");
-        await expect(details).not.toHaveAttribute("open", "");
-        await page.keyboard.press("Enter");
-        await expect(details).toHaveAttribute("open", "");
-        await nav.getByRole("button", { name: "Данные и контракты", exact: true }).click();
-        await expect(dialog.locator("pre").first()).toBeVisible();
-        if (title === "Telegram → AI → YouGile") {
-          await nav.getByRole("button", { name: "Все 35 узлов", exact: true }).click();
-          const diagram = dialog.locator('img[src="/images/engineering/yougile-workflow.svg"]').first();
-          await diagram.scrollIntoViewIfNeeded();
-          await expect(diagram).toBeVisible();
-          await diagram.evaluate(async n => { await (n as HTMLImageElement).decode(); });
-          await diagram.locator("..").click();
-          await expect(diagram.locator("..")).toHaveAttribute("aria-expanded", "true");
-          await expect(dialog.getByRole("group", { name: "Увеличенная схема" })).toBeVisible();
-        }
-      }
-      for (const button of await nav.getByRole("button").all()) {
-        await button.click();
-        const overflow = await dialog.locator(".overflow-y-auto").first().evaluate(el => el.scrollWidth - el.clientWidth);
-        expect(overflow).toBeLessThanOrEqual(1);
-        expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-      }
-      await page.keyboard.press("Escape");
-      await expect(dialog).not.toBeVisible();
-      await expect(trigger).toBeFocused();
+    for (const [title,diagramPath] of [["HH Career Engine","hh-data.svg"],["Telegram → AI → YouGile","yougile-workflow.svg"],["AI-суфлёр","soufleur-architecture.svg"]]) {
+      const trigger = page.getByRole("button", { name: `Прочитать кейс: ${title}`, exact: true });await trigger.click();
+      const dialog = page.getByRole("dialog");await expect(dialog.getByRole("list",{name:"Сценарий пользователя"})).toBeVisible();
+      const nav=dialog.getByRole("navigation",{name:"Содержание AI-кейса"});
+      await expect(nav.getByRole("button")).toHaveCount(4);
+      for(const button of await nav.getByRole("button").all()){await button.click();expect(await dialog.locator(".overflow-y-auto").first().evaluate(el=>el.scrollWidth-el.clientWidth)).toBeLessThanOrEqual(1);}
+      const details=dialog.locator(".case-technical");await expect(details).not.toHaveAttribute("open","");
+      const summary=details.locator("summary");await summary.focus();await page.keyboard.press("Enter");await expect(details).toHaveAttribute("open","");
+      await expect(details.getByRole("heading",{name:"Технологии",exact:true})).toBeVisible();
+      const diagram=details.locator(`img[src="/images/engineering/${diagramPath}"]`).first();await diagram.scrollIntoViewIfNeeded();await diagram.evaluate(async n=>{await(n as HTMLImageElement).decode()});await diagram.locator("..").click();
+      await expect(dialog.getByRole("group",{name:"Увеличенная схема"})).toBeVisible();
+      expect(await dialog.locator(".overflow-y-auto").first().evaluate(el=>el.scrollWidth-el.clientWidth)).toBeLessThanOrEqual(1);
+      await page.keyboard.press("Escape");await expect(trigger).toBeFocused();
     }
     expect(errors).toEqual([]);
   });

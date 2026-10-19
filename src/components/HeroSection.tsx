@@ -38,9 +38,9 @@ const HeroSection = () => {
       <div className="container relative z-10">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="relative max-w-[760px] pb-16 md:pb-24"
           >
             <div className="mb-8 flex items-center gap-4">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { PortfolioCase } from "@/data/cases";
 import AIEngineeringCase from "./AIEngineeringCase";
-import CaseMarkdown from "./CaseMarkdown";
+import MarketingCase from "./MarketingCase";
 
 export default function CaseContent({ item }: { item: PortfolioCase }) {
   const [result, setResult] = useState<{ id: string; content?: string; error?: boolean }>({ id: "" });
@@ -13,5 +13,5 @@ export default function CaseContent({ item }: { item: PortfolioCase }) {
   }, [item]);
   if (result.id !== item.id) return <p role="status">Загружаю материал…</p>;
   if (result.error) return <p role="alert">Не удалось загрузить материал. Закройте кейс и попробуйте открыть его ещё раз.</p>;
-  return item.category === "ai" ? <AIEngineeringCase id={item.id} content={result.content ?? ""} /> : <CaseMarkdown content={result.content ?? ""} />;
+  return item.category === "ai" ? <AIEngineeringCase id={item.id} content={result.content ?? ""} /> : <MarketingCase id={item.id} content={result.content ?? ""} />;
 }

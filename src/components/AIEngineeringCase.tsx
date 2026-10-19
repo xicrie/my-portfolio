@@ -2,69 +2,51 @@ import { useRef } from "react";
 import { engineeringCases } from "@/data/engineeringCases";
 import CaseMarkdown from "./CaseMarkdown";
 
-const technicalSections = new Set(["Инженерный разбор", "Данные и контракты", "Все 35 узлов"]);
-
 export default function AIEngineeringCase({ id, content }: { id: string; content: string }) {
   const root = useRef<HTMLDivElement>(null);
   const project = engineeringCases[id];
-  const sections = content.split(/^## /m).filter(Boolean).map((part) => {
+  const sections = content.split(/^## /m).filter(Boolean).map(part => {
     const [title, ...body] = part.split("\n");
     return { title: title.trim(), body: body.join("\n").trim() };
   });
+  const technical = sections.find(s => s.title === "Технические детали");
+  const story = sections.filter(s => s !== technical);
   const goTo = (index: number) => {
     const section = root.current?.querySelector<HTMLElement>(`[data-story-section="${index}"]`);
-    const details = section?.querySelector("details");
-    if (details) details.open = true;
     section?.scrollIntoView({ behavior: "auto", block: "start" });
     section?.focus({ preventScroll: true });
   };
-
-  return (
-    <div ref={root} className="min-w-0 text-foreground">
-      <div className="rounded-[28px] border border-primary/25 bg-background p-5 sm:p-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-800">Обзор за 30 секунд</p>
-        <p className="mt-3 text-base leading-relaxed sm:text-lg">{project.purpose}</p>
-        <dl className="mt-5 grid gap-4 text-sm leading-relaxed sm:grid-cols-2">
-          <div><dt className="font-semibold">Моя роль</dt><dd className="mt-1 text-muted-foreground">{project.role}</dd></div>
-          <div><dt className="font-semibold">Текущий статус</dt><dd className="mt-1 text-muted-foreground">{project.status}</dd></div>
-        </dl>
-        <ul aria-label={project.stackLabel ?? "Подтверждённый стек"} className="mt-5 flex flex-wrap gap-2">
-          {project.stack.map((technology) => <li key={technology} className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium">{technology}</li>)}
-        </ul>
-      </div>
-
-      <nav aria-label="Содержание AI-кейса" className="my-8 border-y border-border py-5">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Внутри кейса</p>
-        <div className="flex flex-wrap gap-2">
-          {sections.map((section, i) => <button key={section.title} type="button" onClick={() => goTo(i)} className="rounded-full border border-border bg-white px-3 py-2 text-sm transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700">{section.title}</button>)}
-        </div>
-      </nav>
-
-      {sections.map((section, i) => {
-        const headingId = `${id}-section-${i}`;
-        const body = <div className="prose prose-slate max-w-none min-w-0 break-words prose-headings:text-foreground prose-p:leading-[1.85] prose-li:leading-relaxed prose-a:text-amber-800 prose-a:underline prose-strong:text-foreground prose-code:break-words prose-code:text-foreground prose-pre:p-0"><CaseMarkdown content={section.body} technical /></div>;
-        return (
-          <section key={section.title} data-story-section={i} aria-labelledby={headingId} tabIndex={-1} className="mb-10 scroll-mt-20 outline-none focus-visible:rounded-xl focus-visible:ring-2 focus-visible:ring-amber-700">
-            {technicalSections.has(section.title) ? (
-              <details className="group rounded-2xl border border-border bg-background/60 p-5 sm:p-6">
-                <summary id={headingId} className="cursor-pointer text-xl font-semibold leading-snug marker:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700">{section.title}<span className="mt-1 block pl-4 text-sm font-normal text-muted-foreground">Реализация и проверенные решения</span></summary>
-                <div className="mt-6">{body}</div>
-              </details>
-            ) : (
-              <>
-                <h3 id={headingId} className="mb-5 text-2xl font-semibold leading-snug tracking-tight">{section.title}</h3>
-                {section.title === "Как работает система" && project.flow && (
-                  <ol aria-label="Последовательность работы системы" className="mb-6 space-y-3">
-                    {project.flow.map((step, n) => <li key={step.title} className="relative rounded-2xl border border-border bg-white p-4 pl-14 sm:p-5 sm:pl-16"><span aria-hidden="true" className="absolute left-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold sm:top-5">{String(n + 1).padStart(2, "0")}</span><h4 className="font-semibold leading-snug">{step.title}</h4><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.detail}</p>{step.branch && <p className="mt-3 border-l-2 border-primary pl-3 text-sm leading-relaxed">{step.branch}</p>}</li>)}
-                  </ol>
-                )}
-                {body}
-              </>
-            )}
-          </section>
-        );
-      })}
-      <p className="border-t border-border pt-5 text-sm leading-relaxed text-muted-foreground">{project.evidence}</p>
-    </div>
-  );
+  const prose = "case-story-prose prose prose-slate max-w-none min-w-0 break-words prose-headings:text-foreground prose-p:leading-[1.85] prose-li:leading-relaxed prose-a:text-amber-800 prose-a:underline prose-strong:text-foreground prose-code:break-words prose-code:text-foreground prose-pre:p-0";
+  return <div ref={root} className="min-w-0 text-foreground" data-story-variant={project.variant}>
+    <p className="case-lead text-xl leading-relaxed sm:text-2xl">{project.purpose}</p>
+    <dl aria-label="О проекте" className="case-facts my-7 grid gap-5 border-y border-border py-6 sm:grid-cols-3">
+      <div><dt className="case-eyebrow">Что создано</dt><dd className="mt-2 text-sm leading-relaxed">{project.built}</dd></div>
+      <div><dt className="case-eyebrow">Моя роль</dt><dd className="mt-2 text-sm leading-relaxed">{project.role}</dd></div>
+      <div><dt className="case-eyebrow">Сейчас</dt><dd className="mt-2 text-sm leading-relaxed">{project.result}</dd></div>
+    </dl>
+    {technical && <nav aria-label="Содержание AI-кейса" className="mb-10 flex flex-wrap gap-x-5 gap-y-2">
+      {story.map((section,i) => ["Задача", "Мой вклад", "Сценарий", "Результат"].includes(section.title) && <button key={section.title} type="button" onClick={() => goTo(i)} className="case-story-anchor py-2 text-sm underline decoration-current/25 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700">{section.title}</button>)}
+    </nav>}
+    {story.map((section,i) => <section key={section.title} data-story-section={i} aria-labelledby={`${id}-section-${i}`} tabIndex={-1} className="case-story-section mb-10 scroll-mt-6 outline-none focus-visible:rounded-xl focus-visible:ring-2 focus-visible:ring-amber-700">
+      <h3 id={`${id}-section-${i}`} className="mb-4 text-2xl font-semibold leading-snug tracking-tight">{section.title}</h3>
+      <div className={prose}><CaseMarkdown content={section.body} /></div>
+      {(section.title === "Сценарий" || !technical && section === story[0]) && <figure className="case-scenario my-7">
+        <ol aria-label="Сценарий пользователя" className="case-scenario-steps grid gap-3 sm:grid-cols-3">
+          {project.flow.map((step,n) => <li key={step.title} className="case-scenario-step relative rounded-2xl border border-border bg-background/60 p-5">
+            <span aria-hidden="true" className="case-step-number mb-4 block text-sm font-semibold">{String(n+1).padStart(2,"0")}</span>
+            <h4 className="font-semibold leading-snug">{step.title}</h4><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.detail}</p>
+          </li>)}
+        </ol><figcaption className="mt-3 text-xs leading-relaxed text-muted-foreground">{project.flowCaption}</figcaption>
+      </figure>}
+    </section>)}
+    <details className="case-technical rounded-2xl border border-border bg-background/50 p-5 sm:p-6">
+      <summary className="cursor-pointer text-lg font-semibold marker:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700">{technical ? "Технические детали и материалы" : "Материалы и технологии"}<span className="mt-1 block text-sm font-normal leading-relaxed text-muted-foreground">{technical ? "Архитектура, границы проверки и дополнительные данные" : "Что известно о реализации и что ещё нужно уточнить"}</span></summary>
+      <section aria-label="Технологии" className="mb-7 mt-6">
+        <h3 className="mb-3 text-xl font-semibold">Технологии</h3>
+        <ul className="flex flex-wrap gap-2">{project.stack.map(technology => <li key={technology} className="rounded-full border border-border bg-white px-3 py-1.5 text-xs">{technology}</li>)}</ul>
+        {project.stackNote && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{project.stackNote}</p>}
+      </section>
+      {technical ? <div className={prose}><CaseMarkdown content={technical.body} technical /></div> : <p className="text-sm leading-relaxed text-muted-foreground">Описание основано на материалах автора. Список недостающих файлов указан в разделе «Следующий материал»; технические возможности не перенесены из других версий ботов.</p>}
+    </details>
+  </div>;
 }
