@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "react-router-dom";
+import { editorialTypography } from "@/lib/editorialTypography";
 
 function Artifact({ href, children }: { href: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,7 @@ function CaseImage({ src, alt }: { src?: string; alt?: string }) {
 }
 
 export default function CaseMarkdown({ content, technical = false }: { content: string; technical?: boolean }) {
-  return <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
+  return <ReactMarkdown remarkPlugins={[remarkGfm, editorialTypography]} components={{
     a: ({ href = "", children }) => {
       if (href.startsWith("/projects/") && href.endsWith(".json")) return <Artifact href={href}>{children}</Artifact>;
       if (/^https?:\/\//.test(href)) return <a href={href} target="_blank" rel="noopener noreferrer">{children}<span className="text-xs"> ↗ внешний сайт, новая вкладка</span></a>;

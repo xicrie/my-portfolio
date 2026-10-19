@@ -20,8 +20,8 @@ const caseCountRule = new Intl.PluralRules("ru");
 const CaseContent = lazy(() => import("./CaseContent"));
 
 const directions = [
-  { value: "ai", label: "AI / Automation" },
-  { value: "marketing", label: "Marketing / CRM" },
+  { value: "ai", label: "ИИ / Автоматизация" },
+  { value: "marketing", label: "Маркетинг / CRM" },
 ] as const;
 
 const CasesSection = () => {
@@ -101,7 +101,7 @@ const CasesSection = () => {
         <div className="mb-14">
           <SectionHeading
             title="Кейсы"
-            subtitle="Прикладные AI-проекты на базе опыта в B2B-маркетинге и CRM. В каждом кейсе — задача, решение, мой вклад и доступные материалы."
+            subtitle="Личные цифровые продукты и работа для бизнеса. Показываю, как идея становится понятным решением и что я делаю на этом пути."
           />
         </div>
 
@@ -153,8 +153,8 @@ const CasesSection = () => {
 
                 <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
                   <img
-                    src={c.image}
-                    alt={c.title}
+                    src={c.cardCover}
+                    alt=""
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.045]"
@@ -163,13 +163,11 @@ const CasesSection = () => {
                 </div>
 
                 <div className="relative flex flex-1 flex-col px-4 pb-5 pt-6">
-                  <span className="case-type-label mb-4 w-fit rounded-full border px-3 py-1.5 text-xs font-medium">{materialTypes[c.materialType].singular}</span>
-
-                  {c.category === "marketing" && <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-500">{c.company}</div>}
-
                   <h3 className="mb-3 text-[1.85rem] font-semibold leading-[1.08] tracking-tight text-slate-900 transition-colors group-hover:text-amber-700">
                     {c.title}
                   </h3>
+
+                  <p className="case-category mb-4 text-sm font-medium text-muted-foreground">{materialTypes[c.materialType].singular} · {c.company}</p>
 
                   {c.description && (
                     <p className="mb-6 line-clamp-3 text-pretty text-[0.98rem] leading-relaxed text-slate-600">
@@ -193,26 +191,7 @@ const CasesSection = () => {
                       Прочитать
                     </Button>
 
-                    {c.link && c.category !== "ai" ? (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        asChild
-                        className="h-11 rounded-2xl border border-transparent px-4 text-sm font-medium text-slate-500 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-slate-100 hover:text-slate-700"
-                      >
-                        <a
-                          href={c.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="flex flex-col text-left leading-tight"><span>{c.linkLabel ?? "Читать на сайте"}</span><span className="mt-1 text-[10px]">новая вкладка</span></span>
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                    ) : (
-                      <span className="max-w-[9rem] text-right text-xs leading-relaxed text-muted-foreground">{c.category === "ai" ? c.status : ""}</span>
-                    )}
+
                   </div>
                 </div>
               </article>
@@ -256,14 +235,17 @@ const CasesSection = () => {
               </DialogDescription>
 
               <div className="relative min-h-0 flex-1 overflow-y-auto">
-                {/* Обложка теперь часть прокручиваемого контента */}
-                <div className="case-reader-cover relative h-[180px] w-full sm:h-[280px] shrink-0 border-b border-slate-200/70">
-                  <img
-                    src={active.image}
-                    alt={active.title}
-                    className="h-full w-full object-contain"
-                  />
-                </div>
+                <figure className="case-reader-cover relative w-full shrink-0 overflow-hidden">
+                  <picture className="absolute inset-0 block h-full w-full">
+                    <source media="(max-width: 639px)" srcSet={active.caseHeroMobile} />
+                    <img src={active.caseHero} alt="" width={1440} height={480} className="h-full w-full object-cover" />
+                  </picture>
+                  <div className="case-hero-copy relative z-10 hidden h-full max-w-[48%] flex-col justify-center px-10 py-8 sm:flex">
+                    <p className="mb-4 text-sm font-medium">{active.category === "ai" ? active.company : "Материал для KTS"}</p>
+                    <p className="text-2xl font-semibold leading-tight lg:text-3xl">{active.heroLine}</p>
+                  </div>
+                  <figcaption className="sr-only">Концептуальная иллюстрация, не снимок интерфейса продукта.</figcaption>
+                </figure>
 
                 <div className="px-6 pb-10 pt-8 sm:px-12 sm:pb-14">
                   <div className="mx-auto max-w-3xl">
@@ -282,7 +264,7 @@ const CasesSection = () => {
                         <Button
                           variant="ghost"
                           size="lg"
-                          className="h-12 rounded-2xl border border-slate-200 bg-white px-6 text-base font-medium text-slate-700 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-slate-50 hover:text-slate-950"
+                          className="h-auto min-h-12 max-w-full whitespace-normal rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center text-base font-medium text-slate-700 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-slate-50 hover:text-slate-950"
                           asChild
                         >
                           <a

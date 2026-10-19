@@ -13,7 +13,7 @@ test("two directions and six material types replace technology navigation", asyn
     await page.reload();
     await expect(portfolio.getByRole("article")).toHaveCount(count);
   }
-  await page.getByRole("button", { name: "Marketing / CRM", exact: true }).click();
+  await page.getByRole("button", { name: "Маркетинг / CRM", exact: true }).click();
   await expect(portfolio.getByRole("article")).toHaveCount(3);
   for (const type of ["Кейсы","Статьи","Рассылки"]) {
     await types.getByRole("button", { name: type, exact: true }).click();
@@ -24,7 +24,7 @@ test("two directions and six material types replace technology navigation", asyn
 
 test("type filters survive reload and browser history; legacy links are normalized", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
-  await page.getByRole("button", { name: "Marketing / CRM", exact: true }).click();
+  await page.getByRole("button", { name: "Маркетинг / CRM", exact: true }).click();
   await page.getByRole("group", { name: "Тип материала" }).getByRole("button", { name: "Статьи", exact: true }).click();
   await expect(page).toHaveURL(/direction=marketing&type=articles#cases$/);
   await page.reload();
@@ -34,7 +34,7 @@ test("type filters survive reload and browser history; legacy links are normaliz
   await page.goBack();
   await expect(page.locator("#portfolio article")).toHaveCount(6);
   await page.goForward();
-  await expect(page.getByRole("button", { name: "Marketing / CRM", exact: true })).toHaveAttribute("aria-pressed","true");
+  await expect(page.getByRole("button", { name: "Маркетинг / CRM", exact: true })).toHaveAttribute("aria-pressed","true");
   await page.goto("/?direction=marketing&tag="+encodeURIComponent("Статьи")+"#cases");
   await expect(page).toHaveURL(/type=articles/);
   expect(page.url()).not.toContain("tag=");
@@ -54,12 +54,12 @@ test("proof is readable without mistaking automated checks for product results",
   await page.goto("/?direction=ai&case=telegram-ai-yougile#cases");
   const dialog = page.getByRole("dialog");
   const details = dialog.locator(".case-technical");
-  await expect(dialog.getByRole("definition").first()).toContainText("Workflow");
+  await expect(dialog.getByRole("heading", { name: "О продукте", exact: true })).toBeVisible();
   await expect(details).not.toHaveAttribute("open","");
   await expect(dialog.getByText(/32 локальные проверки/)).not.toBeVisible();
   await details.locator("summary").click();
   await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
-  await expect(details).toContainText("программных проверок не означает количество");
+  await expect(details).toContainText("Это не 32 созданные задачи");
   await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
   await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
   await dialog.locator(".case-technical summary").click();
@@ -78,8 +78,8 @@ test("keyboard reading traps and restores focus without clickable technology tag
   await trigger.focus();await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("definition").nth(1)).toContainText("Требования");
-  await expect(dialog.getByText(/350 passed, 1 skipped/)).not.toBeVisible();
+  await expect(dialog.getByRole("heading", { name: "Моя роль и решения", exact: true })).toBeVisible();
+  await expect(dialog.getByText(/350 программных проверок/)).not.toBeVisible();
   await dialog.locator(".case-technical summary").click();
   const technologies = dialog.getByRole("region", { name: "Технологии",exact:true });
   await expect(technologies.getByRole("button")).toHaveCount(0);
@@ -165,7 +165,7 @@ test("skills are available by keyboard and touch without leaving the screen", as
 test("career carousel moves by buttons and releases page scrolling at its edges", async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 900 });
   await page.goto("/#experience");
-  const scroller = page.getByRole("region", { name: "Карьера и компании — прокручиваемые карточки" });
+  const scroller = page.getByRole("region", { name: "Карьера и компании: прокручиваемые карточки" });
   await expect(scroller).toHaveAttribute("tabindex", "0");
   await page.getByRole("button", { name: "Прокрутить вправо", exact: true }).click();
   await expect.poll(() => scroller.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);

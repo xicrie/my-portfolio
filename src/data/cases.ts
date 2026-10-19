@@ -18,10 +18,12 @@ export type PortfolioCase = {
   company: string;
   companyDescription?: string;
   materialType: MaterialType;
-  image: string;
+  cardCover: string;
+  caseHero: string;
+  caseHeroMobile: string;
+  heroLine: string;
   link?: string;
   linkLabel?: string;
-  status?: string;
 };
 
 export const cases: PortfolioCase[] = [
@@ -30,69 +32,65 @@ export const cases: PortfolioCase[] = [
     category: "marketing",
     title: "LEGENDA: история цифрового продукта",
     description:
-      "Упаковка кейса внедрения для IT-компании в PropTech на примере LEGENDA. Продуктовая разработка личного кабинета брокера превращена в ясную B2B-историю с ключевыми сценариями, интеграциями и выгодами для бизнеса.",
+      "История о том, как личный кабинет упрощает работу брокера и помогает девелоперу.",
     loadContent: () => import("../../notion-data/PropTech кейс для IT компании 3045c3762c418107b2ece4cd3bc595c5.md?raw").then(module => module.default),
     company: "KTS",
     companyDescription:
       "Аккредитованная IT-компания и цифровой интегратор. Работа с контентом для сложных цифровых продуктов и B2B-направления.",
     materialType: "cases",
-    image: "/images/case-proptech.svg",
-    status: "Материал проекта · статус релиза уточняется",
+    cardCover: "/images/case-proptech.svg", caseHero: "/images/case-hero-proptech-legend.svg", caseHeroMobile: "/images/case-hero-proptech-legend-mobile.svg", heroLine: "Сложный продукт. Понятная история.",
   },
   {
     id: "article-proptech-2026",
     category: "marketing",
     title: "PropTech: от технологий к задачам бизнеса",
     description:
-      "Аналитическая статья о PropTech-трендах 2026: как девелоперам усилить продажи, стройку и эксплуатацию через цифровые продукты и автоматизацию. Внутри — практичный список решений, которые можно запустить за 2–4 недели.",
+      "Помогает девелоперу выбрать, с какой задачи начать цифровизацию бизнеса.",
     loadContent: () => import("../../notion-data/Статья про PropTech для IT компании 3045c3762c4181e7874af5ec3ec68a3c.md?raw").then(module => module.default),
     company: "KTS",
     companyDescription:
       "Аккредитованная IT-компания и цифровой интегратор. Работа с контентом для сложных цифровых продуктов и B2B-направления.",
     materialType: "articles",
-    image: "/images/case-article.svg",
+    cardCover: "/images/case-article.svg", caseHero: "/images/case-hero-article-proptech-2026.svg", caseHeroMobile: "/images/case-hero-article-proptech-2026-mobile.svg", heroLine: "Технологии через задачи бизнеса",
     link: "https://guides.kts.tech/proptech-trendy-2026/",
     linkLabel: "Читать на сайте",
   },
   {
     id: "email-marketing-kts",
     category: "marketing",
-    title: "Email-маркетинг: повод для диалога",
+    title: "Письма для B2B-аудитории",
     description:
-      "Серия email-рассылок для прогрева тёплой базы: вход через аналитику, кейсы и мягкий вывод в диалог. Внутри собраны два письма под разные сценарии коммуникации.",
+      "Два письма, которые знакомят с подходом IT-компании и приглашают обсудить проект.",
     loadContent: () => import("../../notion-data/email-marketing-kts.md?raw").then(module => module.default),
     company: "KTS",
     companyDescription:
       "Аккредитованная IT-компания и цифровой интегратор. Работа с контентом для сложных цифровых продуктов и B2B-направления.",
     materialType: "newsletters",
-    image: "/images/case-email.svg",
-    status: "Два примера писем внутри кейса",
+    cardCover: "/images/case-email.svg", caseHero: "/images/case-hero-email-marketing-kts.svg", caseHeroMobile: "/images/case-hero-email-marketing-kts-mobile.svg", heroLine: "Письмо как начало разговора",
   },
   {
     id: "hh-career-engine",
     category: "ai",
     title: "HH Career Engine",
     description:
-      "Помогает выбрать подходящие вакансии, понять основания выбора и подготовить письмо с опорой на реальный опыт.",
+      "Находит подходящие вакансии и помогает объяснить работодателю, почему ваш опыт ему подходит.",
     loadContent: () => import("./projects/hh-career-engine.md?raw").then(module => module.default),
     company: "Личный проект",
     materialType: "applications",
-    image: "/images/case-hh-career-engine.svg",
-    status: "Личный инструмент",
+    cardCover: "/images/case-hh-career-engine.svg", caseHero: "/images/case-hero-hh-career-engine.svg", caseHeroMobile: "/images/case-hero-hh-career-engine-mobile.svg", heroLine: "Вакансии под ваш опыт",
     link: "/projects/hh-career-engine-verification.json",
     linkLabel: "Артефакт проверки",
   },
   {
     id: "telegram-ai-yougile",
     category: "ai",
-    title: "Telegram → AI → YouGile",
+    title: "Из Telegram в YouGile",
     description:
-      "Превращает поручение из переписки в понятную задачу: сохраняет контекст, учитывает уточнение и возвращает ответ в чат.",
+      "Помогает перенести поручение из переписки в трекер, сохранив смысл и важные уточнения.",
     loadContent: () => import("./projects/telegram-ai-yougile.md?raw").then(module => module.default),
-    company: "Личная автоматизация",
+    company: "Личный проект",
     materialType: "automations",
-    image: "/images/case-telegram-yougile.svg",
-    status: "Собранный сценарий",
+    cardCover: "/images/case-telegram-yougile.svg", caseHero: "/images/case-hero-telegram-ai-yougile.svg", caseHeroMobile: "/images/case-hero-telegram-ai-yougile-mobile.svg", heroLine: "Поручение становится задачей",
     link: "/projects/yougile-workflow-verification.json",
     linkLabel: "Артефакт проверки",
   },
@@ -101,31 +99,30 @@ export const cases: PortfolioCase[] = [
     category: "ai",
     title: "AI-суфлёр",
     description:
-      "Помогает сформулировать ответ во время онлайн-разговора: выделяет вопрос и подбирает короткую подсказку с контекстом из резюме.",
+      "Предлагает короткую подсказку во время разговора с опорой на вопрос собеседника и факты из резюме.",
     loadContent: () => import("./projects/ai-prompter.md?raw").then(module => module.default),
     company: "Личный прототип",
     materialType: "applications",
-    image: "/images/case-ai-prompter.svg",
-    status: "Прототип приложения",
+    cardCover: "/images/case-ai-prompter.svg", caseHero: "/images/case-hero-ai-prompter.svg", caseHeroMobile: "/images/case-hero-ai-prompter-mobile.svg", heroLine: "Опора во время разговора",
     link: "/projects/ai-prompter-brief.json",
     linkLabel: "Описание прототипа",
   },
   {
-    id: "telegram-roleplay", category: "ai", title: "Интерактивные AI-боты в Telegram",
-    description: "AI-персонажи и интерактивные истории: пользователь участвует в развитии сценария через естественный диалог.",
+    id: "telegram-roleplay", category: "ai", title: "Истории с персонажами в Telegram",
+    description: "Позволяет стать участником истории и продолжать её через разговор с персонажем.",
     loadContent: () => import("./projects/telegram-roleplay.md?raw").then(module => module.default),
-    company: "Личные прототипы", materialType: "bots", image: "/images/case-roleplay.svg", status: "Личные прототипы",
+    company: "Личный прототип", materialType: "bots", cardCover: "/images/case-roleplay.svg", caseHero: "/images/case-hero-telegram-roleplay.svg", caseHeroMobile: "/images/case-hero-telegram-roleplay-mobile.svg", heroLine: "История в ответ на вашу реплику",
   },
   {
     id: "cbt-diary", category: "ai", title: "КПТ-дневник в Telegram",
-    description: "Идея личного дневника в привычном чате: записать мысль или событие и вернуться к ним для спокойной рефлексии.",
+    description: "Помогает остановиться, записать важное и внимательнее отнестись к собственным мыслям.",
     loadContent: () => import("./projects/cbt-diary.md?raw").then(module => module.default),
-    company: "Личный прототип", materialType: "bots", image: "/images/case-cbt-diary.svg", status: "Личный прототип",
+    company: "Личный прототип", materialType: "bots", cardCover: "/images/case-cbt-diary.svg", caseHero: "/images/case-hero-cbt-diary.svg", caseHeroMobile: "/images/case-hero-cbt-diary-mobile.svg", heroLine: "Место для мыслей и наблюдений",
   },
   {
-    id: "personal-assistant", category: "ai", title: "Личный AI-ассистент в Telegram",
-    description: "Свободная мысль — в понятную запись. AI-inbox раскладывает входящее на задачи, гипотезы, факты и заметки.",
+    id: "personal-assistant", category: "ai", title: "Личный ассистент в Telegram",
+    description: "Задачи, идеи и заметки из одного сообщения превращаются в понятные записи.",
     loadContent: () => import("./projects/personal-assistant.md?raw").then(module => module.default),
-    company: "Семейство прототипов", materialType: "bots", image: "/images/case-personal-assistant.svg", status: "Семейство прототипов",
+    company: "Личный прототип", materialType: "bots", cardCover: "/images/case-personal-assistant.svg", caseHero: "/images/case-hero-personal-assistant.svg", caseHeroMobile: "/images/case-hero-personal-assistant-mobile.svg", heroLine: "Мысли не теряются в переписке",
   },
 ];

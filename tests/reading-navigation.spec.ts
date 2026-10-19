@@ -29,7 +29,7 @@ for (const width of [390, 1440]) {
     await page.goForward();
     await expect(dialog).toBeVisible();
     await page.reload();
-    await expect(dialog.getByRole("definition").first()).toBeVisible();
+    await expect(dialog.getByRole("heading", { name: "О продукте", exact: true })).toBeVisible();
     const close = dialog.getByRole("button", { name: "Закрыть", exact: true });
     const box = await close.boundingBox();
     expect(box?.x).toBeGreaterThanOrEqual(0);

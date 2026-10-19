@@ -5,10 +5,10 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];page.on("pageerror", e => errors.push(e.message));
     await page.goto("/?direction=ai#cases");
-    for (const [title,diagramPath] of [["HH Career Engine","hh-data.svg"],["Telegram → AI → YouGile","yougile-workflow.svg"],["AI-суфлёр","soufleur-architecture.svg"]]) {
+    for (const [title,diagramPath] of [["HH Career Engine","hh-data.svg"],["Из Telegram в YouGile","yougile-workflow.svg"],["AI-суфлёр","soufleur-architecture.svg"]]) {
       const trigger = page.getByRole("button", { name: `Прочитать кейс: ${title}`, exact: true });await trigger.click();
       const dialog = page.getByRole("dialog");await expect(dialog.getByRole("list",{name:"Сценарий пользователя"})).toBeVisible();
-      const nav=dialog.getByRole("navigation",{name:"Содержание AI-кейса"});
+      const nav=dialog.getByRole("navigation",{name:"Содержание кейса"});
       await expect(nav.getByRole("button")).toHaveCount(4);
       for(const button of await nav.getByRole("button").all()){await button.click();expect(await dialog.locator(".overflow-y-auto").first().evaluate(el=>el.scrollWidth-el.clientWidth)).toBeLessThanOrEqual(1);}
       const details=dialog.locator(".case-technical");await expect(details).not.toHaveAttribute("open","");
