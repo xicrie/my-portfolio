@@ -1,0 +1,186 @@
+{
+  "checked_on": "2026-10-19",
+  "hh": {
+    "source_commit": "b78e56d",
+    "checked_on": "2026-10-19",
+    "synthetic": true,
+    "scope": "Built-in synthetic demo; simulated analysis, actual policy/scoring; no network, no sending",
+    "examples": [
+      {
+        "scenario": "Неочевидная подходящая роль",
+        "salary": null,
+        "work_format": [
+          {
+            "id": "REMOTE"
+          }
+        ],
+        "policy": "PASS",
+        "decision": "APPLY",
+        "score": 89.8,
+        "execution": "demo_no_send"
+      },
+      {
+        "scenario": "Обязательный гибрид",
+        "salary": null,
+        "work_format": [
+          {
+            "id": "HYBRID"
+          }
+        ],
+        "policy": "SKIP",
+        "decision": "SKIP",
+        "score": null,
+        "execution": "demo_no_send"
+      },
+      {
+        "scenario": "Зарплата 100–120 тысяч",
+        "salary": {
+          "from": 100000,
+          "to": 120000,
+          "currency": "RUR"
+        },
+        "work_format": [
+          {
+            "id": "REMOTE"
+          }
+        ],
+        "policy": "SKIP",
+        "decision": "SKIP",
+        "score": null,
+        "execution": "demo_no_send"
+      },
+      {
+        "scenario": "Зарплата до 180 тысяч",
+        "salary": {
+          "to": 180000,
+          "currency": "RUR"
+        },
+        "work_format": [
+          {
+            "id": "REMOTE"
+          }
+        ],
+        "policy": "REVIEW",
+        "decision": "REVIEW",
+        "score": 89.8,
+        "execution": "demo_no_send"
+      },
+      {
+        "scenario": "Формат неясен",
+        "salary": null,
+        "work_format": [],
+        "policy": "REVIEW",
+        "decision": "REVIEW",
+        "score": null,
+        "execution": "demo_no_send"
+      },
+      {
+        "scenario": "Офис после красивого remote-тега",
+        "salary": null,
+        "work_format": [
+          {
+            "id": "REMOTE"
+          }
+        ],
+        "policy": "SKIP",
+        "decision": "SKIP",
+        "score": null,
+        "execution": "demo_no_send"
+      }
+    ]
+  },
+  "n8n": {
+    "checked_on": "2026-10-19",
+    "synthetic": true,
+    "scope": "Actual Code nodes with mocked LLM response; no n8n instance or API called",
+    "source": "Подготовить черновик письма о новой функции. Показать редактору до пятницы.",
+    "command": "/task",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Название: начинается с глагола, не более 12 слов, по-русски"
+        },
+        "description": {
+          "type": "string",
+          "description": "Понятное описание задачи с сохранением контекста"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "Рассылки",
+            "Реклама",
+            "SEO и контент",
+            "Сайт",
+            "Автоматизация",
+            "Аналитика",
+            "Продукт",
+            "Другое"
+          ]
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "urgent"
+          ]
+        },
+        "assignee_name": {
+          "type": "string",
+          "description": "Имя исполнителя из переписки или пустая строка"
+        },
+        "deadline": {
+          "type": "string",
+          "description": "Срок из переписки или пустая строка"
+        },
+        "missing_information": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "direction",
+        "priority",
+        "assignee_name",
+        "deadline",
+        "missing_information"
+      ]
+    },
+    "validated": {
+      "title": "Подготовить черновик письма о новой функции",
+      "description": "Подготовить текст и передать редактору на согласование.",
+      "direction": "Рассылки",
+      "priority": "medium",
+      "assignee_name": "",
+      "deadline": "до пятницы",
+      "missing_information": [
+        "Кто подготовит черновик?"
+      ]
+    },
+    "createPayload": {
+      "title": "Подготовить черновик письма о новой функции",
+      "columnId": "synthetic-column",
+      "description": "Подготовить текст и передать редактору на согласование.\n\nНаправление: Рассылки\nПриоритет: medium\nИсполнитель из переписки: не указан\nСрок из переписки: до пятницы\n\nНужно уточнить:\n- Кто подготовит черновик?\n\nИсточник: Telegram\nАвтор исходного сообщения: Автор примера\nСоздание задачи запросил(а): Участник примера\nСсылка на исходное сообщение: https://t.me/c/000/1\n\ntelegram_hash: tg_-100000_1",
+      "idempotencyKey": "tg_-100000_1"
+    }
+  },
+  "checks": {
+    "hh": {
+      "passed": 350,
+      "skipped": 1,
+      "scope": "offline regression, network forbidden"
+    },
+    "n8n": {
+      "passed": 32,
+      "scope": "isolated Code nodes, mocked n8n node outputs; no live APIs"
+    }
+  }
+}

@@ -1,18 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600">
-  <title>HH Career Engine — схема процесса</title>
-  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#fff8e3"/><stop offset="1" stop-color="#f1f5f9"/></linearGradient></defs>
-  <rect width="960" height="600" fill="url(#bg)"/>
-  <g font-family="Arial, sans-serif" fill="#0f172a">
-    <text x="64" y="116" font-size="20" fill="#92400e" letter-spacing="4">AI · PYTHON · API</text>
-    <text x="64" y="194" font-size="52" font-weight="700">HH Career Engine</text>
-    <text x="64" y="245" font-size="24" fill="#475569">От вакансии к проверенному решению</text>
-    <g fill="#fff" stroke="#e2e8f0" stroke-width="2">
-      <rect x="64" y="310" width="225" height="100" rx="24"/>
-      <rect x="367" y="310" width="225" height="100" rx="24"/>
-      <rect x="671" y="310" width="225" height="100" rx="24"/>
-    </g>
-    <g font-size="28" text-anchor="middle"><text x="176" y="372">HH API</text><text x="480" y="372">LLM + проверки</text><text x="783" y="372">SQLite</text></g>
-    <g stroke="#d99a00" stroke-width="3" fill="none"><path d="M307 360h40m-12-10 12 10-12 10"/><path d="M610 360h40m-12-10 12 10-12 10"/></g>
-    <text x="64" y="502" font-size="22" fill="#64748b">Pet-проект · схема процесса · offline-тесты</text>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640" role="img"><title>HH Career / Engine — редакционная иллюстрация</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#a87b00"/></marker></defs><rect width="100%" height="100%" fill="#f9f7f2"/><g font-family="Inter,Arial,sans-serif"><circle cx="850" cy="120" r="280" fill="#f5bc0a" opacity=".10"/><path d="M32 34H130" stroke="#f5bc0a" stroke-width="6"/><text x="54" y="91" font-size="16" fill="#6e5000" font-weight="700">PYTHON / LLM / SQLITE</text><text x="54" y="193" font-size="56" fill="#181b2a" font-weight="700">HH Career</text><text x="54" y="258" font-size="56" fill="#181b2a" font-weight="700">Engine</text><text x="56" y="345" font-size="25" fill="#626575" font-weight="400">Вакансии. Основания.</text><text x="56" y="381" font-size="25" fill="#626575" font-weight="400">Проверенное письмо.</text><path d="M56 474H470" stroke="#d9d3c8"/><text x="56" y="520" font-size="15" fill="#6e5000" font-weight="700">ЛИЧНЫЙ AI-ПРОЕКТ</text><text x="56" y="553" font-size="15" fill="#626575" font-weight="400">Редакционная иллюстрация · не интерфейс</text><g transform="translate(660 165) rotate(7)"><rect x="0" y="0" width="270" height="355" rx="18" fill="#f4ecd8" stroke="#d9d3c8"/></g><rect x="595" y="146" width="290" height="355" rx="18" fill="white" stroke="#d9d3c8"/><text x="620" y="182" font-size="15" fill="#6e5000" font-weight="700">ЛОГИКА РЕШЕНИЯ</text><text x="620" y="230" font-size="21" fill="#181b2a" font-weight="700">01  Условия</text><text x="620" y="261" font-size="17" fill="#626575" font-weight="400">Полная удалёнка</text><path d="M620 277H858" stroke="#d9d3c8"/><text x="620" y="326" font-size="21" fill="#181b2a" font-weight="700">02  Основания</text><text x="620" y="357" font-size="17" fill="#626575" font-weight="400">Требование ↔ факт</text><path d="M620 373H858" stroke="#d9d3c8"/><text x="620" y="422" font-size="21" fill="#181b2a" font-weight="700">03  Действие</text><text x="620" y="453" font-size="17" fill="#626575" font-weight="400">APPLY / REVIEW / SKIP</text><path d="M620 469H858" stroke="#d9d3c8"/><circle cx="865" cy="481" r="42" fill="#f5bc0a"/><text x="841" y="490" font-size="32" fill="#181b2a" font-weight="700">✓</text></g></svg>

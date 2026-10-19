@@ -26,6 +26,7 @@ import { cases, type PortfolioCase } from "@/data/cases";
 import { cn } from "@/lib/utils";
 
 const CaseMarkdown = lazy(() => import("./CaseMarkdown"));
+const AIEngineeringCase = lazy(() => import("./AIEngineeringCase"));
 
 const directions = [
   { value: "ai", label: "AI / Automation" },
@@ -157,7 +158,7 @@ const getTagMeta = (tag: string) => {
     return {
       icon: Sparkles,
       className:
-        "border-[rgba(162,224,208,0.24)] bg-[rgba(216,246,239,0.36)] text-[#3c7f6d]",
+        "border-primary/25 bg-primary/10 text-amber-900",
     };
   }
 
@@ -318,7 +319,7 @@ const CasesSection = () => {
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.045]"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,28,0.02),rgba(12,18,28,0.12))]" />
+                  {c.category === "marketing" && <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,28,0.02),rgba(12,18,28,0.12))]" />}
                 </div>
 
                 <div className="relative flex flex-1 flex-col px-4 pb-5 pt-6">
@@ -339,7 +340,7 @@ const CasesSection = () => {
                             "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]",
                             "transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 active:scale-100",
                             "shadow-none ring-0 hover:shadow-none before:hidden after:hidden",
-                            meta.className
+                            c.category === "ai" ? "border-border bg-background text-foreground" : meta.className
                           )}
                           style={{
                             WebkitTapHighlightColor: "transparent",
@@ -444,7 +445,7 @@ const CasesSection = () => {
 
               <div className="relative min-h-0 flex-1 overflow-y-auto">
                 {/* Обложка теперь часть прокручиваемого контента */}
-                <div className="relative h-[240px] w-full sm:h-[320px] shrink-0 border-b border-slate-200/70 bg-slate-100">
+                {active.category === "marketing" && <div className="relative h-[240px] w-full sm:h-[320px] shrink-0 border-b border-slate-200/70 bg-slate-100">
                   <img
                     src={active.image}
                     alt={active.title}
@@ -452,7 +453,7 @@ const CasesSection = () => {
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,28,0.05),rgba(12,18,28,0.16))]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-90" />
-                </div>
+                </div>}
 
                 <div className="px-6 pb-10 pt-8 sm:px-12 sm:pb-14">
                   <div className="mx-auto max-w-3xl">
@@ -469,7 +470,7 @@ const CasesSection = () => {
                             className={cn(
                               "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em]",
                               "transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 shadow-none hover:scale-105",
-                              meta.className
+                              active.category === "ai" ? "border-border bg-background text-foreground" : meta.className
                             )}
                             style={{ boxShadow: "none" }}
                           >
@@ -480,12 +481,12 @@ const CasesSection = () => {
                       })}
                     </div>
 
-                    <h2 className="mb-10 text-[2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-[2.6rem]">
+                    <h2 className={cn("mb-10 text-[2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-[2.6rem]", active.category === "ai" && "pr-10 !mb-6")}>
                       {active.title}
                     </h2>
 
                     {/* Блок информации строго сверху перед текстом */}
-                    {(hasUsableDescription(active) || active.companyDescription) && (
+                    {active.category === "marketing" && (hasUsableDescription(active) || active.companyDescription) && (
                       <div className="mb-10 grid gap-4 md:grid-cols-[1.18fr_0.82fr]">
                         {hasUsableDescription(active) && (
                           <div className="rounded-[28px] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,252,244,0.94),rgba(255,255,255,0.98))] p-6 shadow-[0_12px_34px_rgba(15,23,42,0.05)]">
@@ -514,9 +515,9 @@ const CasesSection = () => {
                       </div>
                     )}
 
-                    <div className={notionProseClass}>
+                    <div className={active.category === "ai" ? undefined : notionProseClass}>
                       <Suspense fallback={<p role="status">Загружаю кейс…</p>}>
-                        <CaseMarkdown content={active.fullContent} />
+                        {active.category === "ai" ? <AIEngineeringCase id={active.id} content={active.fullContent} /> : <CaseMarkdown content={active.fullContent} />}
                       </Suspense>
                     </div>
 

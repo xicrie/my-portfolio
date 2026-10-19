@@ -43,11 +43,12 @@ test("new AI cases distinguish workflow checks from an unverified prototype", as
   await page.getByRole("button", { name: "Прочитать кейс: Telegram → AI → YouGile", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByText(/32 локальные проверки/)).toBeVisible();
+  await dialog.getByRole("navigation", { name: "Содержание AI-кейса" }).getByRole("button", { name: "Инженерный разбор", exact: true }).click();
   await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
   await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
   await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
-  await expect(dialog.getByText(/исходники и текущая работоспособность не верифицированы/)).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "Карточка описания (JSON)", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
+  await expect(dialog.getByText(/Исходники находятся на другом компьютере/)).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Историческая карточка описания (JSON)", exact: true })).toHaveAttribute("href", "/projects/ai-prompter-brief.json");
   for (const path of ["/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
     const response = await page.request.get(path);
     expect(response.ok()).toBeTruthy();
@@ -63,8 +64,8 @@ test("case opens by keyboard, renders full evidence, traps and restores focus", 
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("heading", { name: "Бизнес-применение", exact: true })).toBeVisible();
-  await expect(dialog.getByText(/350 пройденных автоматических тестов/)).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "Техническая сводка проверки (JSON)", exact: true })).toHaveAttribute("href", "/projects/hh-career-engine-verification.json");
+  await expect(dialog.getByText(/350 passed, 1 skipped/)).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "техническая сводка аудита", exact: true })).toHaveAttribute("href", "/projects/hh-career-engine-verification.json");
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press("Tab");
     expect(await dialog.evaluate(el => el.contains(document.activeElement))).toBeTruthy();
