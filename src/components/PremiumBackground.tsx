@@ -183,7 +183,7 @@ const PremiumBackground = () => {
 
     const animate = (timestamp = 0) => {
       if (!inView || document.hidden) { animationId = 0; return; }
-      if (timestamp && timestamp - lastPaint < (coarsePointer.matches ? 32 : 16)) {
+      if (!reducedMotion.matches && timestamp && timestamp - lastPaint < (coarsePointer.matches ? 32 : 16)) {
         animationId = requestAnimationFrame(animate);
         return;
       }
@@ -194,7 +194,7 @@ const PremiumBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      const hasMouse = currentMouse.x > -1000;
+      const hasMouse = currentMouse.x >= 0 && currentMouse.x <= w && currentMouse.y >= 0 && currentMouse.y <= h;
 
       const dx = currentMouse.x - lastMouse.x;
       const dy = currentMouse.y - lastMouse.y;
@@ -265,7 +265,7 @@ const PremiumBackground = () => {
             const dxCursor = p.x - currentMouse.x;
             const dyCursor = p.y - currentMouse.y;
             const distCursor = Math.sqrt(dxCursor * dxCursor + dyCursor * dyCursor);
-            if (distCursor < 150) {
+            if (distCursor > 0 && distCursor < 150) {
                 // Мягкое отталкивание от курсора
                 const repelForce = (150 - distCursor) * 0.00008; 
                 p.vx += (dxCursor / distCursor) * repelForce;
@@ -306,7 +306,7 @@ const PremiumBackground = () => {
         const drawY1 = p1.y + (parallaxBaseY - h / 2) * p1.z * 0.03;
 
         for (let j = i + 1; j < particles.length; j++) {
-          if (connections > 3) break; // Снизили макс. количество связей для чистоты
+          if (connections >= 3) break; // Снизили макс. количество связей для чистоты
 
           const p2 = particles[j];
           if (Math.abs(p1.z - p2.z) > 0.5) continue; 

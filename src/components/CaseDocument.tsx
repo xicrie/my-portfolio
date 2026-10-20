@@ -20,7 +20,7 @@ export default function CaseDocument({ item, content }: { item: PortfolioCase; c
       <div className="case-document-main"><h1 className="type-case-title mb-6">{item.title}</h1>
         <h2 className="sr-only">Описание проекта и&nbsp;мой вклад</h2>
         {item.category==='ai'?<AIEngineeringCase id={item.id} content={content}/>:<MarketingCase id={item.id} content={content}/>}
-        {item.category==='marketing'&&item.link&&<p className="mt-8"><a href={item.link} target="_blank" rel="noopener noreferrer" className="text-base underline">Читать статью на&nbsp;сайте KTS</a></p>}
+        {item.category==='marketing'&&item.link&&<p className="mt-8"><a href={item.link} target="_blank" rel="noopener noreferrer" className="text-base underline">Читать статью на&nbsp;сайте</a></p>}
         <footer className="mt-10 flex flex-wrap justify-between gap-5 border-t border-border pt-6 text-base"><a href={`/?direction=${item.category}#cases`}>Все работы</a><a href={`/cases/${next.id}/`} className="underline underline-offset-4">Следующий кейс: {next.title}</a></footer>
       </div>
     </main>

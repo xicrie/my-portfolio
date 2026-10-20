@@ -95,7 +95,7 @@ const CasesSection = () => {
   };
 
   return (
-    <section className="portfolio-cases relative py-24 md:py-32" id="portfolio" data-direction={direction}>
+    <section className="portfolio-cases relative pt-12 pb-16 md:pt-16 md:pb-24" id="portfolio" data-direction={direction}>
       <div className="container relative z-10 mx-auto max-w-[1280px] px-6">
         <div className="mb-14">
           <SectionHeading

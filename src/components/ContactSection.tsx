@@ -12,7 +12,7 @@ import {
 
 export default function PremiumContactSection() {
   return (
-    <section className="relative w-full overflow-hidden py-20 md:py-32 font-sans text-slate-900 z-10">
+    <section className="relative w-full overflow-hidden py-16 md:py-24 font-sans text-slate-900 z-10">
 
       <div className="container relative z-20 mx-auto px-6 max-w-[1150px]">
         
@@ -25,11 +25,10 @@ export default function PremiumContactSection() {
             </span>
           </div>
           <h2 className="type-section text-slate-900">
-            Поговорим <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-400">о&nbsp;задаче</span>
+            Обсудим ваш <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-400">продукт и&nbsp;задачи</span>
           </h2>
           <p className="mt-5 text-[1.1rem] leading-relaxed text-slate-600 max-w-2xl">
-            Обсудим продукт, автоматизацию или&nbsp;коммуникации с&nbsp;клиентами.
-            Расскажу о&nbsp;своём опыте и&nbsp;покажу личные проекты.
+            Расскажите, что хотите создать или&nbsp;улучшить. Обсудим, где AI и&nbsp;автоматизация помогут и&nbsp;с&nbsp;чего лучше начать.
           </p>
         </div>
 
@@ -102,7 +101,7 @@ export default function PremiumContactSection() {
                 </div>
                 <div className="flex flex-col overflow-hidden">
                   <span className="text-[0.65rem] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Локация</span>
-                  <span className="text-[0.95rem] font-bold text-slate-700 truncate">Москва, Химки / Удалённо</span>
+                  <span className="text-[0.95rem] font-bold text-slate-700 truncate">Москва, удалённо</span>
                 </div>
               </div>
             </div>

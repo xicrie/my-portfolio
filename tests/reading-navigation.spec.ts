@@ -9,7 +9,7 @@ for (const width of [390, 1440]) {
     await page.goto("/?direction=ai#cases");
     await page.getByRole("group", { name: "Тип материала" }).getByRole("button", { name: "Приложения", exact: true }).click();
     const filterURL = page.url();
-    const trigger = page.getByRole("link", { name: "Прочитать кейс: Автоотклик на вакансии", exact: true });
+    const trigger = page.getByRole("link", { name: "Прочитать кейс: Помощник для поиска работы", exact: true });
     await trigger.scrollIntoViewIfNeeded();
     // Clicking can make Playwright scroll again after the card hover transform.
     // Compare the actual activation position, rather than an earlier snapshot.

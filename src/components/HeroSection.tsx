@@ -6,10 +6,11 @@ import { useMemo, useState } from "react";
 import PremiumBackground from "./PremiumBackground";
 
 const quotes = [
-  "Люблю разбираться в сложном и находить понятный путь к решению.",
-  "Сначала задача человека, потом подходящий инструмент.",
-  "Хорошая идея становится сильнее после первой проверки на практике.",
-  "Интереснее всего соединять опыт из разных областей и создавать новое.",
+  "Люблю, когда сложная идея становится простой работающей вещью.",
+  "Сначала разбираюсь в задаче. Потом выбираю инструменты.",
+  "Первый прототип всегда умеет удивить. Поэтому я люблю тестировать.",
+  "Хорошая автоматизация возвращает время на важное.",
+  "AI помогает писать код. Что он должен делать, решаю я.",
 ];
 
 const HeroSection = () => {
@@ -53,17 +54,12 @@ const HeroSection = () => {
               </h1>
 
               <p className="mt-7 text-[1.18rem] font-semibold leading-relaxed text-foreground md:text-[1.34rem]">
-                AI, автоматизация и&nbsp;маркетинг
+                AI-специалист на&nbsp;стыке автоматизации и&nbsp;маркетинга
               </p>
-
               <p className="type-body mt-6 max-w-[710px] text-muted-foreground">
-                Создаю AI-инструменты и&nbsp;автоматизации: от&nbsp;идеи до&nbsp;работающего продукта.
-                Разбираюсь в&nbsp;новых технологиях, собираю прототипы с&nbsp;помощью ИИ
-                и&nbsp;довожу сценарии до&nbsp;результата.
-              </p>
-              <p className="type-body mt-4 max-w-[710px] text-muted-foreground">
-                7+ лет в&nbsp;маркетинге, в&nbsp;том числе B2B и&nbsp;IT, помогают видеть
-                за&nbsp;технической задачей пользу для&nbsp;человека и&nbsp;бизнеса.
+                Придумываю и&nbsp;запускаю AI-инструменты, ботов и&nbsp;автоматизации.
+                С&nbsp;помощью AI разрабатываю решения, тестирую и&nbsp;довожу до&nbsp;работающего продукта.
+                Более семи лет в&nbsp;маркетинге, B2B и&nbsp;IT помогают видеть пользу для&nbsp;людей и&nbsp;бизнеса.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -79,7 +75,7 @@ const HeroSection = () => {
                 <a
                   href="https://t.me/xicrie"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-[1.2rem] border border-[#dcd3c6] bg-white/50 px-6 py-4 text-base font-medium text-foreground shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/35 hover:bg-white/80"
                 >
                   <Send className="h-4 w-4" />
@@ -104,7 +100,7 @@ const HeroSection = () => {
               onMouseEnter={rotateQuote}
               onFocus={rotateQuote}
               tabIndex={0}
-              aria-label="Интерактивная карточка с цитатой"
+              aria-label="Интерактивная карточка с авторскими мыслями"
             >
               <div className="pointer-events-none absolute inset-[-80px] rounded-[4rem] opacity-0 blur-[80px] transition-opacity duration-500 ease-out group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_50%,rgba(255,214,110,0.35)_0%,transparent_60%)]" />
               <div className="pointer-events-none absolute inset-[-20px] rounded-[3.8rem] opacity-0 blur-[35px] transition-opacity duration-300 ease-out group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_50%,rgba(255,248,225,0.95)_0%,rgba(255,224,140,0.6)_50%,transparent_70%)]" />

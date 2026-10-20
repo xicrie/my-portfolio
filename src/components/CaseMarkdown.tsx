@@ -21,7 +21,7 @@ function Artifact({ href, children }: { href: string; children: React.ReactNode 
     return () => controller.abort();
   }, [href, open]);
   return <span className="artifact-preview my-3 block">
-    <button type="button" data-artifact={href} aria-expanded={open} onClick={() => setOpen(!open)} className="rounded-xl border border-current/25 bg-white px-3 py-2 text-left text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">{children} <span className="text-xs">· {open ? "свернуть JSON" : "посмотреть JSON здесь"}</span></button>
+    <button type="button" data-artifact={href} aria-expanded={open} onClick={() => setOpen(!open)} className="rounded-xl border border-current/25 bg-white px-3 py-2 text-left text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">{children} <span className="text-xs">: {open ? "свернуть JSON" : "посмотреть JSON здесь"}</span></button>
     {open && <span className="mt-3 block rounded-xl border border-slate-200 bg-slate-50 p-3 text-slate-900">
       {error ? <span role="alert">Не удалось загрузить JSON. Закройте и&nbsp;повторите попытку.</span> : content === null ? <span role="status">Загрузка JSON…</span> : <span role="group" aria-label="Технический JSON" tabIndex={0} className="block max-h-80 overflow-auto whitespace-pre font-mono text-xs">{content}</span>}
       <a href={href} download className="mt-3 block text-sm underline">Скачать .json</a>

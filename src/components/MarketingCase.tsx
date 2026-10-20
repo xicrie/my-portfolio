@@ -13,10 +13,10 @@ export default function MarketingCase({ id, content }: { id: string; content: st
     <section className="mb-9"><h3 className="mb-4 text-2xl font-semibold">Задача материала</h3><p className="leading-[1.85] text-muted-foreground">{story.challenge}</p></section>
     <section className="mb-9"><h3 className="mb-5 text-2xl font-semibold">Как&nbsp;построена коммуникация</h3>
       <div className="marketing-decisions space-y-5">
-        {story.decisions.map((decision) => <div key={decision.title} className="border-l-2 border-violet-200 pl-5"><h4 className="mb-2 text-lg font-semibold">{decision.title}</h4><p className="leading-[1.85] text-muted-foreground">{decision.text}</p></div>)}
+        {story.decisions.map((decision) => <div key={decision.title} className="rounded-xl bg-white/40 p-4 sm:p-5"><h4 className="mb-2 text-lg font-semibold">{decision.title}</h4><p className="leading-[1.85] text-muted-foreground">{decision.text}</p></div>)}
       </div>
     </section>
-    <section className="mb-12 border-l-2 border-violet-300 pl-5"><h3 className="mb-3 text-2xl font-semibold">Результаты работы</h3><p className="leading-[1.85] text-muted-foreground">{story.proof}</p></section>
+    <section className="mb-9"><h3 className="mb-3 text-2xl font-semibold">Результаты работы</h3><p className="leading-[1.85] text-muted-foreground">{story.proof}</p></section>
     <details className="case-source rounded-2xl border border-border bg-background/40 p-5 sm:p-6">
       <summary className="cursor-pointer text-lg font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">{story.originalLabel}</summary>
       <section aria-label="Оригинальный материал" className="pt-6">

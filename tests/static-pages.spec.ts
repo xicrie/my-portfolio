@@ -2,7 +2,7 @@ import {test,expect}from'../playwright-fixture';
 const ids=['hh-career-engine','telegram-ai-yougile','ai-prompter','telegram-roleplay','cbt-diary','personal-assistant','proptech-legend','article-proptech-2026','email-marketing-kts'];
 test('homepage and all cases are readable and linked without JavaScript',async({browser,request})=>{
  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
- await page.goto('/');await expect(page.locator('h1')).toHaveCount(1);await expect(page.locator('[data-case-trigger]')).toHaveCount(6);await expect(page.getByText('AI, автоматизация и маркетинг',{exact:true}).first()).toBeVisible();
+ await page.goto('/');await expect(page.locator('h1')).toHaveCount(1);await expect(page.locator('[data-case-trigger]')).toHaveCount(6);await expect(page.getByText('AI-специалист на стыке автоматизации и маркетинга',{exact:true}).first()).toBeVisible();
  for(const id of ids){
   const response=await page.goto(`/cases/${id}/`);expect(response?.status()).toBe(200);await expect(page.locator('h1')).toHaveCount(1);
   const canonical=page.locator('link[rel=canonical]');await expect(canonical).toHaveAttribute('href',`https://xicrie.ru/cases/${id}/`);

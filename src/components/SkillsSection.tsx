@@ -34,18 +34,18 @@ const pipelineStages = [
   },
   {
     id: 3,
-    title: "Прототипы\nс помощью ИИ",
+    title: "AI-разработка",
     icon: Cpu,
     tone: "warm" as Tone,
-    tools: ["Python", "LLM API", "Claude Code", "Cursor"],
-    impact: "Превращаю идею в прототип с помощью ИИ. Связываю сервисы, проверяю ответы модели и уточняю решение по результатам пробных запусков.",
+    tools: ["Codex", "Claude Code"],
+    impact: "Создаю решения с помощью AI: от требований и первой версии до запуска. Тестирую сценарии, разбираю ошибки и повторяю проверки после доработок.",
   },
   {
     id: 4,
     title: "Автоматизация\nбизнес-процессов",
     icon: Workflow,
     tone: "cool" as Tone,
-    tools: ["n8n", "1C-Битрикс", "CRM-связки", "Tilda"],
+    tools: ["n8n", "API", "Вебхуки"],
     impact: "Развиваю автоматизации на n8n и опираюсь на опыт с CRM-процессами. Проектирую передачу данных между сервисами и проверку ошибок.",
   },
   {
@@ -53,7 +53,7 @@ const pipelineStages = [
     title: "Аналитика\nи рост",
     icon: BarChart3,
     tone: "warm" as Tone,
-    tools: ["Яндекс.Метрика", "Сквозная аналитика", "Roistat"],
+    tools: ["Яндекс.Метрика", "Roistat"],
     impact: "Смотрю на данные и сравниваю результат с исходной задачей. Ищу, что сработало, где теряется внимание и что стоит проверить следующим шагом.",
   },
 ];
@@ -78,12 +78,12 @@ export default function AI_RoadmapSection() {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
 
   return (
-    <section className="relative w-full overflow-visible py-24 md:py-32 font-sans text-slate-900 z-10">
+    <section className="relative w-full overflow-visible py-16 md:py-24 font-sans text-slate-900 z-10">
 
       <div className="container relative z-20 mx-auto px-6 max-w-[1200px]">
         
         {/* Хедер секции */}
-        <div className="mb-32 max-w-3xl">
+        <div className="mb-14 max-w-3xl md:mb-32">
           <div className="mb-5 flex items-center gap-4">
             {/* Тонкая линия и тонкий шрифт подзаголовка */}
             <span className="h-px w-16 bg-amber-400" />
@@ -92,7 +92,7 @@ export default function AI_RoadmapSection() {
             </span>
           </div>
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-[3.2rem] leading-[1.1] text-slate-900">
-            От&nbsp;задачи к&nbsp;понятному результату
+            От&nbsp;задачи к&nbsp;результату
           </h2>
           <p className="mt-6 text-[1.1rem] leading-relaxed text-slate-600">
             Изучаю аудиторию и&nbsp;рабочие процессы, продумываю сценарий и&nbsp;объясняю ценность продукта. Использую
@@ -149,7 +149,9 @@ export default function AI_RoadmapSection() {
                   }
                 }}
                 onMouseEnter={() => setHoveredStage(stage.id)}
-                onMouseLeave={() => setHoveredStage(null)}
+                onMouseLeave={(event) => {
+                  if (!event.currentTarget.contains(document.activeElement)) setHoveredStage(null);
+                }}
               >
                 {/* Лампочка */}
                 <motion.div
@@ -209,7 +211,7 @@ export default function AI_RoadmapSection() {
                         {stage.tools.map((tool) => (
                           <span 
                             key={tool} 
-                            className="rounded-md border border-white/80 bg-white/60 backdrop-blur-md px-2.5 py-1.5 text-[0.7rem] font-bold text-slate-700 shadow-sm"
+                            className="rounded-md border border-white/80 bg-white/60 backdrop-blur-md px-2.5 py-1.5 text-sm font-medium text-slate-700 shadow-sm"
                           >
                             {tool}
                           </span>
@@ -243,7 +245,8 @@ export default function AI_RoadmapSection() {
               <Network className="h-5 w-5 text-amber-500" />
             </div>
             <p className="text-[0.9rem] font-medium leading-relaxed text-slate-700 max-w-[800px]">
-              Осваиваю новые инструменты под&nbsp;конкретную задачу. Создаю и&nbsp;дорабатываю прототипы с&nbsp;помощью <span className="font-bold text-slate-900">Cursor</span>, <span className="font-bold text-slate-900">Claude Code</span> и&nbsp;<span className="font-bold text-slate-900">n8n</span>. Проверяю результат на&nbsp;примерах и&nbsp;уточняю решение.
+              Выбираю инструменты под&nbsp;задачу, создаю решения с&nbsp;помощью AI,
+              настраиваю интеграции и&nbsp;проверяю результат в&nbsp;реальной работе.
             </p>
           </div>
           {/* Лампочка online — теперь фирменного янтарного цвета */}

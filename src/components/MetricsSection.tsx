@@ -95,7 +95,7 @@ const warmUpIcon: Variants = {
 const MetricsSection = () => {
   return (
     // Секция прозрачная, чтобы фон сайта просвечивал постепенно и красиво
-    <section className="relative z-10 py-24 md:py-32 bg-transparent">
+    <section className="relative z-10 py-16 md:py-24 bg-transparent">
       <div className="container mx-auto px-5 md:px-8">
         
         {/* СТРОГОЕ ВЫРАВНИВАНИЕ ЗАГОЛОВКА: классы скопированы из других экранов один-в-один */}
@@ -160,7 +160,7 @@ const MetricsSection = () => {
                         {item.value}
                       </span>
                       {item.valueNote && (
-                        <span className="text-base md:text-lg font-semibold text-muted-foreground">
+                        <span className="text-base md:text-lg font-semibold text-foreground">
                           {item.valueNote}
                         </span>
                       )}

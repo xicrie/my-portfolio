@@ -20,6 +20,6 @@ export const engineeringCases: Record<string, EngineeringCase> = {
     stack: ["Telegram", "Notion", "Языковая модель"], variant: "reflection",
   },
   "personal-assistant": {
-    stack: ["Telegram", "Языковая модель", "Автоматизации"], variant: "inbox",
+    stack: ["Telegram Bot API", "n8n", "GPT-4o-mini", "API сервисов"], variant: "inbox",
   },
 };

@@ -53,7 +53,7 @@ export const cases: PortfolioCase[] = [
     materialType: "articles",
     cardCover: "/images/case-article.svg", caseHero: "/images/case-hero-article-proptech-2026.svg", caseHeroMobile: "/images/case-hero-article-proptech-2026-mobile.svg", heroLine: "Технологии через задачи бизнеса",
     link: "https://guides.kts.tech/proptech-trendy-2026/",
-    linkLabel: "Читать статью",
+    linkLabel: "Читать статью на сайте",
   },
   {
     id: "email-marketing-kts",
@@ -71,7 +71,7 @@ export const cases: PortfolioCase[] = [
   {
     id: "hh-career-engine",
     category: "ai",
-    title: "Автоотклик на вакансии",
+    title: "Помощник для поиска работы",
     description:
       "Находит подходящие вакансии, готовит персональные письма и отправляет резюме.",
     loadContent: () => import("./projects/hh-career-engine.md?raw").then(module => module.default),
@@ -121,7 +121,7 @@ export const cases: PortfolioCase[] = [
   },
   {
     id: "personal-assistant", category: "ai", title: "AI-ассистент в Телеграме",
-    description: "Отвечает на вопросы, ищет информацию, работает с записями и отправляет письма.",
+    description: "Помогает с поиском, записями, календарём и почтой через текст и голос.",
     loadContent: () => import("./projects/personal-assistant.md?raw").then(module => module.default),
     company: "Личный проект", materialType: "bots", cardCover: "/images/case-personal-assistant.svg", caseHero: "/images/case-hero-personal-assistant.svg", caseHeroMobile: "/images/case-hero-personal-assistant-mobile.svg", heroLine: "Вопросы, записи и действия в одном чате",
   },

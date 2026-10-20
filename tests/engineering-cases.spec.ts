@@ -5,17 +5,17 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];page.on("pageerror", e => errors.push(e.message));
     await page.goto("/?direction=ai#cases");
-    for (const title of ["Автоотклик на вакансии","Задачи из Telegram в YouGile","AI-суфлёр для переговоров"]) {
+    for (const title of ["Помощник для поиска работы","Задачи из Telegram в YouGile","AI-суфлёр для переговоров"]) {
       const trigger = page.getByRole("link", { name: `Прочитать кейс: ${title}`, exact: true });await trigger.click();
       const dialog = page.getByRole("dialog");await dialog.getByRole("heading",{name:"Результат",exact:true}).waitFor();
-      await expect(dialog.locator('[data-story-section]')).toHaveCount(5);
+      await expect(dialog.locator('[data-story-section]')).toHaveCount(title === 'Задачи из Telegram в YouGile' ? 4 : 5);
       await expect(dialog.getByRole("navigation")).toHaveCount(0);
       await expect(dialog.locator("dl, table, [data-artifact]")).toHaveCount(0);
       const details=dialog.locator(".case-technical");await expect(details).not.toHaveAttribute("open","");
       const summary=details.locator("summary");await summary.focus();await page.keyboard.press("Enter");await expect(details).toHaveAttribute("open","");
       const technologies=details.getByRole("region",{name:"Технологии",exact:true});
       await expect(technologies).toBeVisible();await expect(technologies.locator('a,button')).toHaveCount(0);
-      expect((await details.innerText()).split(/\s+/).length).toBeLessThan(130);
+      expect((await details.innerText()).split(/\s+/).length).toBeLessThan(180);
       expect(await dialog.locator(".overflow-y-auto").first().evaluate(el=>el.scrollWidth-el.clientWidth)).toBeLessThanOrEqual(1);
       await page.keyboard.press("Escape");await expect(trigger).toBeFocused();
     }

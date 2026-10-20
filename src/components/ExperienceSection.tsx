@@ -305,7 +305,7 @@ const ExperienceSection = () => {
   const activeTone = jobs[activeIndex].tone;
 
   return (
-    <section className="relative overflow-visible py-24 md:py-32">
+    <section className="relative overflow-visible pt-16 pb-8 md:pt-24 md:pb-12">
       <style>{`
         .exp-no-scrollbar {
           -ms-overflow-style: none;
@@ -354,7 +354,7 @@ const ExperienceSection = () => {
             </h2>
 
             <p className="mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground md:text-[1.12rem]">
-              7+ лет в&nbsp;маркетинге, контенте и&nbsp;цифровых проектах. Соединяю понимание бизнеса, коммуникации и&nbsp;интерес к&nbsp;технологиям.
+              Более 7 лет в&nbsp;маркетинге и&nbsp;цифровых проектах. Сегодня создаю AI-инструменты и&nbsp;автоматизации.
             </p>
           </div>
 
@@ -394,7 +394,7 @@ const ExperienceSection = () => {
               role="region"
               aria-label="Карьера и компании: прокручиваемые карточки"
               tabIndex={0}
-              className="exp-no-scrollbar flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-visible px-[5vw] pt-[30px] pb-[68px] scroll-smooth md:px-[120px]"
+              className="exp-no-scrollbar flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-visible px-[5vw] pt-[30px] pb-12 scroll-smooth md:px-[120px]"
             >
               {jobs.map((job, index) => {
                 const isActive = index === activeIndex;

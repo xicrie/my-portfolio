@@ -45,7 +45,7 @@ test("type filters survive reload and browser history; legacy links are normaliz
   await expect(page).toHaveURL(/direction=ai&type=applications&case=hh-career-engine/);
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("link",{name:"Прочитать кейс: Автоотклик на вакансии",exact:true})).toBeFocused();
+  await expect(page.getByRole("link",{name:"Прочитать кейс: Помощник для поиска работы",exact:true})).toBeFocused();
   await page.goto("/?direction=marketing&type=unknown#cases");
   await expect(page).toHaveURL(/direction=marketing#cases$/);
 });
@@ -56,7 +56,7 @@ test("compact technical detail uses exact YouGile entities and keeps evidence av
   const details = dialog.locator(".case-technical");
   await expect(dialog.getByRole("heading", { name: "О продукте", exact: true })).toBeVisible();
   await expect(details).not.toHaveAttribute("open","");
-  await expect(dialog).toContainText("ответить на нужное сообщение и указать тег");
+  await expect(dialog).toContainText("ответить на сообщение с поручением и указать специальный тег");
   await expect(dialog).toContainText("колонка «Входящие»");
   await details.locator("summary").click();
   await expect(details).toContainText("Исполнитель и срок сохраняются в описании");
@@ -70,7 +70,7 @@ test("compact technical detail uses exact YouGile entities and keeps evidence av
 
 test("keyboard reading traps and restores focus without clickable technology tags", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
-  const trigger = page.getByRole("link", { name: "Прочитать кейс: Автоотклик на вакансии", exact: true });
+  const trigger = page.getByRole("link", { name: "Прочитать кейс: Помощник для поиска работы", exact: true });
   await trigger.focus();await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();

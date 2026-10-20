@@ -87,7 +87,7 @@ export default function PremiumNavbar() {
             
             <div className="flex flex-col leading-none">
               <span className="font-bold text-[1.2rem] tracking-tight text-slate-900">
-                Степанова<span className="text-amber-500">.</span>
+                Степанова
               </span>
               <span className="text-[11px] uppercase tracking-[0.08em] text-slate-400 font-bold mt-1">
                 AI и&nbsp;маркетинг

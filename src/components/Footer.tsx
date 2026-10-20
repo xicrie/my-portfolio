@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  ArrowUp, 
-  Globe, 
+import {
+  ArrowUp,
+  Globe,
   Lightbulb
 } from "lucide-react";
 
@@ -13,13 +13,13 @@ export default function Footer() {
   };
 
   return (
-            <footer className="relative w-full overflow-hidden pt-20 pb-10 font-sans text-slate-900">
+            <footer className="relative w-full overflow-hidden pt-16 pb-8 font-sans text-slate-900">
       {/* Single clean separator — no gradient veils */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
-      
+
       <div className="container relative z-10 mx-auto px-6 max-w-[1150px]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
-          
+
           {/* Блок 1: Бренд */}
           <div className="md:col-span-5 flex flex-col items-start">
                         <div className="flex items-center gap-3 mb-6 group cursor-default">
@@ -27,11 +27,11 @@ export default function Footer() {
                 <Lightbulb className="w-5 h-5 text-white fill-white/20" />
               </div>
               <span className="font-bold text-[1.2rem] tracking-tight">
-                Степанова<span className="text-amber-500">.</span>
+                Степанова
               </span>
             </div>
                         <p className="text-slate-500 text-[0.95rem] leading-relaxed max-w-[320px]">
-              Создаю цифровые продукты и&nbsp;понятные коммуникации. В&nbsp;основе моей работы маркетинговый опыт и&nbsp;внимание к&nbsp;задачам людей.
+              AI-разработка и&nbsp;автоматизация с&nbsp;опытом B2B-маркетинга. От&nbsp;идеи до&nbsp;решения, которым удобно пользоваться.
             </p>
           </div>
 
@@ -48,11 +48,9 @@ export default function Footer() {
           <div className="md:col-span-4 flex flex-col gap-4">
             <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Инструменты в&nbsp;работе</span>
             <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {["ChatGPT", "Claude", "n8n", "Cursor", "Notion AI"].map((tool) => (
-                  <span key={tool} className="text-sm px-3 py-2 rounded-lg bg-slate-50 border border-slate-100 text-slate-500 font-medium">
-                    {tool}
-                  </span>
+              <div className="flex flex-wrap gap-2">
+                {["Codex", "Claude Code", "Cursor", "n8n", "API", "Вебхуки"].map(tool => (
+                  <span key={tool} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700">{tool}</span>
                 ))}
               </div>
             </div>
@@ -65,14 +63,14 @@ export default function Footer() {
             <span className="text-[0.8rem] font-medium text-slate-400 text-center md:text-left">
               © {new Date().getFullYear()} Алёна Степанова. AI, автоматизация и&nbsp;маркетинг
             </span>
-            <div className="hidden md:block w-1 h-1 rounded-full bg-slate-200" />
+
             <span className="flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-400">
               <Globe className="w-3 h-3" />
-              Москва, Химки / Удалённо
+              Москва, удалённо
             </span>
           </div>
 
-          <button 
+          <button
             onClick={scrollToTop}
             className="group flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-500 hover:text-slate-900 hover:border-amber-200 transition-all shadow-sm"
           >
@@ -83,7 +81,7 @@ export default function Footer() {
           </button>
         </div>
       </div>
-      
+
       {/* Декоративный номер версии */}
       <div className="absolute bottom-0 right-0 p-4 opacity-[0.03] select-none pointer-events-none">
         <span className="text-[8rem] font-bold leading-none">v.2026</span>
