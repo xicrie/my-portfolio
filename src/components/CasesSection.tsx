@@ -100,7 +100,7 @@ const CasesSection = () => {
         <div className="mb-14">
           <SectionHeading
             title="Кейсы"
-            subtitle="Личные цифровые продукты и работа для бизнеса. Показываю, как идея становится понятным решением и что я делаю на этом пути."
+            subtitle="Личные цифровые продукты и работа для бизнеса. Показываю, как идея становится понятным решением и что я делаю на этом пути."
           />
         </div>
 
@@ -129,7 +129,7 @@ const CasesSection = () => {
           {availableTypes.map(type => <button key={type} type="button" onClick={() => applyFilter(type)} aria-pressed={filterType === type} className="case-type-filter rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">{materialTypes[type].label}</button>)}
         </div>
 
-        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="case-grid grid gap-7 md:grid-cols-2 lg:grid-cols-3">
           {filteredCases.map((c) => {
 
             return (
@@ -159,33 +159,32 @@ const CasesSection = () => {
                 </div>
 
                 <div className="relative flex flex-1 flex-col px-4 pb-5 pt-6">
-                  <h3 className="mb-3 text-[1.85rem] font-semibold leading-[1.08] tracking-tight text-slate-900 transition-colors group-hover:text-amber-700">
+                  <h3 className="type-card mb-3 text-slate-900 transition-colors group-hover:text-amber-700">
                     {c.title}
                   </h3>
 
-                  <p className="case-category mb-4 text-sm font-medium text-muted-foreground">{materialTypes[c.materialType].singular} · {c.company}</p>
+                  <p className="case-category mb-4 text-sm font-medium text-muted-foreground">{materialTypes[c.materialType].singular}{c.category === "marketing" ? " для\u00a0KTS" : ""}</p>
 
                   {c.description && (
-                    <p className="mb-6 line-clamp-3 text-pretty text-[0.98rem] leading-relaxed text-slate-600">
+                    <p className="type-body mb-6 text-pretty text-slate-600">
                       {c.description}
                     </p>
                   )}
 
                   <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100/90 pt-5">
-                    <Button
-                      type="button"
-                      variant="ghost"
+                    <a
+                      href={`/cases/${c.id}/`}
                       data-case-trigger={c.id}
                       aria-label={`Прочитать кейс: ${c.title}`}
                       onClick={(e) => {
                         e.stopPropagation();
+                        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                        e.preventDefault();
                         caseTriggerRef.current = e.currentTarget;
                         openCase(c);
                       }}
-                      className="h-11 rounded-2xl border border-slate-200 bg-white/74 px-4 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-white hover:text-slate-950"
-                    >
-                      Прочитать
-                    </Button>
+                      className="inline-flex items-center justify-center h-11 rounded-2xl border border-slate-200 bg-white/74 px-4 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-400 hover:bg-white hover:text-slate-950"
+                    >Прочитать</a>
 
 
                   </div>
@@ -202,31 +201,26 @@ const CasesSection = () => {
           onCloseAutoFocus={(event) => {
             event.preventDefault();
             const trigger = caseTriggerRef.current;
-            if (trigger?.isConnected) trigger.focus();
+            if (trigger?.isConnected) trigger.focus({ preventScroll: true });
             else {
               const fallback = document.querySelector<HTMLButtonElement>(`[data-case-trigger="${lastCaseId.current}"]`);
               if (fallback) fallback.focus({ preventScroll: true });
               else filtersRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus({ preventScroll: true });
             }
           }}
-          className="case-reader z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.98)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] [&>button:not([data-case-close])]:hidden sm:rounded-[34px]">
+          className="case-reader z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.98)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] [&>button:not([data-case-close])]:hidden rounded-[28px] sm:rounded-[34px]">
           {active && (
             <>
-              <div className="flex shrink-0 items-center justify-end border-b border-slate-200/70 bg-white px-4 py-2 sm:px-6" role="group" aria-label="Управление чтением">
               <button
                 data-case-close
                 type="button"
                 onClick={closeCase}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 text-slate-700 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-700"
+                className="case-close absolute right-3 top-3 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/80 text-slate-800 shadow-md backdrop-blur-xl transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 sm:right-4 sm:top-4"
                 aria-label="Закрыть"
-              >
-                <X className="h-5 w-5" />
-              </button>
-              </div>
+              ><X className="h-5 w-5" /></button>
 
-              <DialogTitle className="sr-only">{active.title}</DialogTitle>
               <DialogDescription className="sr-only">
-                Полный обзор кейса: {active.title}
+                Описание продукта, моя работа и&nbsp;результат.
               </DialogDescription>
 
               <div className="relative min-h-0 flex-1 overflow-y-auto">
@@ -236,7 +230,7 @@ const CasesSection = () => {
                     <img src={active.caseHero} alt="" width={1440} height={480} className="h-full w-full object-cover" />
                   </picture>
                   <div className="case-hero-copy relative z-10 hidden h-full max-w-[48%] flex-col justify-center px-10 py-8 sm:flex">
-                    <p className="mb-4 text-sm font-medium">{active.category === "ai" ? active.company : "Материал для KTS"}</p>
+                    <p className="mb-4 text-sm font-medium">{active.category === "ai" ? active.company : "Материал для\u00a0KTS"}</p>
                     <p className="text-2xl font-semibold leading-tight lg:text-3xl">{active.heroLine}</p>
                   </div>
                   <figcaption className="sr-only">Концептуальная иллюстрация, не снимок интерфейса продукта.</figcaption>
@@ -245,9 +239,9 @@ const CasesSection = () => {
                 <div className="px-6 pb-10 pt-8 sm:px-12 sm:pb-14">
                   <div className="mx-auto max-w-3xl">
 
-                    <h2 className={cn("mb-10 text-[2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-[2.6rem]", active.category === "ai" && "!mb-6")}>
+                    <DialogTitle asChild><h2 className={cn("type-case-title mb-8 text-slate-950", active.category === "ai" && "!mb-6")}>
                       {active.title}
-                    </h2>
+                    </h2></DialogTitle>
 
                     <Suspense fallback={<p role="status">Загружаю кейс…</p>}>
                       <CaseContent item={active} />

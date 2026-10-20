@@ -23,7 +23,7 @@ for (const width of [320, 390, 768, 1440]) {
         expect(current).not.toContain(cardImage!);
         expect(current).toContain(width<640?'-mobile.svg':'.svg');
         await hero.evaluate(async(n:HTMLImageElement)=>{await n.decode()});
-        const prose=d.locator('.case-story-prose, .case-context').first();
+        const prose=d.locator('.case-story-prose, .case-context, .case-original').first();
         const size=await prose.evaluate(n=>Number.parseFloat(getComputedStyle(n).fontSize));
         expect(size).toBeGreaterThanOrEqual(16);expect(size).toBeLessThanOrEqual(18);
         expect(await d.locator('.overflow-y-auto').first().evaluate(n=>n.scrollWidth-n.clientWidth)).toBeLessThanOrEqual(1);
@@ -42,13 +42,14 @@ for (const width of [320, 390, 768, 1440]) {
   });
 }
 
-test("inbox example is clearly illustrative and does not promise calendar or memory", async ({page})=>{
+test("assistant shows the actual product capabilities without a fabricated conversation", async ({page})=>{
   await page.goto('/?direction=ai&case=personal-assistant#cases');
-  const d=page.getByRole('dialog');const figure=d.getByRole('figure',{name:'Пример разбора сообщения'});
-  await expect(figure).toContainText('Придуманный пример, не переписка с работающим ботом');
-  await expect(figure.getByText('Задача:',{exact:true})).toBeVisible();
-  await expect(figure.getByText('Гипотеза:',{exact:true})).toBeVisible();
-  await expect(d.getByText(/Поиск, календарь и долговременная память/)).toBeVisible();
+  const d=page.getByRole('dialog');await d.locator('.case-lead').waitFor();
+  await expect(d.locator('.inbox-example, blockquote')).toHaveCount(0);
+  await expect(d).toContainText('ищет информацию в интернете');
+  await expect(d).toContainText('Отправляет письма');
+  await expect(d).toContainText('подключённые действия');
+  expect(await d.innerText()).not.toMatch(/Дане|AI Inbox|Придуманный пример|прототип|нужно проверить по экспорту/i);
 });
 
 test("career includes confirmed Teletype work and seven years across disciplines",async({page})=>{
@@ -68,8 +69,8 @@ test("career includes confirmed Teletype work and seven years across disciplines
 test("new author stories, clear titles and quiet navigation", async({page})=>{
   await page.goto('/#cases');const list=page.locator('#portfolio');
   expect(await list.innerText()).not.toMatch(/6 проектов|Направление|Тип материала/);
-  for(const title of ['HH Career Engine','AI-суфлёр','Задачи из Telegram в YouGile','AI-персонаж в Telegram','Умный дневник «Арго»','Личный AI-ассистент'])await expect(list.getByRole('heading',{name:title,exact:true})).toBeVisible();
+  for(const title of ['Автоотклик на вакансии','AI-суфлёр для переговоров','Задачи из Telegram в YouGile','AI-аватар в Телеграме','Умный дневник в Телеграме','AI-ассистент в Телеграме'])await expect(list.getByRole('heading',{name:title,exact:true})).toBeVisible();
   await page.goto('/?case=telegram-roleplay#cases');const d=page.getByRole('dialog');await d.locator('.case-lead').waitFor();await d.locator('details summary').click();
-  await expect(d).toContainText('Ксаавьер');await expect(d).toContainText('DeepSeek v3');await expect(d).toContainText('тестировала ролевое взаимодействие');await expect(d).toContainText('собственном сервере');await expect(d).toContainText('не входят в текущие возможности');expect(await d.innerText()).not.toMatch(/workflow.*не|По описанию автора|не подтвержден/);
+  await expect(d).toContainText('Ксаавьер');await expect(d).toContainText('DeepSeek v3');await expect(d).toContainText('стресс-тестирование');await expect(d).toContainText('собственном сервере');expect(await d.innerText()).not.toMatch(/workflow.*не|По описанию автора|не подтвержден/);
   await page.goto('/?case=cbt-diary#cases');await d.locator('.case-lead').waitFor();expect(await d.innerText()).not.toMatch(/По описанию автора|До проверки workflow|не подтвержден/);await expect(d).toContainText('Notion');await expect(d).toContainText('недельные обзоры');await expect(d).toContainText('сохраняет записи в Notion');
 });

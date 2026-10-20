@@ -14,8 +14,9 @@
 .portfolio-cases article[data-direction="marketing"] .case-hover > div:first-child { background: linear-gradient(180deg,#a47ed322,#ffffff08); }
 .portfolio-cases article[data-direction="marketing"] .case-hover > div:last-child { box-shadow: inset 0 0 60px #a47ed31f; }
 .portfolio-cases article[data-direction="marketing"]:hover h3 { color: #6740a0; }
-.case-reader .case-story-prose, .case-reader .case-original, .case-context, .marketing-decisions p, .marketing-story section > p, .case-scenario, .inbox-example { font-size: 17px; line-height: 1.8; }
-.case-reader .case-technical section, .case-reader .case-technical summary span, .case-scenario figcaption { font-size: 15px; }
+.case-reader .case-story-prose, .case-reader .case-original, .case-context, .marketing-decisions p, .marketing-story section > p, .case-scenario, .case-reader .case-technical section { font-size: 17px; line-height: 1.8; }
+.case-scenario figcaption { font-size: 15px; }
+.case-reader .prose blockquote p::before, .case-reader .prose blockquote p::after { content: none; }
 .case-story-anchor { color: var(--case-ink); }
 .case-story-prose > :first-child { margin-top: 0; }
 .case-story-prose > :last-child { margin-bottom: 0; }
@@ -33,7 +34,7 @@
 @media (min-width: 640px) { .case-reader-cover { aspect-ratio: 3 / 1; } }
 @media (max-width: 640px) {
   .portfolio-cases article { backdrop-filter: none; }
-  .case-reader .case-story-prose, .case-reader .case-original, .case-context, .marketing-decisions p, .marketing-story section > p, .case-scenario, .inbox-example { font-size: 16px; }
+  .case-reader .case-story-prose, .case-reader .case-original, .case-context, .marketing-decisions p, .marketing-story section > p, .case-scenario, .case-reader .case-technical section { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .portfolio-cases *, .case-reader * { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }

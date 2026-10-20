@@ -12,6 +12,6 @@ export default function CaseContent({ item }: { item: PortfolioCase }) {
     return () => { current = false; };
   }, [item]);
   if (result.id !== item.id) return <p role="status">Загружаю материал…</p>;
-  if (result.error) return <p role="alert">Не удалось загрузить материал. Закройте кейс и попробуйте открыть его ещё раз.</p>;
+  if (result.error) return <p role="alert">Не удалось загрузить материал. Закройте кейс и&nbsp;попробуйте открыть его ещё раз.</p>;
   return item.category === "ai" ? <AIEngineeringCase id={item.id} content={result.content ?? ""} /> : <MarketingCase id={item.id} content={result.content ?? ""} />;
 }

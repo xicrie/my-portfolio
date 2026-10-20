@@ -6,10 +6,10 @@ import { useMemo, useState } from "react";
 import PremiumBackground from "./PremiumBackground";
 
 const quotes = [
-  "Люблю разбираться в сложном и находить понятный путь к решению.",
+  "Люблю разбираться в сложном и находить понятный путь к решению.",
   "Сначала задача человека, потом подходящий инструмент.",
-  "Хорошая идея становится сильнее после первой проверки на практике.",
-  "Интереснее всего соединять опыт из разных областей и создавать новое.",
+  "Хорошая идея становится сильнее после первой проверки на практике.",
+  "Интереснее всего соединять опыт из разных областей и создавать новое.",
 ];
 
 const HeroSection = () => {
@@ -45,7 +45,7 @@ const HeroSection = () => {
             </div>
 
             <div className="relative">
-              <h1 className="font-display text-[3.25rem] leading-[0.98] tracking-tight text-foreground sm:text-[4.25rem] md:text-[5.1rem] xl:text-[5.8rem]">
+              <h1 className="type-hero text-foreground">
                 <span className="block">Привет,</span>
                 <span className="block whitespace-nowrap bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 bg-clip-text text-transparent">
                   я Алёна
@@ -53,14 +53,17 @@ const HeroSection = () => {
               </h1>
 
               <p className="mt-7 text-[1.18rem] font-semibold leading-relaxed text-foreground md:text-[1.34rem]">
-                Продукты, автоматизация и маркетинг
+                AI, автоматизация и&nbsp;маркетинг
               </p>
 
-              <p className="mt-7 max-w-[710px] text-[1.04rem] leading-[1.78] text-muted-foreground md:text-[1.12rem]">
-                Собираю инструменты для повседневных задач: от отбора вакансий
-                до работы с сообщениями. Продумываю сценарий, создаю прототип
-                с помощью ИИ и проверяю результат. В этом помогает опыт
-                в маркетинге и клиентских коммуникациях.
+              <p className="type-body mt-6 max-w-[710px] text-muted-foreground">
+                Создаю AI-инструменты и&nbsp;автоматизации: от&nbsp;идеи до&nbsp;работающего продукта.
+                Разбираюсь в&nbsp;новых технологиях, собираю прототипы с&nbsp;помощью ИИ
+                и&nbsp;довожу сценарии до&nbsp;результата.
+              </p>
+              <p className="type-body mt-4 max-w-[710px] text-muted-foreground">
+                7+ лет в&nbsp;маркетинге, в&nbsp;том числе B2B и&nbsp;IT, помогают видеть
+                за&nbsp;технической задачей пользу для&nbsp;человека и&nbsp;бизнеса.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -80,7 +83,7 @@ const HeroSection = () => {
                   className="inline-flex items-center justify-center gap-2 rounded-[1.2rem] border border-[#dcd3c6] bg-white/50 px-6 py-4 text-base font-medium text-foreground shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/35 hover:bg-white/80"
                 >
                   <Send className="h-4 w-4" />
-                  Написать в Telegram
+                  Написать в&nbsp;Telegram
                 </a>
               </div>
             </div>

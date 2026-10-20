@@ -1,0 +1,6 @@
+import {build}from'vite';import fs from'node:fs/promises';
+const [auditPath,outPath]=process.argv.slice(2);if(!auditPath||!outPath)throw new Error('Provide audit JSON and report path');
+const audit=JSON.parse(await fs.readFile(auditPath,'utf8'));const bundled=new Set();
+await build({configFile:'vite.config.ts',logLevel:'warn',build:{write:false},plugins:[{name:'report-bundled-dependencies',generateBundle(_options,bundle){for(const file of Object.values(bundle)){if(file.type!=='chunk')continue;for(const [id,details]of Object.entries(file.modules)){if(!details.renderedLength||!id.includes('node_modules/'))continue;const p=id.split('node_modules/').at(-1).split('/');bundled.add(p[0].startsWith('@')?p.slice(0,2).join('/'):p[0]);}}}}]});
+const high=Object.entries(audit.vulnerabilities??{}).filter(([,v])=>v.severity==='high').map(([name,v])=>({name,direct:v.isDirect,bundled:bundled.has(name),range:v.range,via:v.via.map(x=>typeof x==='string'?{package:x}:{title:x.title,url:x.url,range:x.range})}));
+await fs.writeFile(outPath,JSON.stringify({bundledPackages:[...bundled].sort(),high,highInBrowser:high.filter(x=>x.bundled).map(x=>x.name)},null,2));console.log('High packages in browser chunks:',high.filter(x=>x.bundled).length);

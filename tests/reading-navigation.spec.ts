@@ -9,10 +9,15 @@ for (const width of [390, 1440]) {
     await page.goto("/?direction=ai#cases");
     await page.getByRole("group", { name: "Тип материала" }).getByRole("button", { name: "Приложения", exact: true }).click();
     const filterURL = page.url();
-    const trigger = page.getByRole("button", { name: "Прочитать кейс: HH Career Engine", exact: true });
+    const trigger = page.getByRole("link", { name: "Прочитать кейс: Автоотклик на вакансии", exact: true });
     await trigger.scrollIntoViewIfNeeded();
-    const before = await page.evaluate(() => scrollY);
+    // Clicking can make Playwright scroll again after the card hover transform.
+    // Compare the actual activation position, rather than an earlier snapshot.
+    await trigger.evaluate(node => node.addEventListener("click", () => {
+      node.setAttribute("data-open-scroll-y", String(window.scrollY));
+    }, { capture: true, once: true }));
     await trigger.click();
+    const before = Number(await page.locator('[data-case-trigger="hh-career-engine"]').getAttribute("data-open-scroll-y"));
     await expect(page).toHaveURL(/case=hh-career-engine/);
     const dialog = page.getByRole("dialog");
     await dialog.locator(".case-technical summary").click();

@@ -21,15 +21,15 @@ export default function PremiumContactSection() {
           <div className="mb-4 flex items-center gap-4">
             <span className="h-px w-12 bg-amber-400" />
             <span className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">
-              Связь и резюме
+              Связь и&nbsp;резюме
             </span>
           </div>
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-[3.2rem] leading-[1.1] text-slate-900">
-            Поговорим <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-400">о задаче</span>
+          <h2 className="type-section text-slate-900">
+            Поговорим <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-400">о&nbsp;задаче</span>
           </h2>
           <p className="mt-5 text-[1.1rem] leading-relaxed text-slate-600 max-w-2xl">
-            Обсудим продукт, автоматизацию или коммуникации с клиентами.
-            Расскажу о своём опыте и покажу личные проекты.
+            Обсудим продукт, автоматизацию или&nbsp;коммуникации с&nbsp;клиентами.
+            Расскажу о&nbsp;своём опыте и&nbsp;покажу личные проекты.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export default function PremiumContactSection() {
                 {/* Плашка профессии */}
                 <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-100/80 text-[0.8rem] font-bold text-amber-700">
                   <Sparkles className="w-3.5 h-3.5" />
-                  Продукты · Маркетинг
+                  AI и&nbsp;маркетинг
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function PremiumContactSection() {
                   <h3 className="text-2xl font-bold text-slate-900">Telegram</h3>
                 </div>
                 <p className="text-[0.95rem] font-medium text-slate-600 leading-relaxed">
-                  Предпочитаю общаться через Telegram. Расскажите о задаче или вакансии. Обсудим детали.
+                  Предпочитаю общаться через&nbsp;Telegram. Расскажите о&nbsp;задаче или&nbsp;вакансии. Обсудим детали.
                 </p>
               </div>
 
@@ -155,7 +155,7 @@ export default function PremiumContactSection() {
                 </div>
                 <div className="flex flex-col">
                   <h4 className="text-[1.1rem] font-bold text-slate-900 mb-0.5">Официальное резюме</h4>
-                  <span className="text-[0.85rem] font-medium text-slate-500">HeadHunter · Опыт и навыки</span>
+                  <span className="text-[0.85rem] font-medium text-slate-500">Опыт и&nbsp;навыки на&nbsp;HeadHunter</span>
                 </div>
               </div>
 
@@ -165,7 +165,7 @@ export default function PremiumContactSection() {
                 rel="noopener noreferrer"
                 className="shrink-0 flex items-center justify-center gap-2 px-6 py-3.5 w-full sm:w-auto rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:border-amber-300 hover:text-amber-600 transition-all shadow-sm hover:shadow-md"
               >
-                Посмотреть на HH
+                Посмотреть на&nbsp;HH
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </motion.div>

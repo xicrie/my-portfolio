@@ -90,7 +90,7 @@ export default function PremiumNavbar() {
                 Степанова<span className="text-amber-500">.</span>
               </span>
               <span className="text-[11px] uppercase tracking-[0.08em] text-slate-400 font-bold mt-1">
-                Продукты · Маркетинг
+                AI и&nbsp;маркетинг
               </span>
             </div>
           </a>

@@ -31,7 +31,7 @@ export default function Footer() {
               </span>
             </div>
                         <p className="text-slate-500 text-[0.95rem] leading-relaxed max-w-[320px]">
-              Создаю цифровые продукты и понятные коммуникации. В основе моей работы маркетинговый опыт и внимание к задачам людей.
+              Создаю цифровые продукты и&nbsp;понятные коммуникации. В&nbsp;основе моей работы маркетинговый опыт и&nbsp;внимание к&nbsp;задачам людей.
             </p>
           </div>
 
@@ -40,13 +40,13 @@ export default function Footer() {
             <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Навигация</span>
             <a href="#experience" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Опыт работы</a>
             <a href="#cases" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Портфолио</a>
-            <a href="#skills" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Навыки и подход</a>
+            <a href="#skills" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Навыки и&nbsp;подход</a>
             <a href="#results" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Результаты</a>
           </div>
 
           {/* Блок 3: Engine Status */}
           <div className="md:col-span-4 flex flex-col gap-4">
-            <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Инструменты в работе</span>
+            <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Инструменты в&nbsp;работе</span>
             <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-3">
               <div className="flex flex-wrap gap-1.5">
                 {["ChatGPT", "Claude", "n8n", "Cursor", "Notion AI"].map((tool) => (
@@ -63,7 +63,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-100 gap-6">
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
             <span className="text-[0.8rem] font-medium text-slate-400 text-center md:text-left">
-              © {new Date().getFullYear()} Алёна Степанова · Продукты, автоматизация и маркетинг
+              © {new Date().getFullYear()} Алёна Степанова. AI, автоматизация и&nbsp;маркетинг
             </span>
             <div className="hidden md:block w-1 h-1 rounded-full bg-slate-200" />
             <span className="flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-400">
@@ -76,7 +76,7 @@ export default function Footer() {
             onClick={scrollToTop}
             className="group flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-500 hover:text-slate-900 hover:border-amber-200 transition-all shadow-sm"
           >
-            <span className="text-[0.75rem] font-bold uppercase tracking-widest">В начало</span>
+            <span className="text-[0.75rem] font-bold uppercase tracking-widest">В&nbsp;начало</span>
             <div className="p-1 rounded-full bg-slate-50 group-hover:bg-amber-50 transition-colors">
               <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
             </div>

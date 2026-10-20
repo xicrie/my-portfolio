@@ -20,12 +20,12 @@ const SectionHeading = ({ title, subtitle }: SectionHeadingProps) => (
       </span>
     </div>
 
-    <h2 className="font-display text-[2.6rem] md:text-[3.4rem] leading-[0.95] tracking-tight text-foreground max-w-3xl">
+    <h2 className="type-section text-foreground max-w-3xl">
       {title}
     </h2>
 
     {subtitle && (
-      <p className="mt-5 text-muted-foreground text-lg leading-relaxed max-w-2xl">
+      <p className="mt-5 type-body text-muted-foreground max-w-2xl">
         {subtitle}
       </p>
     )}

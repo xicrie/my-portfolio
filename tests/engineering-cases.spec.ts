@@ -5,8 +5,8 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];page.on("pageerror", e => errors.push(e.message));
     await page.goto("/?direction=ai#cases");
-    for (const title of ["HH Career Engine","Задачи из Telegram в YouGile","AI-суфлёр"]) {
-      const trigger = page.getByRole("button", { name: `Прочитать кейс: ${title}`, exact: true });await trigger.click();
+    for (const title of ["Автоотклик на вакансии","Задачи из Telegram в YouGile","AI-суфлёр для переговоров"]) {
+      const trigger = page.getByRole("link", { name: `Прочитать кейс: ${title}`, exact: true });await trigger.click();
       const dialog = page.getByRole("dialog");await dialog.getByRole("heading",{name:"Результат",exact:true}).waitFor();
       await expect(dialog.locator('[data-story-section]')).toHaveCount(5);
       await expect(dialog.getByRole("navigation")).toHaveCount(0);
