@@ -50,25 +50,20 @@ test("type filters survive reload and browser history; legacy links are normaliz
   await expect(page).toHaveURL(/direction=marketing#cases$/);
 });
 
-test("proof is readable without mistaking automated checks for product results", async ({ page }) => {
+test("compact technical detail preserves honest readiness and keeps public evidence available", async ({ page }) => {
   await page.goto("/?direction=ai&case=telegram-ai-yougile#cases");
   const dialog = page.getByRole("dialog");
   const details = dialog.locator(".case-technical");
   await expect(dialog.getByRole("heading", { name: "О продукте", exact: true })).toBeVisible();
   await expect(details).not.toHaveAttribute("open","");
-  await expect(dialog.getByText(/32 локальные проверки/)).not.toBeVisible();
+  await expect(dialog).toContainText("исправить передачу состояния");
   await details.locator("summary").click();
-  await expect(dialog.getByText(/поля назначения исполнителя и дедлайна YouGile автоматически не заполняются/i)).toBeVisible();
-  await expect(details).toContainText("Это не 32 созданные задачи");
-  await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
-  await page.getByRole("button", { name: "Прочитать кейс: AI-суфлёр", exact: true }).click();
-  await dialog.locator(".case-technical summary").click();
-  await expect(dialog.getByText(/11 изолированных проверок чистых функций/)).toBeVisible();
-  await expect(dialog.locator('[data-artifact="/projects/ai-prompter-brief.json"]')).toBeVisible();
-  for (const path of ["/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
+  await expect(details).toContainText("отдельные поля YouGile автоматически не заполняются");
+  await expect(dialog.locator('[data-artifact]')).toHaveCount(0);
+  expect(await dialog.innerText()).not.toMatch(/32 локальные|350 программных|Подробная техническая сводка/);
+  for (const path of ["/projects/hh-career-engine-verification.json", "/projects/yougile-workflow-verification.json", "/projects/ai-prompter-brief.json"]) {
     const response = await page.request.get(path);
-    expect(response.ok()).toBeTruthy();
-    expect(response.headers()["content-type"]).toContain("application/json");
+    expect(response.ok()).toBeTruthy();expect(response.headers()["content-type"]).toContain("application/json");
   }
 });
 
@@ -83,7 +78,7 @@ test("keyboard reading traps and restores focus without clickable technology tag
   await dialog.locator(".case-technical summary").click();
   const technologies = dialog.getByRole("region", { name: "Технологии",exact:true });
   await expect(technologies.getByRole("button")).toHaveCount(0);
-  const before = page.url();await technologies.getByText("SQLite / WAL",{exact:true}).click();
+  const before = page.url();await technologies.getByText(/SQLite/).click();
   expect(page.url()).toBe(before);
   for (let i = 0; i < 12; i++) {await page.keyboard.press("Tab");expect(await dialog.evaluate(el => el.contains(document.activeElement))).toBeTruthy();}
   await page.keyboard.press("Escape");await expect(dialog).not.toBeVisible();await expect(trigger).toBeFocused();

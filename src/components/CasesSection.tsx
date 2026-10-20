@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 import "./cases.css";
 import { normalizeCaseSearch } from "@/data/caseNavigation";
 
-const caseCountRule = new Intl.PluralRules("ru");
 const CaseContent = lazy(() => import("./CaseContent"));
 
 const directions = [
@@ -105,7 +104,6 @@ const CasesSection = () => {
           />
         </div>
 
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Направление</p>
         <div className="mb-6 flex flex-wrap items-center gap-2.5" role="group" aria-label="Направление проектов">
           {directions.map((item) => (
             <button
@@ -126,12 +124,10 @@ const CasesSection = () => {
           ))}
         </div>
 
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Тип материала</p>
         <div ref={filtersRef} className="mb-10 flex flex-wrap items-center gap-2" role="group" aria-label="Тип материала">
           <button type="button" onClick={() => applyFilter(null)} aria-pressed={!filterType} className="case-type-filter rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">Все типы</button>
           {availableTypes.map(type => <button key={type} type="button" onClick={() => applyFilter(type)} aria-pressed={filterType === type} className="case-type-filter rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">{materialTypes[type].label}</button>)}
         </div>
-        <p className="mb-5 text-sm text-muted-foreground" role="status">{filteredCases.length} {(direction === "ai" ? { one: "проект", few: "проекта", many: "проектов", other: "проекта" } : { one: "материал", few: "материала", many: "материалов", other: "материала" })[caseCountRule.select(filteredCases.length) as "one" | "few" | "many" | "other"]}</p>
 
         <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
           {filteredCases.map((c) => {
@@ -216,8 +212,7 @@ const CasesSection = () => {
           className="case-reader z-[9999] flex max-h-[92vh] w-[min(94vw,72rem)] max-w-5xl flex-col gap-0 overflow-hidden border border-white/50 bg-[rgba(255,255,255,0.98)] p-0 shadow-[0_40px_120px_rgba(0,0,0,0.24)] [&>button:not([data-case-close])]:hidden sm:rounded-[34px]">
           {active && (
             <>
-              <div className="flex shrink-0 items-center justify-between border-b border-slate-200/70 bg-white px-4 py-2 sm:px-6" role="group" aria-label="Управление чтением">
-                <button type="button" onClick={closeCase} className="case-return rounded-xl px-3 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-700">← К списку кейсов</button>
+              <div className="flex shrink-0 items-center justify-end border-b border-slate-200/70 bg-white px-4 py-2 sm:px-6" role="group" aria-label="Управление чтением">
               <button
                 data-case-close
                 type="button"
@@ -249,9 +244,8 @@ const CasesSection = () => {
 
                 <div className="px-6 pb-10 pt-8 sm:px-12 sm:pb-14">
                   <div className="mx-auto max-w-3xl">
-                    <span className="case-type-label mb-4 inline-block rounded-full border px-3 py-1.5 text-xs font-medium">{materialTypes[active.materialType].singular}</span>
 
-                    <h2 className={cn("mb-10 text-[2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-[2.6rem]", active.category === "ai" && "pr-10 !mb-6")}>
+                    <h2 className={cn("mb-10 text-[2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-[2.6rem]", active.category === "ai" && "!mb-6")}>
                       {active.title}
                     </h2>
 
@@ -273,7 +267,7 @@ const CasesSection = () => {
                             rel="noopener noreferrer"
                           >
                             <ExternalLink className="mr-2 h-5 w-5" />
-                            {active.linkLabel ?? "Читать на сайте"} · новая вкладка
+                            {active.linkLabel ?? "Смотреть публикацию"}
                           </a>
                         </Button>
                       </div>

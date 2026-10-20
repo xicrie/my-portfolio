@@ -15,10 +15,9 @@ for (const width of [390, 1440]) {
     await trigger.click();
     await expect(page).toHaveURL(/case=hh-career-engine/);
     const dialog = page.getByRole("dialog");
-    const artifact = dialog.locator('[data-artifact="/projects/hh-career-engine-verification.json"]');
     await dialog.locator(".case-technical summary").click();
-    await artifact.click();
-    await expect(dialog.getByRole("group", { name: "Технический JSON" })).toContainText('"project": "HH Career Engine"');
+    await expect(dialog.getByRole("region",{name:"Технологии",exact:true})).toContainText("SQLite");
+    await expect(dialog.locator('[data-artifact]')).toHaveCount(0);
     expect(context.pages()).toHaveLength(1);
     expect(page.url()).toContain("case=hh-career-engine");
     await page.goBack();
@@ -49,9 +48,10 @@ for (const width of [390, 1440]) {
       await expect.poll(async () => (await dialog.innerText()).length).toBeGreaterThan(500);
       await expect(dialog).toHaveCount(1);
       const external = dialog.locator('a[target="_blank"]');
-      for (const link of await external.all()) expect(await link.textContent()).toMatch(/новая вкладка/);
+      for (const link of await external.all()) {expect(await link.getAttribute("rel")).toContain("noopener");expect(await link.textContent()).not.toMatch(/новая вкладка|внешний сайт/);}
       expect(await dialog.locator(".overflow-y-auto").first().evaluate(n => n.scrollWidth - n.clientWidth)).toBeLessThanOrEqual(1);
-      await dialog.getByRole("button", { name: "← К списку кейсов", exact: true }).click();
+      await expect(dialog.getByRole("button",{name:/К списку кейсов/})).toHaveCount(0);
+      await dialog.getByRole("button", { name: "Закрыть", exact: true }).click();
       await expect(dialog).not.toBeVisible();
       await expect(button).toBeFocused();
     }

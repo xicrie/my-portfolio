@@ -45,7 +45,7 @@ export default function CaseMarkdown({ content, technical = false }: { content: 
   return <ReactMarkdown remarkPlugins={[remarkGfm, editorialTypography]} components={{
     a: ({ href = "", children }) => {
       if (href.startsWith("/projects/") && href.endsWith(".json")) return <Artifact href={href}>{children}</Artifact>;
-      if (/^https?:\/\//.test(href)) return <a href={href} target="_blank" rel="noopener noreferrer">{children}<span className="text-xs"> ↗ внешний сайт, новая вкладка</span></a>;
+      if (/^https?:\/\//.test(href)) return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
       if (href.startsWith("?")) return <Link to={href}>{children}</Link>;
       return <a href={href}>{children}</a>;
     },

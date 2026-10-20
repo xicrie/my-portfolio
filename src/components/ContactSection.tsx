@@ -134,8 +134,8 @@ export default function PremiumContactSection() {
                 href="https://t.me/xicrie" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                // Кнопка стала сочной, фиолетово-фуксиевой, не сливается с черным текстом и имеет пространство
-                className="shrink-0 flex items-center justify-center gap-2 px-8 py-4 w-full md:w-auto rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-violet-600 hover:to-fuchsia-600 transition-all hover:-translate-y-1 active:scale-95"
+                // Цвет и контраст согласованы с основной кнопкой первого экрана.
+                className="shrink-0 flex items-center justify-center gap-2 px-8 py-4 w-full md:w-auto rounded-2xl bg-accent text-accent-foreground font-semibold shadow-[0_12px_30px_rgba(236,183,11,0.22)] hover:shadow-[0_16px_36px_rgba(236,183,11,0.30)] transition-all hover:-translate-y-1 active:scale-95"
               >
                 Написать Алёне
                 <ArrowUpRight className="w-4 h-4 opacity-80" />

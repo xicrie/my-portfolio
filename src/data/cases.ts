@@ -30,7 +30,7 @@ export const cases: PortfolioCase[] = [
   {
     id: "proptech-legend",
     category: "marketing",
-    title: "LEGENDA: история цифрового продукта",
+    title: "Упаковка кейса LEGENDA",
     description:
       "История о том, как личный кабинет упрощает работу брокера и помогает девелоперу.",
     loadContent: () => import("../../notion-data/PropTech кейс для IT компании 3045c3762c418107b2ece4cd3bc595c5.md?raw").then(module => module.default),
@@ -38,12 +38,12 @@ export const cases: PortfolioCase[] = [
     companyDescription:
       "Аккредитованная IT-компания и цифровой интегратор. Работа с контентом для сложных цифровых продуктов и B2B-направления.",
     materialType: "cases",
-    cardCover: "/images/case-proptech.svg", caseHero: "/images/case-hero-proptech-legend.svg", caseHeroMobile: "/images/case-hero-proptech-legend-mobile.svg", heroLine: "Сложный продукт. Понятная история.",
+    cardCover: "/images/case-proptech.svg", caseHero: "/images/case-hero-proptech-legend.svg", caseHeroMobile: "/images/case-hero-proptech-legend-mobile.svg", heroLine: "История кабинета брокера",
   },
   {
     id: "article-proptech-2026",
     category: "marketing",
-    title: "PropTech: от технологий к задачам бизнеса",
+    title: "Статья о PropTech для KTS",
     description:
       "Помогает девелоперу выбрать, с какой задачи начать цифровизацию бизнеса.",
     loadContent: () => import("../../notion-data/Статья про PropTech для IT компании 3045c3762c4181e7874af5ec3ec68a3c.md?raw").then(module => module.default),
@@ -53,7 +53,7 @@ export const cases: PortfolioCase[] = [
     materialType: "articles",
     cardCover: "/images/case-article.svg", caseHero: "/images/case-hero-article-proptech-2026.svg", caseHeroMobile: "/images/case-hero-article-proptech-2026-mobile.svg", heroLine: "Технологии через задачи бизнеса",
     link: "https://guides.kts.tech/proptech-trendy-2026/",
-    linkLabel: "Читать на сайте",
+    linkLabel: "Читать статью",
   },
   {
     id: "email-marketing-kts",
@@ -73,7 +73,7 @@ export const cases: PortfolioCase[] = [
     category: "ai",
     title: "HH Career Engine",
     description:
-      "Находит подходящие вакансии и помогает объяснить работодателю, почему ваш опыт ему подходит.",
+      "Помощник для поиска и отбора вакансий.",
     loadContent: () => import("./projects/hh-career-engine.md?raw").then(module => module.default),
     company: "Личный проект",
     materialType: "applications",
@@ -84,7 +84,7 @@ export const cases: PortfolioCase[] = [
   {
     id: "telegram-ai-yougile",
     category: "ai",
-    title: "Из Telegram в YouGile",
+    title: "Задачи из Telegram в YouGile",
     description:
       "Помогает перенести поручение из переписки в трекер, сохранив смысл и важные уточнения.",
     loadContent: () => import("./projects/telegram-ai-yougile.md?raw").then(module => module.default),
@@ -99,7 +99,7 @@ export const cases: PortfolioCase[] = [
     category: "ai",
     title: "AI-суфлёр",
     description:
-      "Предлагает короткую подсказку во время разговора с опорой на вопрос собеседника и факты из резюме.",
+      "AI-помощник во время звонков и переговоров.",
     loadContent: () => import("./projects/ai-prompter.md?raw").then(module => module.default),
     company: "Личный прототип",
     materialType: "applications",
@@ -108,20 +108,20 @@ export const cases: PortfolioCase[] = [
     linkLabel: "Описание прототипа",
   },
   {
-    id: "telegram-roleplay", category: "ai", title: "Истории с персонажами в Telegram",
-    description: "Позволяет стать участником истории и продолжать её через разговор с персонажем.",
+    id: "telegram-roleplay", category: "ai", title: "AI-персонаж в Telegram",
+    description: "Ксаавьер: эксперимент с характером и последовательностью поведения в диалоге.",
     loadContent: () => import("./projects/telegram-roleplay.md?raw").then(module => module.default),
-    company: "Личный прототип", materialType: "bots", cardCover: "/images/case-roleplay.svg", caseHero: "/images/case-hero-telegram-roleplay.svg", caseHeroMobile: "/images/case-hero-telegram-roleplay-mobile.svg", heroLine: "История в ответ на вашу реплику",
+    company: "Личный проект", materialType: "bots", cardCover: "/images/case-roleplay.svg", caseHero: "/images/case-hero-telegram-roleplay.svg", caseHeroMobile: "/images/case-hero-telegram-roleplay-mobile.svg", heroLine: "Ксаавьер: характер в диалоге",
   },
   {
-    id: "cbt-diary", category: "ai", title: "КПТ-дневник в Telegram",
-    description: "Помогает остановиться, записать важное и внимательнее отнестись к собственным мыслям.",
+    id: "cbt-diary", category: "ai", title: "Умный дневник «Арго»",
+    description: "Личный дневник для записей, рефлексии и анализа эмоционального состояния.",
     loadContent: () => import("./projects/cbt-diary.md?raw").then(module => module.default),
-    company: "Личный прототип", materialType: "bots", cardCover: "/images/case-cbt-diary.svg", caseHero: "/images/case-hero-cbt-diary.svg", caseHeroMobile: "/images/case-hero-cbt-diary-mobile.svg", heroLine: "Место для мыслей и наблюдений",
+    company: "Личный проект", materialType: "bots", cardCover: "/images/case-cbt-diary.svg", caseHero: "/images/case-hero-cbt-diary.svg", caseHeroMobile: "/images/case-hero-cbt-diary-mobile.svg", heroLine: "Записи, к которым можно вернуться",
   },
   {
-    id: "personal-assistant", category: "ai", title: "Личный ассистент в Telegram",
-    description: "Задачи, идеи и заметки из одного сообщения превращаются в понятные записи.",
+    id: "personal-assistant", category: "ai", title: "Личный AI-ассистент",
+    description: "Помощник для фиксации, разбора и сохранения информации.",
     loadContent: () => import("./projects/personal-assistant.md?raw").then(module => module.default),
     company: "Личный прототип", materialType: "bots", cardCover: "/images/case-personal-assistant.svg", caseHero: "/images/case-hero-personal-assistant.svg", caseHeroMobile: "/images/case-hero-personal-assistant-mobile.svg", heroLine: "Мысли не теряются в переписке",
   },

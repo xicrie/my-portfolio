@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { 
   ArrowUp, 
-  Cpu, 
   Globe, 
   Lightbulb
 } from "lucide-react";
@@ -38,7 +37,7 @@ export default function Footer() {
 
           {/* Блок 2: Навигация */}
           <div className="md:col-span-3 flex flex-col gap-4">
-            <span className="text-[0.8rem] uppercase tracking-[0.2em] text-slate-400 font-bold mb-2">Навигация</span>
+            <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Навигация</span>
             <a href="#experience" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Опыт работы</a>
             <a href="#cases" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Портфолио</a>
             <a href="#skills" className="text-[0.9rem] font-medium text-slate-600 hover:text-amber-600 transition-colors w-fit">Навыки и подход</a>
@@ -47,21 +46,11 @@ export default function Footer() {
 
           {/* Блок 3: Engine Status */}
           <div className="md:col-span-4 flex flex-col gap-4">
-            <span className="text-[0.8rem] uppercase tracking-[0.2em] text-slate-400 font-bold mb-2">Рабочие инструменты</span>
+            <span className="text-sm uppercase tracking-[0.12em] text-slate-400 font-bold mb-2">Инструменты в работе</span>
             <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[0.8rem] font-bold text-slate-700">
-                  <Cpu className="w-3.5 h-3.5 text-violet-500" />
-                  Инструменты
-                </div>
-                <span className="text-[0.8rem] font-bold text-emerald-700 uppercase tracking-tighter flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  В работе
-                </span>
-              </div>
               <div className="flex flex-wrap gap-1.5">
                 {["ChatGPT", "Claude", "n8n", "Cursor", "Notion AI"].map((tool) => (
-                  <span key={tool} className="text-[0.8rem] px-2 py-0.5 rounded-md bg-slate-50 border border-slate-100 text-slate-500 font-medium">
+                  <span key={tool} className="text-sm px-3 py-2 rounded-lg bg-slate-50 border border-slate-100 text-slate-500 font-medium">
                     {tool}
                   </span>
                 ))}
@@ -79,7 +68,7 @@ export default function Footer() {
             <div className="hidden md:block w-1 h-1 rounded-full bg-slate-200" />
             <span className="flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-400">
               <Globe className="w-3 h-3" />
-              Москва, Химки / Remote
+              Москва, Химки / Удалённо
             </span>
           </div>
 
