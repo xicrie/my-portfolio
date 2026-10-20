@@ -69,8 +69,8 @@ test("career includes confirmed Teletype work and seven years across disciplines
 test("new author stories, clear titles and quiet navigation", async({page})=>{
   await page.goto('/#cases');const list=page.locator('#portfolio');
   expect(await list.innerText()).not.toMatch(/6 проектов|Направление|Тип материала/);
-  for(const title of ['Помощник для поиска работы','AI-суфлёр для переговоров','Задачи из Telegram в YouGile','AI-аватар в Телеграме','Умный дневник в Телеграме','AI-ассистент в Телеграме'])await expect(list.getByRole('heading',{name:title,exact:true})).toBeVisible();
+  for(const title of ['Помощник для поиска работы','AI-суфлёр для переговоров','Задачи из Telegram в YouGile','AI-аватар в Telegram','Умный дневник в Телеграме','AI-ассистент в Телеграме'])await expect(list.getByRole('heading',{name:title,exact:true})).toBeVisible();
   await page.goto('/?case=telegram-roleplay#cases');const d=page.getByRole('dialog');await d.locator('.case-lead').waitFor();await d.locator('details summary').click();
-  await expect(d).toContainText('Ксаавьер');await expect(d).toContainText('DeepSeek v3');await expect(d).toContainText('стресс-тестирование');await expect(d).toContainText('собственном сервере');expect(await d.innerText()).not.toMatch(/workflow.*не|По описанию автора|не подтвержден/);
+  await expect(d).not.toContainText('Ксаавьер');await expect(d).toContainText('DeepSeek v3');await expect(d).toContainText('стресс-тестирование');await expect(d).toContainText('собственном сервере');expect(await d.innerText()).not.toMatch(/workflow.*не|По описанию автора|не подтвержден/);
   await page.goto('/?case=cbt-diary#cases');await d.locator('.case-lead').waitFor();expect(await d.innerText()).not.toMatch(/По описанию автора|До проверки workflow|не подтвержден/);await expect(d).toContainText('Notion');await expect(d).toContainText('недельные обзоры');await expect(d).toContainText('сохраняет записи в Notion');
 });

@@ -112,7 +112,7 @@ const MetricsSection = () => {
           </h2>
 
           <p className="mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground md:text-[1.12rem]">
-            Результаты моей работы в&nbsp;B2B-маркетинге: привлечение клиентов, развитие контента и&nbsp;продажи через&nbsp;рассылки.
+            Избранные достижения за&nbsp;семь лет работы в&nbsp;маркетинге.
           </p>
         </div>
 

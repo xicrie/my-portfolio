@@ -29,7 +29,7 @@ const pipelineStages = [
     title: "Контент\nи коммуникации",
     icon: PenTool,
     tone: "cool" as Tone,
-    tools: ["Кейсы", "SEO", "Рассылки", "Посадочные страницы"],
+    tools: ["Кейсы", "Статьи и SEO", "Рассылки", "Лендинги"],
     impact: "Продумываю, что человек должен узнать о продукте на каждом этапе. Готовлю материалы, которые отвечают на вопросы и помогают перейти к разговору.",
   },
   {
@@ -37,7 +37,7 @@ const pipelineStages = [
     title: "AI-разработка",
     icon: Cpu,
     tone: "warm" as Tone,
-    tools: ["Codex", "Claude Code"],
+    tools: ["Python", "Codex", "Claude Code", "OpenAI API"],
     impact: "Создаю решения с помощью AI: от требований и первой версии до запуска. Тестирую сценарии, разбираю ошибки и повторяю проверки после доработок.",
   },
   {
@@ -45,7 +45,7 @@ const pipelineStages = [
     title: "Автоматизация\nбизнес-процессов",
     icon: Workflow,
     tone: "cool" as Tone,
-    tools: ["n8n", "API", "Вебхуки"],
+    tools: ["n8n", "REST API", "Вебхуки"],
     impact: "Развиваю автоматизации на n8n и опираюсь на опыт с CRM-процессами. Проектирую передачу данных между сервисами и проверку ошибок.",
   },
   {
@@ -137,6 +137,7 @@ export default function AI_RoadmapSection() {
                 aria-label={stage.title.replace("\n", " ")}
                 aria-expanded={isHovered}
                 aria-controls={isHovered ? `skill-${stage.id}` : undefined}
+                style={{ zIndex: isHovered ? 40 : undefined }}
                 onFocus={() => setHoveredStage(stage.id)}
                 onBlur={() => setHoveredStage(null)}
                 onClick={() => setHoveredStage(stage.id)}
@@ -207,7 +208,7 @@ export default function AI_RoadmapSection() {
                       </h4>
 
                       {/* Плашки навыков */}
-                      <div className="mb-5 flex flex-wrap gap-2">
+                      <div className={cn("mb-5 gap-2", stage.id === 3 ? "grid grid-cols-2" : "flex flex-wrap")}>
                         {stage.tools.map((tool) => (
                           <span 
                             key={tool} 

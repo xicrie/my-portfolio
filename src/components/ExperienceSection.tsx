@@ -386,7 +386,7 @@ const ExperienceSection = () => {
         </div>
       </div>
 
-      <div className="relative z-10 mt-8">
+      <div className="relative z-10 -mt-0.5 -mb-20">
         <div className="mx-auto max-w-[1380px] overflow-visible">
           <div className="overflow-visible" style={edgeMaskStyle}>
             <div
@@ -394,7 +394,12 @@ const ExperienceSection = () => {
               role="region"
               aria-label="Карьера и компании: прокручиваемые карточки"
               tabIndex={0}
-              className="exp-no-scrollbar flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-visible px-[5vw] pt-[30px] pb-12 scroll-smooth md:px-[120px]"
+              style={{
+                // The fade stays entirely in the shadow gutter, clear of the cards.
+                maskImage: "linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 32px), transparent)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 32px), transparent)",
+              }}
+              className="exp-no-scrollbar flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-visible px-[5vw] pt-16 pb-32 scroll-smooth md:px-[120px]"
             >
               {jobs.map((job, index) => {
                 const isActive = index === activeIndex;

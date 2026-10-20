@@ -108,14 +108,14 @@ export const cases: PortfolioCase[] = [
     linkLabel: "Техническое описание",
   },
   {
-    id: "telegram-roleplay", category: "ai", title: "AI-аватар в Телеграме",
-    description: "Ксаавьер: AI-собеседник с заданным характером и последовательным поведением в диалоге.",
+    id: "telegram-roleplay", category: "ai", title: "AI-аватар в Telegram",
+    description: "Виртуальный собеседник с заданным характером. Проверяла, насколько последовательно он сохраняет его в диалоге.",
     loadContent: () => import("./projects/telegram-roleplay.md?raw").then(module => module.default),
     company: "Личный проект", materialType: "bots", cardCover: "/images/case-roleplay.svg", caseHero: "/images/case-hero-telegram-roleplay.svg", caseHeroMobile: "/images/case-hero-telegram-roleplay-mobile.svg", heroLine: "Характер, который узнаётся в разговоре",
   },
   {
     id: "cbt-diary", category: "ai", title: "Умный дневник в Телеграме",
-    description: "Арго сохраняет записи в Notion и помогает замечать изменения и повторяющиеся ситуации.",
+    description: "AI-дневник с КПТ-поддержкой помогает вести записи, отслеживать настроение и замечать повторяющиеся ситуации.",
     loadContent: () => import("./projects/cbt-diary.md?raw").then(module => module.default),
     company: "Личный проект", materialType: "bots", cardCover: "/images/case-cbt-diary.svg", caseHero: "/images/case-hero-cbt-diary.svg", caseHeroMobile: "/images/case-hero-cbt-diary-mobile.svg", heroLine: "Записи, к которым можно вернуться",
   },
