@@ -12,7 +12,7 @@ export default function CaseDocument({ item, content }: { item: PortfolioCase; c
     <main className="case-document case-reader" data-direction={item.category}>
       <div className="relative">
         <figure className="case-reader-cover relative w-full overflow-hidden">
-          <picture className="absolute inset-0 block h-full w-full"><source media="(max-width:639px)" srcSet={item.caseHeroMobile}/><img src={item.caseHero} width={1440} height={480} alt="" className="h-full w-full object-cover" /></picture>
+          <picture className="absolute inset-0 block h-full w-full"><source media="(max-width:639px)" srcSet={item.caseHeroMobile}/><img src={item.caseHero} width={1440} height={480} alt={item.illustrationAlt ?? ""} className="h-full w-full object-cover" /></picture>
           <div className="case-hero-copy hidden h-full max-w-[48%] flex-col justify-center px-10 py-8 sm:flex"><p className="text-2xl font-semibold leading-tight">{item.heroLine}</p></div>
         </figure>
         <a href={`/?direction=${item.category}#cases`} className="case-close absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/80 text-slate-800 shadow-md backdrop-blur-xl" aria-label="Закрыть кейс и перейти к списку"><X className="h-5 w-5"/></a>

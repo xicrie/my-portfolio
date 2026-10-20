@@ -19,8 +19,8 @@ import { normalizeCaseSearch } from "@/data/caseNavigation";
 const CaseContent = lazy(() => import("./CaseContent"));
 
 const directions = [
-  { value: "ai", label: "ИИ / Автоматизация" },
-  { value: "marketing", label: "Маркетинг / CRM" },
+  { value: "ai", label: "ИИ и автоматизация" },
+  { value: "marketing", label: "Маркетинг и CRM" },
 ] as const;
 
 const CasesSection = () => {
@@ -150,7 +150,7 @@ const CasesSection = () => {
                 <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
                   <img
                     src={c.cardCover}
-                    alt=""
+                    alt={c.illustrationAlt ?? ""}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.045]"
@@ -163,7 +163,7 @@ const CasesSection = () => {
                     {c.title}
                   </h3>
 
-                  <p className="case-category mb-4 text-sm font-medium text-muted-foreground">{materialTypes[c.materialType].singular}{c.category === "marketing" ? " для\u00a0KTS" : ""}</p>
+                  <p className="case-category mb-4 text-sm font-medium text-muted-foreground">{materialTypes[c.materialType].singular}</p>
 
                   {c.description && (
                     <p className="type-body mb-6 text-pretty text-slate-600">
@@ -227,7 +227,7 @@ const CasesSection = () => {
                 <figure className="case-reader-cover relative w-full shrink-0 overflow-hidden">
                   <picture className="absolute inset-0 block h-full w-full">
                     <source media="(max-width: 639px)" srcSet={active.caseHeroMobile} />
-                    <img src={active.caseHero} alt="" width={1440} height={480} className="h-full w-full object-cover" />
+                    <img src={active.caseHero} alt={active.illustrationAlt ?? ""} width={1440} height={480} className="h-full w-full object-cover" />
                   </picture>
                   <div className="case-hero-copy relative z-10 hidden h-full max-w-[48%] flex-col justify-center px-10 py-8 sm:flex">
                     <p className="mb-4 text-sm font-medium">{active.category === "ai" ? active.company : "Материал для\u00a0KTS"}</p>

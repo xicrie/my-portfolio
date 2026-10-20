@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" width="1440" height="480" role="img"><title>AI-аватар: диалог с заданным характером</title><desc>Редакционная иллюстрация сценария, не снимок интерфейса.</desc><rect width="1440" height="480" fill="#fbf8f0"/><circle cx="1137.6000000000001" cy="172.79999999999998" r="268.8" fill="#f6c947" opacity=".13"/><circle cx="345.59999999999997" cy="393.59999999999997" r="110.4" fill="#f6c947" opacity=".08"/><g transform="translate(1050 235) scale(0.9)"><circle cx="-120" cy="-38" r="102" fill="#ede0bc" stroke="#885800" stroke-width="5"/><path d="M -243 175 c 6 -110 239 -110 245 0" fill="white" stroke="#885800" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M -154 -44 h 8 M -98 -44 h 8 M -148 3 q 31 29 62 0" fill="none" stroke="#885800" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="52" y="-170" width="225" height="182" rx="40" fill="white" stroke="#885800" stroke-width="5"/><path d="M 98 12 v 46 l 51 -46" fill="white" stroke="#885800" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M 98 -104 h 134 M 98 -54 h 89" fill="none" stroke="#f6c947" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><rect x="69" y="83" width="210" height="105" rx="24" fill="#ede0bc" stroke="#885800" stroke-width="5"/><path d="M 105 133 h 113" fill="none" stroke="#885800" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" width="1440" height="480" role="img"><title>Персонаж, который оживает в диалоге</title><desc>Редакционная иллюстрация сценария, не снимок интерфейса.</desc><defs>
+  <linearGradient id="surface" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#fffcf4"/></linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe89a"/><stop offset="1" stop-color="#f6c947"/></linearGradient>
+  <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#885800" flood-opacity=".1"/></filter>
+</defs><rect width="1440" height="480" fill="#fbf8f0"/><circle cx="1137.6000000000001" cy="172.79999999999998" r="268.8" fill="#f6c947" opacity=".13"/><circle cx="345.59999999999997" cy="393.59999999999997" r="110.4" fill="#f6c947" opacity=".08"/><g transform="translate(1050 235) scale(0.9)">
+  <g filter="url(#soft-shadow)">
+    <rect x="-270" y="-146" width="238" height="292" rx="55" fill="url(#surface)" stroke="#885800" stroke-width="5"/>
+    <rect x="-244" y="-120" width="186" height="194" rx="55" fill="url(#accent)"/>
+    <path d="M64-150 H256 Q286-150 286-120 V-37 Q286-7 256-7 H124 L94 22 V-7 H64 Q34-7 34-37 V-120 Q34-150 64-150Z" fill="url(#surface)" stroke="#885800" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M94 70 H256 Q280 70 280 94 V151 Q280 175 256 175 H185 L156 199 V175 H94 Q70 175 70 151 V94 Q70 70 94 70Z" fill="url(#surface)" stroke="#885800" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+  <g fill="none" stroke="#885800" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-204-48 Q-192-60-180-48 M-123-48 Q-111-60-99-48" stroke-width="7"/>
+    <path d="M-181-4 Q-151 26-121-4" stroke-width="7"/>
+    <path d="M-193 110 H-109" stroke-width="7" opacity=".45"/>
+  </g>
+  <path d="M79-99 H230 M79-58 H185" fill="none" stroke="#f6c947" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#f6c947"><circle cx="119" cy="124" r="8"/><circle cx="175" cy="124" r="8"/><circle cx="231" cy="124" r="8"/></g>
+</g></svg>

@@ -13,7 +13,7 @@ test("two directions and six material types replace technology navigation", asyn
     await page.reload();
     await expect(portfolio.getByRole("article")).toHaveCount(count);
   }
-  await page.getByRole("button", { name: "Маркетинг / CRM", exact: true }).click();
+  await page.getByRole("button", { name: "Маркетинг и CRM", exact: true }).click();
   await expect(portfolio.getByRole("article")).toHaveCount(3);
   for (const type of ["Кейсы","Статьи","Рассылки"]) {
     await types.getByRole("button", { name: type, exact: true }).click();
@@ -24,7 +24,7 @@ test("two directions and six material types replace technology navigation", asyn
 
 test("type filters survive reload and browser history; legacy links are normalized", async ({ page }) => {
   await page.goto("/?direction=ai#cases");
-  await page.getByRole("button", { name: "Маркетинг / CRM", exact: true }).click();
+  await page.getByRole("button", { name: "Маркетинг и CRM", exact: true }).click();
   await page.getByRole("group", { name: "Тип материала" }).getByRole("button", { name: "Статьи", exact: true }).click();
   await expect(page).toHaveURL(/direction=marketing&type=articles#cases$/);
   await page.reload();
@@ -34,7 +34,7 @@ test("type filters survive reload and browser history; legacy links are normaliz
   await page.goBack();
   await expect(page.locator("#portfolio article")).toHaveCount(6);
   await page.goForward();
-  await expect(page.getByRole("button", { name: "Маркетинг / CRM", exact: true })).toHaveAttribute("aria-pressed","true");
+  await expect(page.getByRole("button", { name: "Маркетинг и CRM", exact: true })).toHaveAttribute("aria-pressed","true");
   await page.goto("/?direction=marketing&tag="+encodeURIComponent("Статьи")+"#cases");
   await expect(page).toHaveURL(/type=articles/);
   expect(page.url()).not.toContain("tag=");

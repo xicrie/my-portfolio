@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" width="1440" height="480" role="img"><title>Арго: запись и осмысление</title><desc>Редакционная иллюстрация сценария, не снимок интерфейса.</desc><rect width="1440" height="480" fill="#fbf8f0"/><circle cx="1137.6000000000001" cy="172.79999999999998" r="268.8" fill="#f6c947" opacity=".13"/><circle cx="345.59999999999997" cy="393.59999999999997" r="110.4" fill="#f6c947" opacity=".08"/><g transform="translate(1050 235) scale(0.9)"><rect x="-235" y="-185" width="350" height="365" rx="20" fill="white" stroke="#885800" stroke-width="5"/><path d="M -179 -185 V 180" fill="none" stroke="#f6c947" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M -135 -105 H 65" fill="none" stroke="#ede0bc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M -135 -30 H 65" fill="none" stroke="#ede0bc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M -135 45 H 65" fill="none" stroke="#ede0bc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M -135 120 H 65" fill="none" stroke="#ede0bc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(168,-38) rotate(27)"><rect x="-21" y="-121" width="44" height="231" rx="7" fill="#f6c947" stroke="#885800" stroke-width="5"/><path d="M -21 112 l 22 40 22 -40" fill="white" stroke="#885800" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="-196" cy="98" r="72" fill="#f6c947" stroke="#885800" stroke-width="5"/><path d="M -220 84 h 3 M -174 84 h 3 M -222 112 q 26 22 52 0" fill="none" stroke="#885800" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" width="1440" height="480" role="img"><title>КПТ-дневник с историей записей</title><desc>Редакционная иллюстрация сценария, не снимок интерфейса.</desc><defs>
+  <linearGradient id="surface" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#fffcf4"/></linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe89a"/><stop offset="1" stop-color="#f6c947"/></linearGradient>
+  <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#885800" flood-opacity=".1"/></filter>
+</defs><rect width="1440" height="480" fill="#fbf8f0"/><circle cx="1137.6000000000001" cy="172.79999999999998" r="268.8" fill="#f6c947" opacity=".13"/><circle cx="345.59999999999997" cy="393.59999999999997" r="110.4" fill="#f6c947" opacity=".08"/><g transform="translate(1050 235) scale(0.9)">
+  <g filter="url(#soft-shadow)">
+    <rect x="-246" y="-165" width="300" height="350" rx="25" fill="#fffcf4" stroke="#885800" stroke-width="5" transform="rotate(-6 -96 10)"/>
+    <rect x="-224" y="-176" width="300" height="350" rx="25" fill="url(#surface)" stroke="#885800" stroke-width="5"/>
+    <rect x="122" y="-104" width="168" height="216" rx="26" fill="url(#surface)" stroke="#885800" stroke-width="5"/>
+  </g>
+  <path d="M-173-176 V174" fill="none" stroke="#f6c947" stroke-width="7"/>
+  <path d="M-132-113 H26 M-132-63 H8 M-132 48 H26 M-132 97 H-22" fill="none" stroke="#ede0bc" stroke-width="10" stroke-linecap="round"/>
+  <g fill="url(#accent)" stroke="#885800" stroke-width="3">
+    <circle cx="-115" cy="-4" r="16"/><circle cx="-57" cy="-4" r="16"/><circle cx="1" cy="-4" r="16"/>
+  </g>
+  <g fill="none" stroke="#885800" stroke-width="3" stroke-linecap="round">
+    <path d="M-122 1 H-108 M-64 1 Q-57 7-50 1 M-6 0 Q1 10 8 0"/>
+  </g>
+  <path d="M158-57 H251" fill="none" stroke="#ede0bc" stroke-width="9" stroke-linecap="round"/>
+  <path d="M160-12 V69" fill="none" stroke="#ede0bc" stroke-width="5"/>
+  <g fill="#f6c947" stroke="#885800" stroke-width="2"><circle cx="160" cy="-12" r="7"/><circle cx="160" cy="28" r="7"/><circle cx="160" cy="68" r="7"/></g>
+  <path d="M180-12 H250 M180 28 H230 M180 68 H250" fill="none" stroke="#ede0bc" stroke-width="8" stroke-linecap="round"/>
+  <path d="M90 4 H108" fill="none" stroke="#f6c947" stroke-width="5" stroke-linecap="round"/>
+</g></svg>

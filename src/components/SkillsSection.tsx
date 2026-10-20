@@ -8,8 +8,7 @@ import {
   PenTool, 
   Cpu, 
   Workflow, 
-  BarChart3,
-  Network
+  BarChart3
 } from "lucide-react";
 
 // --- ТИПЫ И ДАННЫЕ ---
@@ -78,7 +77,7 @@ export default function AI_RoadmapSection() {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
 
   return (
-    <section className="relative w-full overflow-visible py-16 md:py-24 font-sans text-slate-900 z-10">
+    <section className="relative w-full overflow-visible pt-16 pb-40 md:pt-24 md:pb-36 font-sans text-slate-900 z-10">
 
       <div className="container relative z-20 mx-auto px-6 max-w-[1200px]">
         
@@ -151,7 +150,9 @@ export default function AI_RoadmapSection() {
                 }}
                 onMouseEnter={() => setHoveredStage(stage.id)}
                 onMouseLeave={(event) => {
-                  if (!event.currentTarget.contains(document.activeElement)) setHoveredStage(null);
+                  if (!event.currentTarget.contains(document.activeElement)) {
+                    setHoveredStage(current => current === stage.id ? null : current);
+                  }
                 }}
               >
                 {/* Лампочка */}
@@ -203,9 +204,9 @@ export default function AI_RoadmapSection() {
                       )}
                     >
                       {/* Название внутри карточки */}
-                      <h4 className={cn("text-[1.05rem] font-bold mb-4", style.iconColor)}>
+                      <h3 className={cn("text-[1.05rem] font-bold mb-4", style.iconColor)}>
                         {stage.title.replace('\n', ' ')}
-                      </h4>
+                      </h3>
 
                       {/* Плашки навыков */}
                       <div className={cn("mb-5 gap-2", stage.id === 3 ? "grid grid-cols-2" : "flex flex-wrap")}>
@@ -233,29 +234,6 @@ export default function AI_RoadmapSection() {
           })}
         </div>
 
-        {/* Облегченный подвал (Кнопка) в единой стилистике */}
-        <motion.div 
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 md:mt-24 flex flex-col md:flex-row items-start md:items-center justify-between rounded-[1.25rem] border border-white/50 bg-white/30 p-5 md:px-7 md:py-6 backdrop-blur-xl shadow-sm"
-        >
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-5">
-            {/* Иконка теперь легкая, с янтарным акцентом */}
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/60 border border-white/80 shadow-sm">
-              <Network className="h-5 w-5 text-amber-500" />
-            </div>
-            <p className="text-[0.9rem] font-medium leading-relaxed text-slate-700 max-w-[800px]">
-              Выбираю инструменты под&nbsp;задачу, создаю решения с&nbsp;помощью AI,
-              настраиваю интеграции и&nbsp;проверяю результат в&nbsp;реальной работе.
-            </p>
-          </div>
-          {/* Лампочка online — теперь фирменного янтарного цвета */}
-          <div className="hidden md:flex h-3 w-3 shrink-0 items-center justify-center relative ml-6">
-            <span className="absolute h-3 w-3 animate-ping rounded-full bg-amber-400 opacity-60"></span>
-            <span className="relative h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
-          </div>
-        </motion.div>
 
       </div>
     </section>

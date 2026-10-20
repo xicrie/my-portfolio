@@ -2,24 +2,51 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Send, Lightbulb } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PremiumBackground from "./PremiumBackground";
 
 const quotes = [
-  "Люблю, когда сложная идея становится простой работающей вещью.",
-  "Сначала разбираюсь в задаче. Потом выбираю инструменты.",
-  "Первый прототип всегда умеет удивить. Поэтому я люблю тестировать.",
-  "Хорошая автоматизация возвращает время на важное.",
-  "AI помогает писать код. Что он должен делать, решаю я.",
+  "Мне мало пользоваться AI. Хочется создавать с его помощью что-то своё.",
+  "Обожаю момент, когда идея превращается в работающую программу.",
+  "Если что-то можно автоматизировать, мне хочется попробовать.",
+  "В нейросетях меня увлекает то, что с ними можно построить.",
+  "Могу часами искать ошибку, если знаю, что в итоге всё заработает.",
 ];
+
+type QuoteInteraction = "pointer" | "keyboard" | "touch" | null;
 
 const HeroSection = () => {
   const [quoteIndex, setQuoteIndex] = useState(0);
+  const [interaction, setInteraction] = useState<QuoteInteraction>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+  const quoteOpen = interaction !== null;
+  const showQuote = (mode: Exclude<QuoteInteraction, null>) => {
+    setQuoteIndex(previous => (previous + 1) % quotes.length);
+    setInteraction(mode);
+  };
 
-  const rotateQuote = useMemo(
-    () => () => setQuoteIndex((prev) => (prev + 1) % quotes.length),
-    []
-  );
+  useEffect(() => {
+    if (!interaction) return;
+    const close = () => setInteraction(null);
+    const onOutsidePress = (event: PointerEvent) => {
+      if (!photoRef.current?.contains(event.target as Node)) close();
+    };
+    const onVisibility = () => { if (document.hidden) close(); };
+    // One timer per interaction; touch gets a bounded reading time.
+    const timer = interaction === "touch"
+      ? window.setTimeout(close, 6000)
+      : window.setInterval(() => setQuoteIndex(previous => (previous + 1) % quotes.length), 6000);
+    document.addEventListener("pointerdown", onOutsidePress);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("blur", close);
+    return () => {
+      window.clearTimeout(timer);
+      window.clearInterval(timer);
+      document.removeEventListener("pointerdown", onOutsidePress);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("blur", close);
+    };
+  }, [interaction]);
 
   return (
     <section
@@ -96,11 +123,34 @@ const HeroSection = () => {
             className="relative mx-auto w-full max-w-[580px] pb-16 md:pb-24"
           >
             <div
+              ref={photoRef}
               className="group relative"
-              onMouseEnter={rotateQuote}
-              onFocus={rotateQuote}
+              data-hero-photo
+              data-quote-active={quoteOpen}
+              onPointerEnter={(event) => { if (event.pointerType !== "touch") showQuote("pointer"); }}
+              onPointerLeave={(event) => { if (event.pointerType !== "touch") setInteraction(null); }}
+              onPointerCancel={() => setInteraction(null)}
+              onPointerDown={(event) => {
+                if (event.pointerType === "touch") {
+                  if (interaction === "touch") setInteraction(null);
+                  else showQuote("touch");
+                }
+              }}
+              onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) showQuote("keyboard"); }}
+              onBlur={() => setInteraction(null)}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") setInteraction(null);
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  if (quoteOpen) setInteraction(null);
+                  else showQuote("keyboard");
+                }
+              }}
               tabIndex={0}
-              aria-label="Интерактивная карточка с авторскими мыслями"
+              role="button"
+              aria-expanded={quoteOpen}
+              aria-controls="hero-quote"
+              aria-label={quoteOpen ? `Авторские фразы на фотографии: ${quotes[quoteIndex]}` : "Авторские фразы на фотографии"}
             >
               <div className="pointer-events-none absolute inset-[-80px] rounded-[4rem] opacity-0 blur-[80px] transition-opacity duration-500 ease-out group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_50%,rgba(255,214,110,0.35)_0%,transparent_60%)]" />
               <div className="pointer-events-none absolute inset-[-20px] rounded-[3.8rem] opacity-0 blur-[35px] transition-opacity duration-300 ease-out group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_50%,rgba(255,248,225,0.95)_0%,rgba(255,224,140,0.6)_50%,transparent_70%)]" />
@@ -128,7 +178,7 @@ const HeroSection = () => {
 
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(180deg,transparent_0%,rgba(30,20,10,0.45)_100%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
 
-                  <div className="absolute bottom-6 left-5 right-5 z-20 translate-y-4 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100 sm:left-6 sm:right-6">
+                  <div id="hero-quote" aria-hidden={!quoteOpen} className="pointer-events-none absolute bottom-6 left-5 right-5 z-20 translate-y-4 opacity-0 transition-all duration-300 ease-out group-data-[quote-active=true]:pointer-events-auto group-data-[quote-active=true]:translate-y-0 group-data-[quote-active=true]:opacity-100 sm:left-6 sm:right-6">
                     <div className="relative rounded-[1.25rem] bg-[#fbf9f6] p-5 shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
                       <svg
                         className="absolute -top-[14px] right-12 h-[15px] w-[20px] text-[#fbf9f6] drop-shadow-[0_-4px_4px_rgba(0,0,0,0.04)]"
@@ -141,12 +191,12 @@ const HeroSection = () => {
                       <div className="flex gap-4">
                         <div className="relative mt-0.5 shrink-0">
                           <Lightbulb
-                            className="relative z-10 h-[24px] w-[24px] text-[#b5a08d] transition-colors duration-300 group-hover:text-amber-500"
+                            className="relative z-10 h-[24px] w-[24px] text-[#b5a08d] transition-colors duration-300 group-data-[quote-active=true]:text-amber-500"
                             strokeWidth={2}
                           />
                         </div>
 
-                        <p className="text-[1.08rem] font-medium leading-[1.6] text-[#4a3528]">
+                        <p aria-live="polite" className="min-h-[6.4em] min-[360px]:min-h-[4.8em] sm:min-h-[3.2em] text-[1.08rem] font-medium leading-[1.6] text-[#4a3528]">
                           {quotes[quoteIndex]}
                         </p>
                       </div>
